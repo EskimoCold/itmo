@@ -69,3 +69,5 @@ chmod 777 ../lab0/*
 chmod 777 ../lab0/**/*
 
 # number 3
+cp -r lickilicky9 lickilicky9/spoink
+cat lickilicky9/cherrim clamperl4/floatzel > dodrio0_71
