@@ -1,17 +1,17 @@
-import java.lang.Math;
+import static java.lang.Math.*;
 import java.util.Random;
 
 public class Main {
     public static double firstFormula(float x) {
-        return Math.tan(Math.sin(Math.pow(x, (x / (x + 0.75f)))));
+        return tan(sin(pow(x, (x / (x + 0.75f)))));
     }
 
     public static double secondFormula(float x) {
-        return Math.sin((Math.pow(x, x / (x - 0.5))) / 2);
+        return sin((pow(x, x / (x - 0.5))) / 2);
     }
 
     public static double thirdFormula(float x) {
-        return Math.cos(Math.atan(Math.pow((x - 4.5) / 17, 4)));
+        return cos(atan(pow((x - 4.5) / 17, 4)));
     }
 
     public static void main(String[] args) {
