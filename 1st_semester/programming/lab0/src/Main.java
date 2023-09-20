@@ -2,15 +2,15 @@ import java.lang.Math;
 import java.util.Random;
 
 public class Main {
-    static double firstFormula(float x) {
+    public static double firstFormula(float x) {
         return Math.tan(Math.sin(Math.pow(x, (x / (x + 0.75f)))));
     }
 
-    static double secondFormula(float x) {
+    public static double secondFormula(float x) {
         return Math.sin((Math.pow(x, x / (x - 0.5))) / 2);
     }
 
-    static double thirdFormula(float x) {
+    public static double thirdFormula(float x) {
         return Math.cos(Math.atan(Math.pow((x - 4.5) / 17, 4)));
     }
 
@@ -21,12 +21,14 @@ public class Main {
 
         Random rand = new Random();
 
+        // make c array
         byte el = 16;
         for (int i = 0; i < c.length; i++) {
             c[i] = el;
             el -= 2;
         }
 
+        // make x array
         for (int i = 0; i < x.length; i++) {
             x[i] = rand.nextFloat()*17 - 13;
         }
@@ -51,7 +53,7 @@ public class Main {
         // print array
         for (int i = 0; i < c.length; i++) {
             for (int j = 0; j < x.length; j++) {
-                System.out.printf("%.5f ", res[i][j]);
+                System.out.printf("%10.5f", res[i][j]);
             }
 
             System.out.println();
