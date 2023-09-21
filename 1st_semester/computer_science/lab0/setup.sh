@@ -17,21 +17,21 @@ touch wigglytuff5/{luxray,meditite,omanyte}
 
 ls -l -R
 
-echo "Ходы Body Slam Bullet Seed Counter Double-Edged Drain Punch\nDynamicpunch Endeavor Focus Punch Fury Cutter Giga Drain Grass Pledge\nIron Tail Low Kick Mega Kick Mega Punch Mud-Slap Secret Power Seed\nBomb Seismic Toss Sleep Talk Snore Swift Synthesis Thunderpunch Worry" > clamperl4/groovyle
+echo -e "Ходы Body Slam Bullet Seed Counter Double-Edged Drain Punch\nDynamicpunch Endeavor Focus Punch Fury Cutter Giga Drain Grass Pledge\nIron Tail Low Kick Mega Kick Mega Punch Mud-Slap Secret Power Seed\nBomb Seismic Toss Sleep Talk Snore Swift Synthesis Thunderpunch Worry" > clamperl4/groovyle
 echo "Развитые способности Thick Fat" > clamperl4/tepig
-echo "Живет\nFreshwater Grassland" > clamperl4/floatzel
+echo -e "Живет\nFreshwater Grassland" > clamperl4/floatzel
 
 echo "Тип покемона  ICE WATER" > lickilicky9/walrein
-echo "Развитые способности\nInfiltrator" > lickilicky9/golbat
+echo -e "Развитые способности\nInfiltrator" > lickilicky9/golbat
 echo "Тип покемона  GRASS NONE" > lickilicky9/cherrim
-echo "Возможности\nOverland=6 Surface=5 Jump=3 Power=3\nIntelligence=4" > lickilicky9/loudred
+echo -e "Возможности\nOverland=6 Surface=5 Jump=3 Power=3\nIntelligence=4" > lickilicky9/loudred
 
-echo "weight=187.8 height=71.0 atk=11\ndef=7" > dodrio0
-echo "Возможности Overland=1 Surface=1 Sky=8\nPower=1 Intelligence=4 Invisibility=0 Phasing=0" > misdreavus6
-echo "Ходы\nAncientpower Bind Block Bullet Seed Endeavor Giga Drain Knock Off Pain\nSplit Rage Powder Seed Bomb Shock Wave Sleep Talk Snore Synthesis\nWorry Seed" > tangrowth4
+echo -e "weight=187.8 height=71.0 atk=11\ndef=7" > dodrio0
+echo -e "Возможности Overland=1 Surface=1 Sky=8\nPower=1 Intelligence=4 Invisibility=0 Phasing=0" > misdreavus6
+echo -e "Ходы\nAncientpower Bind Block Bullet Seed Endeavor Giga Drain Knock Off Pain\nSplit Rage Powder Seed Bomb Shock Wave Sleep Talk Snore Synthesis\nWorry Seed" > tangrowth4
 
-echo "Способности Leer Charge Spark Bite Roar Swagger\nThunder Fang Crunch Scary Face Discharge Wild Charge" > wigglytuff5/luxray
-echo "Ходы\nBody Slam Counter Double-Edged Drain Punch Fire Punch Focus Punch\nGravity Helping Hand Ice Punch Low Kick Magic Coat Mega Kick Mega\nPunch Metronome Mud-Slap Pain Split Recycle Role Play Seismic Toss\nSignal Beam Sleep Talk Snore Swift Thunderpunch Trick Vacuum Wave Zen\nHeadbutt" > wigglytuff5/meditite
+echo -e "Способности Leer Charge Spark Bite Roar Swagger\nThunder Fang Crunch Scary Face Discharge Wild Charge" > wigglytuff5/luxray
+echo -e "Ходы\nBody Slam Counter Double-Edged Drain Punch Fire Punch Focus Punch\nGravity Helping Hand Ice Punch Low Kick Magic Coat Mega Kick Mega\nPunch Metronome Mud-Slap Pain Split Recycle Role Play Seismic Toss\nSignal Beam Sleep Talk Snore Swift Thunderpunch Trick Vacuum Wave Zen\nHeadbutt" > wigglytuff5/meditite
 echo "weight=16.5 height=16.0 atk=4 def=10" > wigglytuff5/omanyte
 
 # number 2
