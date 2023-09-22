@@ -71,3 +71,19 @@ chmod 777 ../lab0/**/*
 # number 3
 cp -r lickilicky9 lickilicky9/spoink
 cat lickilicky9/cherrim clamperl4/floatzel > dodrio0_71
+cat dodrio0 > wigglytuff5/medititedodrio
+ln -s lickilicky9/ Copy_42
+ln -s ../tangrowth4 lickilicky9/shinx
+cp tangrowth4 lickilicky9/shinx
+ln misdreavus6 clamperl4/tepigmisdreavus
+
+ls -l -R
+
+# number 4
+mkdir tmp
+
+# cat clamperl4/groovyle clamperl4/tepig clamperl4/floatzel lickilicky9/walrein lickilicky9/golbat
+cat clamperl4/{groovyle,tepig,floatzel} lickilicky9/{walrein,golbat,cherrim,loudred} wigglytuff5/{luxray,meditite} 2>/dev/null | wc -l | sort
+ls -l lickilicky9 2>&1 | sort -r
+cat lickilicky9/{cherrim,loudred} wigglytuff5/luxray 2>/dev/null | sort
+cat -n lickilicky9/* 2>/temp/err.log | grep "rge"

@@ -50,6 +50,7 @@ public class Main {
             }
         }
 
+
         // print array
         for (int i = 0; i < c.length; i++) {
             for (int j = 0; j < x.length; j++) {
@@ -58,5 +59,6 @@ public class Main {
 
             System.out.println();
         }
+
     }
 }
