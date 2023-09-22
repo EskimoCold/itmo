@@ -27,7 +27,7 @@ def process_errors(l: List[int]) -> Union[None, List[str]]:
     
 
 if __name__ == "__main__":
-    s = input(">> ")
+    s = input("Enter your code:\n\n>> ")
     
     try:
         l = list(map(int, s.replace(" ", "")))
