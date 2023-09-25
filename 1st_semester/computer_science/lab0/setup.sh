@@ -3,6 +3,7 @@
 chmod 777 ../lab0/*
 chmod 777 ../lab0/**/*
 
+
 # number 1
 mkdir -p clamperl4/cranidos
 touch clamperl4/{groovyle,tepig,floatzel}
@@ -14,8 +15,6 @@ touch lickilicky9/{walrein,golbat,cherrim,loudred}
 
 mkdir -p wigglytuff5/{lickilicky,mankey}
 touch wigglytuff5/{luxray,meditite,omanyte}
-
-ls -l -R
 
 echo -e "Ходы Body Slam Bullet Seed Counter Double-Edged Drain Punch\nDynamicpunch Endeavor Focus Punch Fury Cutter Giga Drain Grass Pledge\nIron Tail Low Kick Mega Kick Mega Punch Mud-Slap Secret Power Seed\nBomb Seismic Toss Sleep Talk Snore Swift Synthesis Thunderpunch Worry" > clamperl4/groovyle
 echo "Развитые способности Thick Fat" > clamperl4/tepig
@@ -33,6 +32,11 @@ echo -e "Ходы\nAncientpower Bind Block Bullet Seed Endeavor Giga Drain Knock
 echo -e "Способности Leer Charge Spark Bite Roar Swagger\nThunder Fang Crunch Scary Face Discharge Wild Charge" > wigglytuff5/luxray
 echo -e "Ходы\nBody Slam Counter Double-Edged Drain Punch Fire Punch Focus Punch\nGravity Helping Hand Ice Punch Low Kick Magic Coat Mega Kick Mega\nPunch Metronome Mud-Slap Pain Split Recycle Role Play Seismic Toss\nSignal Beam Sleep Talk Snore Swift Thunderpunch Trick Vacuum Wave Zen\nHeadbutt" > wigglytuff5/meditite
 echo "weight=16.5 height=16.0 atk=4 def=10" > wigglytuff5/omanyte
+
+ls -l -R
+
+echo "......................................................................"
+
 
 # number 2
 chmod u=r-x,g=--x,o=-w- clamperl4/cranidos
@@ -60,13 +64,13 @@ chmod u=r-x,g=--x,o=--x wigglytuff5/mankey
 chmod 664 wigglytuff5/omanyte
 chmod u=r-x,g=-w-,o=r-- wigglytuff5
 
+ls -l -R
 
 echo "......................................................................"
 
-ls -l -R
-
 chmod 777 ../lab0/*
 chmod 777 ../lab0/**/*
+
 
 # number 3
 cp -r lickilicky9 lickilicky9/spoink
@@ -79,11 +83,29 @@ ln misdreavus6 clamperl4/tepigmisdreavus
 
 ls -l -R
 
+echo "......................................................................"
+
+
 # number 4
 mkdir tmp
 
-# cat clamperl4/groovyle clamperl4/tepig clamperl4/floatzel lickilicky9/walrein lickilicky9/golbat
 cat clamperl4/{groovyle,tepig,floatzel} lickilicky9/{walrein,golbat,cherrim,loudred} wigglytuff5/{luxray,meditite} 2>/dev/null | wc -l | sort
 ls -l lickilicky9 2>&1 | sort -r
 cat lickilicky9/{cherrim,loudred} wigglytuff5/luxray 2>/dev/null | sort
-cat -n lickilicky9/* 2>/temp/err.log | grep "rge"
+cat -n lickilicky9/* 2>/tmp/err.log | grep "rge"
+cat -n ./c* ./*/c* ./*/*/c* 2>/tmp/err.log | sort
+cat ./t* ./*/t* ./*/*/t* > "/tmp/output" 2>/tmp/err.log | wc
+
+ls -l -R
+echo "......................................................................"
+
+
+# number 5
+rm -f tangrowth4
+rm -f clamperl4/floatzel
+rm -f Copy_*
+rm -f clamperl4/tepigmisdreav*
+rm -rf clamperl4
+rm -rf wigglytuff5/lickilicky
+
+ls -l -R
