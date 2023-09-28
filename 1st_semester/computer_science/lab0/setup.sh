@@ -1,9 +1,9 @@
-# !/bin/sh
+# !/bin/bash
 
 chmod 777 ../lab0/*
 chmod 777 ../lab0/**/*
 
-
+c
 # number 1
 mkdir -p clamperl4/cranidos
 touch clamperl4/{groovyle,tepig,floatzel}
@@ -77,26 +77,47 @@ cp -r lickilicky9 lickilicky9/spoink
 cat lickilicky9/cherrim clamperl4/floatzel > dodrio0_71
 cat dodrio0 > wigglytuff5/medititedodrio
 ln -s lickilicky9/ Copy_42
-ln -s ../tangrowth4 lickilicky9/shinx
+ln -s ../tangrowth4 clamperl4/grovyletangrowth
 cp tangrowth4 lickilicky9/shinx
 ln misdreavus6 clamperl4/tepigmisdreavus
 
 ls -l -R
 
 echo "......................................................................"
+echo "-------4--------"
 
 
 # number 4
 mkdir tmp
+touch tmp/err.log
+touch tmp/output
 
-cat clamperl4/{groovyle,tepig,floatzel} lickilicky9/{walrein,golbat,cherrim,loudred} wigglytuff5/{luxray,meditite} 2>/dev/null | wc -l | sort
-ls -l lickilicky9 2>&1 | sort -r
+echo "1:"
+wc -l clamperl4/{groovyle,tepig,floatzel} lickilicky9/{walrein,golbat,cherrim,loudred} wigglytuff5/{luxray,meditite} 2>/dev/null | sort
+
+echo "2:"
+ls -l lickilicky9 2>&1 | sort -k9,9 | grep -v "^d"
+
+echo "3:"
 cat lickilicky9/{cherrim,loudred} wigglytuff5/luxray 2>/dev/null | sort
-cat -n lickilicky9/* 2>/tmp/err.log | grep "rge"
-cat -n ./c* ./*/c* ./*/*/c* 2>/tmp/err.log | sort
-cat ./t* ./*/t* ./*/*/t* > "/tmp/output" 2>/tmp/err.log | wc
 
-ls -l -R
+echo "4:"
+cat -n lickilicky9/* 2>tmp/err.log | grep "rge"
+echo "file:"
+cat tmp/err.log
+
+echo "5:"
+cat -n ./c* ./*/c* 2>tmp/err.log | sort
+echo "file:"
+cat tmp/err.log
+
+echo "6:"
+wc -m ./t* ./*/t* ./*/*/t* 1>tmp/output 2>tmp/err.log
+echo "file output:"
+cat tmp/output
+echo "file err:"
+cat tmp/err.log
+
 echo "......................................................................"
 
 
