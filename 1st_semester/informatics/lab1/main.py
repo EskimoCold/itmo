@@ -11,6 +11,18 @@ def process_errors(l: List[int]) -> Union[None, List[str]]:
     Returns:
         Union[None, List[str]]
     """
+
+    names = ["r1", "r2", "i1", "r3", "i2", "i3", "i4"]
+
+    table = {
+        "001": 3,
+        "010": 1,
+        "011": 5,
+        "100": 0,
+        "101": 4,
+        "110": 2,
+        '111': 6
+    }
     
     syndromes = [l[0] ^ l[2] ^ l[4] ^ l[6],
                  l[1] ^ l[2] ^ l[5] ^ l[6],
@@ -19,9 +31,13 @@ def process_errors(l: List[int]) -> Union[None, List[str]]:
     if not any(syndromes):
         return None
     
-    place = None
-    bit = None
-    fixed = None
+    syndromes = "".join(list(map(str, syndromes)))
+    
+    place = names[table[syndromes]]
+    bit = l[table[syndromes]]
+    fixed = l.copy()
+    fixed[table[syndromes]] = (bit + 1) % 2
+    fixed = "".join(list(map(str, fixed)))
     
     return place, bit, fixed
     
