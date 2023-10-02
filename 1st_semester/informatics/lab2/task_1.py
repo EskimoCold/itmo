@@ -25,4 +25,4 @@ if __name__ == "__main__":
     for i in range(len(tests)):
         count = len(re.findall(pattern, tests[i]))
         
-        print(f"test: {tests[i]}\nregex answer: {count}\ntrue answer: {answers[i]}\n")
+        print(f"test [{i+1}/{len(tests)}]: {tests[i]}\nregex answer: {count}\ntrue answer:  {answers[i]}\n")
