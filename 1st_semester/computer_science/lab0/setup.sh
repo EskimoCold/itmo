@@ -1,10 +1,11 @@
 # !/bin/bash
 
-chmod 777 ../lab0/*
-chmod 777 ../lab0/**/*
+mkdir lab0
+cd lab0
 
-c
 # number 1
+echo "-------1--------"
+
 mkdir -p clamperl4/cranidos
 touch clamperl4/{groovyle,tepig,floatzel}
 
@@ -22,7 +23,6 @@ echo -e "Живет\nFreshwater Grassland" > clamperl4/floatzel
 
 echo "Тип покемона  ICE WATER" > lickilicky9/walrein
 echo -e "Развитые способности\nInfiltrator" > lickilicky9/golbat
-echo "Тип покемона  GRASS NONE" > lickilicky9/cherrim
 echo -e "Возможности\nOverland=6 Surface=5 Jump=3 Power=3\nIntelligence=4" > lickilicky9/loudred
 
 echo -e "weight=187.8 height=71.0 atk=11\ndef=7" > dodrio0
@@ -36,7 +36,7 @@ echo "weight=16.5 height=16.0 atk=4 def=10" > wigglytuff5/omanyte
 ls -l -R
 
 echo "......................................................................"
-
+echo "-------2--------"
 
 # number 2
 chmod u=r-x,g=--x,o=-w- clamperl4/cranidos
@@ -67,12 +67,15 @@ chmod u=r-x,g=-w-,o=r-- wigglytuff5
 ls -l -R
 
 echo "......................................................................"
-
-chmod 777 ../lab0/*
-chmod 777 ../lab0/**/*
-
+echo "-------3--------"
 
 # number 3
+chmod u+r lickilicky9
+chmod u+r lickilicky9/{cherrim,spoink}
+chmod u+wx clamperl4
+chmod u+r clamperl4/floatzel
+chmod u+wx wigglytuff5
+
 cp -r lickilicky9 lickilicky9/spoink
 cat lickilicky9/cherrim clamperl4/floatzel > dodrio0_71
 cat dodrio0 > wigglytuff5/medititedodrio
@@ -82,6 +85,18 @@ cp tangrowth4 lickilicky9/shinx
 ln misdreavus6 clamperl4/tepigmisdreavus
 
 ls -l -R
+
+chmod u=rw-,g=---,o=r-- lickilicky9/walrein
+chmod u=r--,g=---,o=--- lickilicky9/golbat
+chmod 330 lickilicky9/spoink
+chmod u=rwx,g=-wx,o=rwx lickilicky9/shinx
+chmod u=---,g=---,o=rw- lickilicky9/cherrim
+chmod 440 lickilicky9/loudred
+chmod 315 lickilicky9
+chmod u=r-x,g=-w-,o=r-- wigglytuff5
+chmod 640 clamperl4/floatzel
+chmod u=r-x,g=rwx,o=rwx clamperl4
+
 
 echo "......................................................................"
 echo "-------4--------"
@@ -119,9 +134,12 @@ echo "file err:"
 cat tmp/err.log
 
 echo "......................................................................"
-
+echo "-------5--------"
 
 # number 5
+chmod u+w clamperl4
+chmod u+w clamperl4/floatzel
+
 rm -f tangrowth4
 rm -f clamperl4/floatzel
 rm -f Copy_*

@@ -30,7 +30,7 @@ public class Main {
 
         // make x array
         for (int i = 0; i < x.length; i++) {
-            x[i] = rand.nextFloat()*17 - 13;
+            x[i] = rand.nextFloat() * 17 - 13;
         }
 
         // calculate main array
@@ -38,13 +38,9 @@ public class Main {
             for (int j = 0; j < x.length; j++) {
                 if (c[i] == 16) {
                     res[i][j] = (float) firstFormula(x[j]);
-                }
-
-                else if (c[i] == 6 || c[i] == 10 || c[i] == 14) {
+                } else if (c[i] == 6 || c[i] == 10 || c[i] == 14) {
                     res[i][j] = (float) secondFormula(x[j]);
-                }
-
-                else {
+                } else {
                     res[i][j] = (float) thirdFormula(x[j]);
                 }
             }
