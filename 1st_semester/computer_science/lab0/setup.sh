@@ -7,7 +7,7 @@ cd lab0
 echo "-------1--------"
 
 mkdir -p clamperl4/cranidos
-touch clamperl4/{groovyle,tepig,floatzel}
+touch clamperl4/{grovyle,tepig,floatzel}
 
 touch {dodrio0,misdreavus6,tangrowth4}
 
@@ -17,7 +17,7 @@ touch lickilicky9/{walrein,golbat,cherrim,loudred}
 mkdir -p wigglytuff5/{lickilicky,mankey}
 touch wigglytuff5/{luxray,meditite,omanyte}
 
-echo -e "Ходы Body Slam Bullet Seed Counter Double-Edged Drain Punch\nDynamicpunch Endeavor Focus Punch Fury Cutter Giga Drain Grass Pledge\nIron Tail Low Kick Mega Kick Mega Punch Mud-Slap Secret Power Seed\nBomb Seismic Toss Sleep Talk Snore Swift Synthesis Thunderpunch Worry" > clamperl4/groovyle
+echo -e "Ходы Body Slam Bullet Seed Counter Double-Edged Drain Punch\nDynamicpunch Endeavor Focus Punch Fury Cutter Giga Drain Grass Pledge\nIron Tail Low Kick Mega Kick Mega Punch Mud-Slap Secret Power Seed\nBomb Seismic Toss Sleep Talk Snore Swift Synthesis Thunderpunch Worry" > clamperl4/grovyle
 echo "Развитые способности Thick Fat" > clamperl4/tepig
 echo -e "Живет\nFreshwater Grassland" > clamperl4/floatzel
 
@@ -40,7 +40,7 @@ echo "-------2--------"
 
 # number 2
 chmod u=r-x,g=--x,o=-w- clamperl4/cranidos
-chmod 400 clamperl4/groovyle
+chmod 400 clamperl4/grovyle
 chmod u=r--,g=r--,o=r-- clamperl4/tepig
 chmod 640 clamperl4/floatzel
 chmod u=r-x,g=rwx,o=rwx clamperl4
@@ -108,7 +108,7 @@ touch tmp/err.log
 touch tmp/output
 
 echo "1:"
-wc -l clamperl4/{groovyle,tepig,floatzel} lickilicky9/{walrein,golbat,cherrim,loudred} wigglytuff5/{luxray,meditite} 2>/dev/null | sort
+wc -l clamperl4/{grovyle,tepig,floatzel} lickilicky9/{walrein,golbat,cherrim,loudred} wigglytuff5/{luxray,meditite} 2>/dev/null | sort
 
 echo "2:"
 ls -l lickilicky9 2>&1 | sort -k9,9 | grep -v "^d"
