@@ -1,2 +1,3 @@
-Main-Class: ru.ifmo.se.pokemon.Main
-Class-Path: ../lib/Pokemon.jar
+Manifest-Version: 1.0
+Main-Class: lab.Main
+Class-Path: lib/Pokemon.jar
