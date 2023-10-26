@@ -8,7 +8,11 @@ public class Sewaddle extends Pokemon{
         super(name, level);
         super.setStats(45, 53, 70, 40, 60, 42);
         super.setType(Type.BUG, Type.GRASS);
-        super.setMove(new Tackle(), new CalmMind());
+
+        Tackle Tackle = new Tackle();
+        CalmMind CalmMind = new CalmMind();
+
+        super.setMove(Tackle, CalmMind);
     }
 
 }

@@ -14,6 +14,7 @@ class Main{
         Pokemon swadloon = new Swadloon("Swadloon", 1);
         Pokemon leavanny = new Leavanny("Leavanny", 1);
 
+
         battle.addAlly(tornadus);
         battle.addAlly(baltoy);
         battle.addAlly(claydol);

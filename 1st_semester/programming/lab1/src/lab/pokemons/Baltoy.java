@@ -8,7 +8,12 @@ public class Baltoy extends Pokemon{
         super(name, level);
         super.setStats(40, 40, 55, 40, 70, 55);
         super.setType(Type.GROUND, Type.PSYCHIC);
-        super.setMove(new Facade(), new Psybeam(), new ShadowBall());
+
+        Facade Facade = new Facade();
+        Psybeam Psybeam = new Psybeam();
+        ShadowBall ShadowBall = new ShadowBall();
+
+        super.setMove(Facade, Psybeam, ShadowBall);
     }
 
 }

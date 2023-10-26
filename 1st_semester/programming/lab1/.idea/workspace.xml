@@ -5,40 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e594e51d-345c-4534-ab0e-1bce9de20664" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/build/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/ru/ifmo/se/pokemon/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/compile.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lab1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lab1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/ifmo/se/pokemon/Bite.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/ifmo/se/pokemon/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/ifmo/se/pokemon/Pokemon.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/Pokemon.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lab/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lab/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lab/pokemons/Baltoy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lab/pokemons/Baltoy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lab/pokemons/Claydol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lab/pokemons/Claydol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lab/pokemons/Leavanny.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lab/pokemons/Leavanny.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lab/pokemons/Sewaddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lab/pokemons/Sewaddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lab/pokemons/Swadloon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lab/pokemons/Swadloon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2X4ehQwmAiCC55rYVBTtQeweGWJ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/eskimo/Desktop/itmo/itmo/1st_semester/programming/lab1/build/lib"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/eskimo/Desktop/itmo/itmo/1st_semester/programming/lab1/build/lib&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/build/lib" />
