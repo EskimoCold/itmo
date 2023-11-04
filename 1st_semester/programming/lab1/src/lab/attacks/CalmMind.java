@@ -9,11 +9,8 @@ public class CalmMind extends StatusMove {
 
     @Override
     protected void applySelfEffects(Pokemon pokemon) {
-        Effect effect = new Effect().stat(Stat.SPECIAL_ATTACK, +1);
-        Effect effect_2 = new Effect().stat(Stat.SPECIAL_DEFENSE, +1);
-
-        pokemon.addEffect(effect);
-        pokemon.addEffect(effect_2);
+        pokemon.addEffect(new Effect().stat(Stat.SPECIAL_ATTACK, +1));
+        pokemon.addEffect(new Effect().stat(Stat.SPECIAL_DEFENSE, +1));
     }
 
     @Override

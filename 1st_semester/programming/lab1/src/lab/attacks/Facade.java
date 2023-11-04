@@ -2,7 +2,7 @@ package lab.attacks;
 
 import ru.ifmo.se.pokemon.*;
 
-public class Facade extends PhysicalMove{
+public class Facade extends PhysicalMove {
     public Facade() {
         super(Type.NORMAL, 70, 100);
     }
@@ -12,9 +12,7 @@ public class Facade extends PhysicalMove{
         Status status = opponent.getCondition();
         if (status.equals(Status.BURN) || status.equals(Status.PARALYZE) || status.equals(Status.POISON)) {
             opponent.setMod(Stat.HP, (int) damage * 2);
-        }
-
-        else {
+        } else {
             opponent.setMod(Stat.HP, (int) damage);
         }
     }
