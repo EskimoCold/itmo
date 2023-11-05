@@ -1,0 +1,5 @@
+loguru==0.7.0
+pyTelegramBotAPI==4.7.1
+openai==0.28.1
+deepface==0.0.79
+python-dotenv==1.0.0
