@@ -39,30 +39,30 @@ echo "......................................................................"
 echo "-------2--------"
 
 # number 2
-chmod u=r-x,g=--x,o=-w- clamperl4/cranidos
+chmod u=rx,g=x,o=w clamperl4/cranidos
 chmod 400 clamperl4/grovyle
-chmod u=r--,g=r--,o=r-- clamperl4/tepig
+chmod u=r,g=r,o=r clamperl4/tepig
 chmod 640 clamperl4/floatzel
-chmod u=r-x,g=rwx,o=rwx clamperl4
+chmod u=rx,g=rwx,o=rwx clamperl4
 
-chmod u=rw-,g=-w-,o=-w- dodrio0
-chmod u=r--,g=---,o=r-- misdreavus6
-chmod u=rw-,g=r--,o=--- tangrowth4
+chmod u=rw,g=w,o=w dodrio0
+chmod u=r,g=,o=r misdreavus6
+chmod u=rw,g=r,o= tangrowth4
 
-chmod u=rw-,g=---,o=r-- lickilicky9/walrein
-chmod u=r--,g=---,o=--- lickilicky9/golbat
+chmod u=rw,g=,o=r lickilicky9/walrein
+chmod u=r,g=,o= lickilicky9/golbat
 chmod 330 lickilicky9/spoink
-chmod u=rwx,g=-wx,o=rwx lickilicky9/shinx
-chmod u=---,g=---,o=rw- lickilicky9/cherrim
+chmod u=rwx,g=wx,o=rwx lickilicky9/shinx
+chmod u=,g=,o=rw lickilicky9/cherrim
 chmod 440 lickilicky9/loudred
 chmod 315 lickilicky9
 
 chmod 664 wigglytuff5/luxray
-chmod u=r--,g=---,o=--- wigglytuff5/meditite
-chmod u=r-x,g=rwx,o=-wx wigglytuff5/lickilicky
-chmod u=r-x,g=--x,o=--x wigglytuff5/mankey
+chmod u=r,g=,o= wigglytuff5/meditite
+chmod u=rx,g=rwx,o=wx wigglytuff5/lickilicky
+chmod u=rx,g=x,o=x wigglytuff5/mankey
 chmod 664 wigglytuff5/omanyte
-chmod u=r-x,g=-w-,o=r-- wigglytuff5
+chmod u=rx,g=-w,o=r wigglytuff5
 
 ls -l -R
 
@@ -86,16 +86,16 @@ ln misdreavus6 clamperl4/tepigmisdreavus
 
 ls -l -R
 
-chmod u=rw-,g=---,o=r-- lickilicky9/walrein
-chmod u=r--,g=---,o=--- lickilicky9/golbat
+chmod u=rw,g=,o=r lickilicky9/walrein
+chmod u=r,g=,o= lickilicky9/golbat
 chmod 330 lickilicky9/spoink
-chmod u=rwx,g=-wx,o=rwx lickilicky9/shinx
-chmod u=---,g=---,o=rw- lickilicky9/cherrim
+chmod u=rwx,g=wx,o=rwx lickilicky9/shinx
+chmod u=,g=,o=rw lickilicky9/cherrim
 chmod 440 lickilicky9/loudred
 chmod 315 lickilicky9
-chmod u=r-x,g=-w-,o=r-- wigglytuff5
+chmod u=rx,g=w,o=r wigglytuff5
 chmod 640 clamperl4/floatzel
-chmod u=r-x,g=rwx,o=rwx clamperl4
+chmod u=rx,g=rwx,o=rwx clamperl4
 
 
 echo "......................................................................"
