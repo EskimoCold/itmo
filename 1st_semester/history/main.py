@@ -43,28 +43,33 @@ def photo(message):
         
     reply_message = bot.reply_to(message, messages["got_photo"])
     
-    demographies = get_person_description(f"photos/{filename}.jpg")
+    try:
+        demographies = get_person_description(f"photos/{filename}.jpg")
+        
+    except ValueError:
+        bot.send_message(message.chat.id, messages["no_face"])
     
-    age = demographies["age"]
-    gender = demographies["dominant_gender"]
-    race = demographies["dominant_race"]
-    
-    angry = round(demographies["emotion"]["angry"], 2)
-    disgust = round(demographies["emotion"]["disgust"], 2)
-    fear = round(demographies["emotion"]["fear"], 2)
-    happy = round(demographies["emotion"]["happy"], 2)
-    sad = round(demographies["emotion"]["sad"], 2)
-    surprise = round(demographies["emotion"]["surprise"], 2)
-    neutral = round(demographies["emotion"]["neutral"], 2)
-    
-    reply_message = bot.edit_message_text(messages["extracted_emotions"].format(age, gender, race, angry, disgust, fear, happy, sad, surprise, neutral),
-                          message.chat.id, reply_message.message_id)
-    
-    user_message = structurize_for_gpt(demographies)
-    gpt_answer = request_promt(GPT_PROMT, user_message)
-    
-    bot.edit_message_text(messages["gpt_answer"].format(gpt_answer),
-                          message.chat.id, reply_message.message_id)
+    else:
+        age = demographies["age"]
+        gender = demographies["dominant_gender"]
+        race = demographies["dominant_race"]
+        
+        angry = round(demographies["emotion"]["angry"], 2)
+        disgust = round(demographies["emotion"]["disgust"], 2)
+        fear = round(demographies["emotion"]["fear"], 2)
+        happy = round(demographies["emotion"]["happy"], 2)
+        sad = round(demographies["emotion"]["sad"], 2)
+        surprise = round(demographies["emotion"]["surprise"], 2)
+        neutral = round(demographies["emotion"]["neutral"], 2)
+        
+        reply_message = bot.edit_message_text(messages["extracted_emotions"].format(age, gender, race, angry, disgust, fear, happy, sad, surprise, neutral),
+                            message.chat.id, reply_message.message_id)
+        
+        user_message = structurize_for_gpt(demographies)
+        gpt_answer = request_promt(GPT_PROMT, user_message)
+        
+        bot.edit_message_text(messages["gpt_answer"].format(gpt_answer),
+                            message.chat.id, reply_message.message_id)
 
 
 if __name__ == "__main__":
