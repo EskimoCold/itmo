@@ -257,7 +257,7 @@ def execute_read_query(connection, query):
 
 
 if __name__ == "__main__":
-    connection = create_connection(r"/Users/eskimo/Desktop/itmo/itmo/1st_semester/informatics/lab3/university.sqlite")
+    connection = create_connection(r"C:\Users\n2811\Desktop\itmo\1st_semester\informatics\lab3\university.sqlite")
 
     create_database(connection, create_database_query)
 
