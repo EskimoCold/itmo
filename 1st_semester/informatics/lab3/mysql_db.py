@@ -2,58 +2,207 @@ import mysql.connector
 from mysql.connector import Error
 
 
-create_users_table = """
-CREATE TABLE IF NOT EXISTS users (
-  id INT AUTO_INCREMENT,
-  name TEXT NOT NULL,
-  age INT,
-  gender TEXT,
-  nationality TEXT,
-  PRIMARY KEY (id)
-) ENGINE = InnoDB
-"""
-
-create_posts_table = """
-CREATE TABLE IF NOT EXISTS posts (
-  id INT AUTO_INCREMENT,
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  user_id INTEGER NOT NULL,
-  FOREIGN KEY fk_user_id (user_id) REFERENCES users(id), PRIMARY KEY (id)
-) ENGINE = InnoDB
-"""
-
-create_comments_table = """
-CREATE TABLE IF NOT EXISTS comments (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  text TEXT NOT NULL,
-  user_id INTEGER NOT NULL,
-  post_id INTEGER NOT NULL,
-FOREIGN KEY (user_id) REFERENCES users (id) FOREIGN KEY (post_id) REFERENCES posts (id)
+create_students_table = """
+CREATE TABLE IF NOT EXISTS students (
+    isu INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(50) NOT NULL
 );
 """
 
-create_likes_table = """
-CREATE TABLE IF NOT EXISTS likes (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-user_id INTEGER NOT NULL,
-post_id integer NOT NULL,
-FOREIGN KEY (user_id) REFERENCES users (id) FOREIGN KEY (post_id)
-REFERENCES posts (id)
+create_ege_table = """
+CREATE TABLE IF NOT EXISTS ege (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    russian INT NOT NULL,
+    math INT NOT NULL,
+    informatics INT NOT NULL,
+    student_isu INT NOT NULL,
+    FOREIGN KEY (student_isu) REFERENCES students (isu)
 );
 """
 
-create_users = """
+create_programming_table = """
+CREATE TABLE IF NOT EXISTS programming (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    lab1 FLOAT,
+    lab2 FLOAT,
+    lab3 FLOAT,
+    lab4 FLOAT,
+    test FLOAT,
+    student_isu INT NOT NULL,
+    FOREIGN KEY (student_isu) REFERENCES students (isu)
+);
+"""
+
+create_opd_table = """
+CREATE TABLE IF NOT EXISTS opd (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    lab1 FLOAT,
+    lab2 FLOAT,
+    test FLOAT,
+    student_isu INT NOT NULL,
+    FOREIGN KEY (student_isu) REFERENCES students (isu)
+);
+"""
+
+create_students = """
 INSERT INTO
-`users` (`name`, `age`, `gender`, `nationality`) VALUES
-  ('James', 25, 'male', 'USA'),
-('Leila', 32, 'female', 'France'),
-  ('Brigitte', 35, 'female', 'England'),
-  ('Mike', 40, 'male', 'Denmark'),
-  ('Elizabeth', 21, 'female', 'Canada');
+    students (name, age, gender)
+VALUES
+    ('Egor', 18, 'male'),
+    ('Maria', 18, 'female'),
+    ('Petr', 18, 'male'),
+    ('Edward', 17, 'male'),
+    ('Natasha', 21, 'female');
 """
 
-select_users = "SELECT * FROM users"
+create_ege = """
+INSERT INTO
+    ege (russian, math, informatics, student_isu)
+VALUES
+    (71, 66, 87, 1),
+    (78, 89, 64, 2),
+    (98, 96, 97, 3),
+    (75, 84, 93, 4),
+    (86, 77, 100, 5);
+"""
+
+create_programming = """
+INSERT INTO
+    programming (lab1, lab2, lab3, lab4, test, student_isu)
+VALUES
+    (10, 9, 8, 9, 10, 1),
+    (7, 10, 8, 7, 14, 2),
+    (2, 5, 8, 10, 18, 3),
+    (10, 10, 10, 10, 20, 4),
+    (8, 9, 6, 10, 15, 5);
+"""
+
+create_opd = """
+INSERT INTO
+    opd (lab1, lab2, test, student_isu)
+VALUES
+    (9, 8, 10, 1),
+    (6, 10, 14, 2),
+    (3, 6, 18, 3),
+    (10, 10, 20, 4),
+    (7, 9, 15, 5);
+"""
+
+select_students = "SELECT * from students"
+
+select_ege = "SELECT * FROM ege"
+
+select_students_ege = """
+SELECT
+    students.isu,
+    students.name,
+    ege.russian,
+    ege.math,
+    ege.informatics
+FROM ege
+    INNER JOIN students ON students.isu = ege.student_isu
+"""
+
+select_students_programming_opd = """
+SELECT
+    programming.test,
+    opd.test,
+    name
+FROM students
+    INNER JOIN programming ON programming.student_isu = students.isu
+    INNER JOIN opd ON opd.student_isu = students.isu
+"""
+
+select_math_over_70 = """
+SELECT name
+FROM students
+WHERE isu IN (SELECT student_isu FROM ege WHERE math > 90);
+"""
+
+select_good_prog_labs = """
+SELECT s.name, s.age
+FROM students s
+WHERE s.isu IN (
+    SELECT p.student_isu
+    FROM programming p
+    WHERE p.lab1 >= 6 AND p.lab2 >= 6 AND p.lab3 >= 6 AND p.lab4 >= 6
+);
+"""
+
+select_good_labs = """
+SELECT s.name
+FROM students s
+JOIN programming p ON s.isu = p.student_isu
+WHERE p.lab1 >= 6 AND p.lab2 >= 6 AND p.lab3 >= 6 AND p.lab4 >= 6
+UNION
+SELECT s.name
+FROM students s
+JOIN opd o ON s.isu = o.student_isu
+WHERE o.lab1 >= 6 AND o.lab2 >= 6;
+"""
+
+select_good_ege = """
+SELECT student_isu
+FROM ege
+WHERE russian > 80
+UNION
+SELECT student_isu
+FROM ege
+WHERE math > 80;
+"""
+
+select_distinct_age = """
+SELECT DISTINCT age
+FROM students;
+"""
+
+update_age = """
+UPDATE students
+SET age = 19
+WHERE name IN ('Egor', 'Maria');
+"""
+
+select_age = """
+SELECT age
+FROM students;
+"""
+
+update_ege = """
+UPDATE ege
+SET math = 80
+WHERE student_isu IN (1, 2);
+"""
+
+select_math = """
+SELECT math
+FROM ege;
+"""
+
+delete_students = """
+DELETE FROM students WHERE isu = 1;
+"""
+
+delete_ege = """
+DELETE FROM ege WHERE id = 1;
+"""
+
+delete_programming = """
+DELETE FROM programming WHERE id = 1;
+"""
+
+select_programming = """
+SELECT * from programming
+"""
+
+delete_opd = """
+DELETE FROM opd WHERE id = 1;
+"""
+
+select_opd = """
+SELECT * from opd
+"""
 
 
 def create_connection(host_name, user_name, user_password, db_name):
@@ -101,15 +250,151 @@ def execute_read_query(connection, query):
 
 
 if __name__ == "__main__":
-    connection = create_connection("localhost", "root", "", "sm_app")
-
-    execute_query(connection, create_users_table)
-    execute_query(connection, create_posts_table)
-    execute_query(connection, create_comments_table)
-    execute_query(connection, create_likes_table)
-    execute_query(connection, create_users)
-
-    users = execute_read_query(connection, select_users)
+    connection = create_connection("localhost", "root", "root", "university")
     
-    for user in users:
-        print(user)
+    execute_query(connection, create_students_table)
+    execute_query(connection, create_ege_table)
+    execute_query(connection, create_programming_table)
+    execute_query(connection, create_opd_table)
+    execute_query(connection, create_students)
+    execute_query(connection, create_ege)
+    execute_query(connection, create_programming)
+    execute_query(connection, create_opd)
+
+    print("------------------------------------")
+
+    students = execute_read_query(connection, select_students)
+    for student in students:
+        print(student)
+
+    print("------------------------------------")
+
+    ege = execute_read_query(connection, select_ege)
+    for el in ege:
+        print(el)
+
+    print("------------------------------------")
+
+    students_ege = execute_read_query(connection, select_students_ege)
+    for el in students_ege:
+        print(el)
+
+    print("------------------------------------")
+
+    stud_prog_opd = execute_read_query(connection, select_students_programming_opd)
+    for el in stud_prog_opd:
+        print(el)
+
+    print("------------------------------------")
+
+    math = execute_read_query(connection, select_math_over_70)
+    for el in math:
+        print(el)
+
+    print("------------------------------------")
+
+    good_prog = execute_read_query(connection, select_good_prog_labs)
+    for el in good_prog:
+        print(el)
+
+    print("------------------------------------")
+
+    good_labs = execute_read_query(connection, select_good_labs)
+    for el in good_labs:
+        print(el)
+
+    print("------------------------------------")
+
+    good_ege = execute_read_query(connection, select_good_ege)
+    for el in good_ege:
+        print(el)
+
+    print("------------------------------------")
+
+    distinct_age = execute_read_query(connection, select_distinct_age)
+    for el in distinct_age:
+        print(el)
+
+    print("====================================")
+
+    age = execute_read_query(connection, select_age)
+    for el in age:
+        print(el)
+
+    print("------------------------------------")
+
+    execute_query(connection, update_age)
+
+    age = execute_read_query(connection, select_age)
+    for el in age:
+        print(el)
+
+    print("------------------------------------")
+
+    math = execute_read_query(connection, select_math)
+    for el in math:
+        print(el)
+
+    print("------------------------------------")
+
+    execute_query(connection, update_ege)
+
+    math = execute_read_query(connection, select_math)
+    for el in math:
+        print(el)
+
+    print("====================================")
+
+    students = execute_read_query(connection, select_students)
+    for student in students:
+        print(student)
+
+    print("------------------------------------")
+
+    execute_query(connection, delete_students)
+
+    students = execute_read_query(connection, select_students)
+    for student in students:
+        print(student)
+
+    print("------------------------------------")
+
+    ege = execute_read_query(connection, select_ege)
+    for el in ege:
+        print(el)
+
+    print("------------------------------------")
+
+    execute_query(connection, delete_ege)
+
+    ege = execute_read_query(connection, select_ege)
+    for el in ege:
+        print(el)
+
+    print("------------------------------------")
+
+    programming = execute_read_query(connection, select_programming)
+    for el in programming:
+        print(el)
+
+    print("------------------------------------")
+
+    execute_query(connection, delete_programming)
+
+    programming = execute_read_query(connection, select_programming)
+    for el in programming:
+        print(el)
+
+    print("------------------------------------")
+
+    opd = execute_read_query(connection, select_opd)
+    for el in opd:
+        print(el)
+
+    print("------------------------------------")
+
+    execute_query(connection, delete_opd)
+
+    opd = execute_read_query(connection, select_opd)
+    for el in opd:
+        print(el)
