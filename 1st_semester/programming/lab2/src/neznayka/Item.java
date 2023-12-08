@@ -13,7 +13,7 @@ public abstract class Item {
         return this.cords.getCoordinates();
     }
 
-    public abstract String interact(Character obj);
+    public abstract String interacted(Character obj);
 
     @Override
     public int hashCode() {
@@ -30,6 +30,11 @@ public abstract class Item {
         Item m = (Item) o;
 
         return m.cords == this.cords && m.name == this.name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 
 }

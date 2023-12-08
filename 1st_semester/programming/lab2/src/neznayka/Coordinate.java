@@ -35,4 +35,9 @@ public class Coordinate {
 
         return m.X == this.X && m.Y == this.Y;
     }
+
+    @Override
+    public String toString() {
+        return this.getCoordinates().toString();
+    }
 }

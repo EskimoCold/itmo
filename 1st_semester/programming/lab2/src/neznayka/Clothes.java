@@ -31,4 +31,9 @@ public class Clothes {
 
         return m.type == this.type;
     }
+
+    @Override
+    public String toString() {
+        return this.type;
+    }
 }

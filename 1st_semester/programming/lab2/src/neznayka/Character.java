@@ -19,14 +19,6 @@ public abstract class Character {
         this.cords.setCoordinates(X, Y);
     }
 
-    public double[] getCoordinates() {
-        return this.cords.getCoordinates();
-    }
-
-    public String laugh() {
-        return this.name + " смеется";
-    }
-
     public boolean isWearingClothes() {
         return this.clothes.size() > 0;
     }
@@ -46,6 +38,15 @@ public abstract class Character {
         Item m = (Item) o;
 
         return m.cords == this.cords && m.name == this.name;
+    }
+
+    @Override
+    public String toString() {
+        if (this.isWearingClothes()) {
+            return this.name;
+        } else {
+            return this.name + "(без одежды)";
+        }
     }
 
 }
