@@ -23,6 +23,10 @@ public class Clothes {
 
     @Override
     public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+
         if (this.getClass() != o.getClass() || o == null){
             return false;
         }

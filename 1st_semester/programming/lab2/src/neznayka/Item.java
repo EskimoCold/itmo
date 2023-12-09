@@ -1,5 +1,7 @@
 package neznayka;
 
+import java.util.Objects;
+
 public abstract class Item {
     String name;
     Coordinate cords;
@@ -23,13 +25,17 @@ public abstract class Item {
 
     @Override
     public boolean equals(Object o){
-        if (this.getClass() != o.getClass() || o == null){
+        if (this == o) {
+            return true;
+        }
+
+        if (this.getClass() != o.getClass()){
             return false;
         }
 
         Item m = (Item) o;
 
-        return m.cords == this.cords && m.name == this.name;
+        return m.cords == this.cords && Objects.equals(m.name, this.name);
     }
 
     @Override

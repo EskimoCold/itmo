@@ -1,11 +1,13 @@
 package neznayka;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Shorty extends Character implements Thinker, Talker, Actor {
+    HashMap<Character, String> rated = new HashMap<>();
 
-    public Shorty(Coordinate cords, String name, MentalState mental, ArrayList clothes) {
-        super(cords, name, mental, clothes);
+    public Shorty(Coordinate cords, String name, MentalState mental, Planet planet, ArrayList clothes) {
+        super(cords, name, mental, planet, clothes);
     }
 
     public String act(String story) {
@@ -13,15 +15,15 @@ public class Shorty extends Character implements Thinker, Talker, Actor {
     }
 
     public String getMental() {
-        if (this.mental == MentalState.SANE) {
-            return "Нормальный";
-        }
+        return mental.toString();
+    }
 
-        if (this.mental == MentalState.INSANE) {
-            return "Сумашедший";
-        }
+    public HashMap getRated() {
+        return rated;
+    }
 
-        return null;
+    public void rateOther(Shorty obj, String rating) {
+        obj.getRated().put(this, rating);
     }
 
     public void setMental(MentalState mental) {

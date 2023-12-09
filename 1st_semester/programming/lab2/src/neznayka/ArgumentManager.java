@@ -2,12 +2,12 @@ package neznayka;
 
 import java.util.ArrayList;
 
-public class Argument {
+public class ArgumentManager {
     Character leader = null;
     ArrayList <Character> participants;
     ArgumentStatus status = ArgumentStatus.NOT_STARTED;
 
-    public Argument(ArrayList <Character> participants) {
+    public ArgumentManager(ArrayList <Character> participants) {
         this.participants = participants;
     }
 
@@ -53,11 +53,15 @@ public class Argument {
 
     @Override
     public boolean equals(Object o){
-        if (this.getClass() != o.getClass() || o == null){
+        if (this == o) {
+            return true;
+        }
+
+        if (this.getClass() != o.getClass()){
             return false;
         }
 
-        Argument m = (Argument) o;
+        ArgumentManager m = (ArgumentManager) o;
 
         return this.participants.equals(m.participants);
     }

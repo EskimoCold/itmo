@@ -1,17 +1,20 @@
 package neznayka;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Character {
     Coordinate cords;
     String name;
     MentalState mental;
+    Planet planet;
     ArrayList clothes;
 
-    public Character(Coordinate cords, String name, MentalState mental, ArrayList clothes) {
+    public Character(Coordinate cords, String name, MentalState mental, Planet planet, ArrayList clothes) {
         this.cords = cords;
         this.name = name;
         this.mental = mental;
+        this.planet = planet;
         this.clothes = clothes;
     }
 
@@ -20,7 +23,15 @@ public abstract class Character {
     }
 
     public boolean isWearingClothes() {
-        return this.clothes.size() > 0;
+        return !this.clothes.isEmpty();
+    }
+
+    public Planet getPlanet() {
+        return planet;
+    }
+
+    public void setPlanet(Planet planet) {
+        this.planet = planet;
     }
 
     @Override
@@ -31,13 +42,17 @@ public abstract class Character {
 
     @Override
     public boolean equals(Object o){
-        if (this.getClass() != o.getClass() || o == null){
+        if (this == o) {
+            return true;
+        }
+
+        if (this.getClass() != o.getClass()){
             return false;
         }
 
         Item m = (Item) o;
 
-        return m.cords == this.cords && m.name == this.name;
+        return m.cords == this.cords && Objects.equals(m.name, this.name);
     }
 
     @Override

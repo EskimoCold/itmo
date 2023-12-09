@@ -1,6 +1,17 @@
 package neznayka;
 
 public enum MentalState {
-    SANE,
-    INSANE
+    SANE("Нормальный"),
+    INSANE("Сумашедший");
+
+    private final String state;
+
+    MentalState(String state) {
+        this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return this.state;
+    }
 }

@@ -1,5 +1,5 @@
 package neznayka;
 
 public interface Thinker {
-    public String think(String thought);
+    String think(String thought);
 }
