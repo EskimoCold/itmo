@@ -9,7 +9,8 @@
 1. <a href="1st_semester/informatics/lab0">Numeral systems</a>  
 2. <a href="1st_semester/informatics/lab1">Noise-resitant code</a>  
 3. <a href="1st_semester/informatics/lab2">Regular expressions, python, parsing</a>
-4. <a href="1st_semester/informatics/lab3">SQL databases</a>  
+4. <a href="1st_semester/informatics/lab3">SQL databases</a>
+5. <a href="1st_semester/informatics/lab4">PHP</a>  
 6. <a href="1st_semester/informatics/lab5">LaTeX</a>  
 
 ## Computer science
