@@ -1,5 +1,8 @@
 package neznayka;
 
+import neznayka.enums.MentalState;
+import neznayka.enums.Planet;
+
 import java.util.ArrayList;
 import java.util.Objects;
 

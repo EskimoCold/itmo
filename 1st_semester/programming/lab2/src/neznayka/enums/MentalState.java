@@ -1,4 +1,4 @@
-package neznayka;
+package neznayka.enums;
 
 public enum MentalState {
     SANE("Нормальный"),

@@ -1,5 +1,11 @@
 package neznayka;
 
+import neznayka.enums.MentalState;
+import neznayka.enums.Planet;
+import neznayka.interfaces.Actor;
+import neznayka.interfaces.Talker;
+import neznayka.interfaces.Thinker;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,16 +24,16 @@ public class Shorty extends Character implements Thinker, Talker, Actor {
         return mental.toString();
     }
 
+    public void setMental(MentalState mental) {
+        this.mental = mental;
+    }
+
     public HashMap getRated() {
         return rated;
     }
 
     public void rateOther(Shorty obj, String rating) {
         obj.getRated().put(this, rating);
-    }
-
-    public void setMental(MentalState mental) {
-        this.mental = mental;
     }
 
     @Override

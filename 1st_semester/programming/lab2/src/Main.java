@@ -1,5 +1,7 @@
 import neznayka.*;
 import neznayka.Character;
+import neznayka.enums.MentalState;
+import neznayka.enums.Planet;
 
 import java.util.ArrayList;
 
@@ -11,19 +13,19 @@ public class Main {
         Clothes trousers = new Clothes("trousers");
         Clothes tshirt = new Clothes("t-shirt");
 
-        ArrayList<Clothes> NeznaykaClothes = new ArrayList<Clothes>();
+        ArrayList<Clothes> NeznaykaClothes = new ArrayList<>();
         NeznaykaClothes.add(trousers);
         NeznaykaClothes.add(tshirt);
 
-        ArrayList<Clothes> firstShortyClothes = new ArrayList<Clothes>();
+        ArrayList<Clothes> firstShortyClothes = new ArrayList<>();
         firstShortyClothes.add(trousers);
         firstShortyClothes.add(tshirt);
 
-        ArrayList<Clothes> secondShortyClothes = new ArrayList<Clothes>();
+        ArrayList<Clothes> secondShortyClothes = new ArrayList<>();
         secondShortyClothes.add(trousers);
         secondShortyClothes.add(tshirt);
 
-        ArrayList<Clothes> thirdShortyClothes = new ArrayList<Clothes>();
+        ArrayList<Clothes> thirdShortyClothes = new ArrayList<>();
         secondShortyClothes.add(trousers);
         thirdShortyClothes.add(tshirt);
 
@@ -32,7 +34,7 @@ public class Main {
         Shorty secondShorty = new Shorty(new Coordinate(3.8, 4.3), "Коротышка 2", MentalState.SANE, Planet.EARTH, secondShortyClothes);
         Shorty thirdShorty = new Shorty(new Coordinate(3.8, 4.1), "Коротышка 3", MentalState.SANE, Planet.EARTH, thirdShortyClothes);
 
-        ArrayList<Character> shortiesInArgument = new ArrayList<Character>();
+        ArrayList<Character> shortiesInArgument = new ArrayList<>();
         shortiesInArgument.add(firstShorty);
         shortiesInArgument.add(secondShorty);
         shortiesInArgument.add(thirdShorty);
@@ -50,7 +52,7 @@ public class Main {
         shortiesArgument.setLeader(firstShorty);
         output += shortiesArgument.getLeader().toString() + " - лидер спора." + "\n";
 
-        output += thirdShorty.toString() + " стало жарко и он снял одежду." + "\n";
+        output += thirdShorty + " стало жарко и он снял одежду." + "\n";
         thirdShortyClothes.clear();
 
         neznayka.setMental(MentalState.INSANE);

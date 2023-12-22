@@ -1,5 +1,7 @@
 package neznayka;
 
+import neznayka.enums.ArgumentStatus;
+
 import java.util.ArrayList;
 
 public class ArgumentManager {

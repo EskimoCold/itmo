@@ -14,7 +14,7 @@ public class Coordinate {
         return cords;
     }
 
-    public void  setCoordinates(double X, double Y) {
+    public void setCoordinates(double X, double Y) {
         this.X = X;
         this.Y = Y;
     }
@@ -26,12 +26,12 @@ public class Coordinate {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
 
-        if (this.getClass() != o.getClass() || o == null){
+        if (this.getClass() != o.getClass()) {
             return false;
         }
 

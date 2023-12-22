@@ -27,7 +27,7 @@ public class Clothes {
             return true;
         }
 
-        if (this.getClass() != o.getClass() || o == null){
+        if (this.getClass() != o.getClass()){
             return false;
         }
 
