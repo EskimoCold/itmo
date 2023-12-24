@@ -5,10 +5,12 @@ import java.util.Objects;
 public abstract class Item {
     String name;
     Coordinate cords;
+    RadiusCoordinateArea area;
 
-    public Item(String name, Coordinate cords) {
+    public Item(String name, Coordinate cords, RadiusCoordinateArea area) {
         this.name = name;
         this.cords = cords;
+        this.area = area;
     }
 
     public double[] getCoordinates() {
@@ -35,7 +37,7 @@ public abstract class Item {
 
         Item m = (Item) o;
 
-        return m.cords == this.cords && Objects.equals(m.name, this.name);
+        return this.cords.equals(m.cords) && Objects.equals(m.name, this.name);
     }
 
     @Override

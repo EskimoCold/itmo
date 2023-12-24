@@ -12,8 +12,8 @@ import java.util.HashMap;
 public class Shorty extends Character implements Thinker, Talker, Actor {
     HashMap<Character, String> rated = new HashMap<>();
 
-    public Shorty(Coordinate cords, String name, MentalState mental, Planet planet, ArrayList clothes) {
-        super(cords, name, mental, planet, clothes);
+    public Shorty(Coordinate cords, RadiusCoordinateArea area, String name, MentalState mental, Planet planet, ArrayList<Clothes> clothes) {
+        super(cords, area, name, mental, planet, clothes);
     }
 
     public String act(String story) {
@@ -28,7 +28,7 @@ public class Shorty extends Character implements Thinker, Talker, Actor {
         this.mental = mental;
     }
 
-    public HashMap getRated() {
+    public HashMap<Character, String> getRated() {
         return rated;
     }
 

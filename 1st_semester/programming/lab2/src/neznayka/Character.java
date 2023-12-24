@@ -8,13 +8,15 @@ import java.util.Objects;
 
 public abstract class Character {
     Coordinate cords;
+    RadiusCoordinateArea area;
     String name;
     MentalState mental;
     Planet planet;
-    ArrayList clothes;
+    ArrayList<Clothes> clothes;
 
-    public Character(Coordinate cords, String name, MentalState mental, Planet planet, ArrayList clothes) {
+    public Character(Coordinate cords, RadiusCoordinateArea area, String name, MentalState mental, Planet planet, ArrayList<Clothes> clothes) {
         this.cords = cords;
+        this.area = area;
         this.name = name;
         this.mental = mental;
         this.planet = planet;
@@ -35,6 +37,10 @@ public abstract class Character {
 
     public void setPlanet(Planet planet) {
         this.planet = planet;
+    }
+
+    public Coordinate getCords() {
+        return this.cords;
     }
 
     @Override
