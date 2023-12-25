@@ -96,5 +96,3 @@ public class Main {
         System.out.print(output);
     }
 }
-
-// todo: radius(done), equals(done), helios(done), arguments(done), new uml
