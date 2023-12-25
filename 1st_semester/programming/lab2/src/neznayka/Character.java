@@ -61,7 +61,7 @@ public abstract class Character {
 
         Item m = (Item) o;
 
-        return m.cords == this.cords && Objects.equals(m.name, this.name);
+        return this.cords.equals(m.cords) && Objects.equals(m.name, this.name);
     }
 
     @Override

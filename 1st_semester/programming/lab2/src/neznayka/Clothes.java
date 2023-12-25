@@ -1,5 +1,7 @@
 package neznayka;
 
+import java.util.Objects;
+
 public class Clothes {
     String type;
 
@@ -33,7 +35,7 @@ public class Clothes {
 
         Clothes m = (Clothes) o;
 
-        return m.type == this.type;
+        return this.type.equals(m.type);
     }
 
     @Override

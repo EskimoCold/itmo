@@ -97,4 +97,4 @@ public class Main {
     }
 }
 
-// todo: radius(done), equals, helios, arguments(done), new uml
+// todo: radius(done), equals(done), helios(done), arguments(done), new uml
