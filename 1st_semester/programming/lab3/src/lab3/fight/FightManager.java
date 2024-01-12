@@ -2,6 +2,7 @@ package lab3.fight;
 
 import lab3.Character;
 import lab3.enums.FightStatus;
+import lab3.exceptions.CustomUncheckedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,31 +21,35 @@ public class FightManager {
     }
 
     public String start() {
-        if (status != FightStatus.STARTED) {
-            status = FightStatus.STARTED;
-            StringBuilder str = new StringBuilder();
-            for (Character obj : participants) {
-                str.append(obj.getName()).append(", ");
-            }
-            return str + "начали драку";
-        } else {
-            return "Драка уже идет";
+        if (this.status == FightStatus.STARTED) {
+            throw new CustomUncheckedException("Драка уже идет");
         }
+
+        this.status = FightStatus.STARTED;
+        StringBuilder str = new StringBuilder();
+
+        for (Character obj : participants) {
+            str.append(obj.getName()).append(", ");
+        }
+
+        return str + "начали драку";
     }
 
     public String finish() {
-        if (status != FightStatus.FINISHED) {
-            status = FightStatus.FINISHED;
-            StringBuilder str = new StringBuilder();
-
-            for (Character obj : participants) {
-                str.append(obj.getName()).append(", ");
-            }
-
-            return str + "закончили драку. Победил: " + this.getLeader().getCharacter().getName();
+        if (this.status == FightStatus.FINISHED) {
+            throw new CustomUncheckedException("Драка уже закончена");
         }
-            return "Драка уже закончена";
 
+        this.status = FightStatus.FINISHED;
+        StringBuilder str = new StringBuilder();
+
+        for (Character obj : participants) {
+            str.append(obj.getName()).append(", ");
+        }
+
+        LeaderPowerDTO leader = this.getLeader();
+
+        return str + "закончили драку. Победил: " +leader.getLeader().getName() + ". Сила: " + leader.getPower();
     }
 
     public void addImpact(Character obj, FightImpact arg) {

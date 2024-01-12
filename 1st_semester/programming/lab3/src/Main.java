@@ -2,6 +2,8 @@ import lab3.*;
 import lab3.Character;
 import lab3.cords.Coordinate;
 import lab3.cords.RadiusCoordinateArea;
+import lab3.exceptions.CustomCheckedException;
+import lab3.exceptions.CustomUncheckedException;
 import lab3.fight.FightImpact;
 import lab3.fight.FightManager;
 import lab3.items.Clothes;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CustomCheckedException {
         Random randomizer = new Random();
 
         // clothes
@@ -156,29 +158,16 @@ public class Main {
                 new RadiusCoordinateArea(0.5, stickShortyCords)
         );
 
-        Stick electricStickSigl = new Stick(
-                "Дубинка",
-                siglCords,
-                new RadiusCoordinateArea(0.5, siglCords)
-        );
-
-        Stick electricStickDrigl = new Stick(
-                "Дубинка",
-                driglCords,
-                new RadiusCoordinateArea(0.5, driglCords)
-        );
-
-        Stick electricStickZhmigl = new Stick(
-                "Дубинка",
-                zhmiglCords,
-                new RadiusCoordinateArea(0.5, zhmiglCords)
-        );
-
-        Stick electricStickPhigl = new Stick(
-                "Дубинка",
-                phiglCords,
-                new RadiusCoordinateArea(0.5, phiglCords)
-        );
+        // anonymous class
+        Stick electroStick = new Stick("Дубинка", siglCords, new RadiusCoordinateArea(0.5, siglCords)) {
+            @Override
+            public String interacted(Character obj) {
+                if (!this.area.compareWithCoordinate(obj.getCords())) {
+                    throw new CustomUncheckedException("Слишком далеко от объекта, чтобы воспользоваться им");
+                }
+                return  obj.getName() + " воспользовался электрической дубинкой.";
+            }
+        };
 
         // fight
         ArrayList<Character> shortiesInArgument = new ArrayList<>();
@@ -217,7 +206,11 @@ public class Main {
         output.append(stickShorty.getName()).append(" забрался на верхнюю полку").append("\n");
         stickShorty.move(stickShorty.getCords().getCoordinates()[0], stickShorty.getCords().getCoordinates()[1] + 2);
 
-        output.append(stick.interacted(stickShorty)).append(" Колотил палкой всех, кто пробегал мимо").append("\n");
+        try {
+            output.append(stick.interacted(stickShorty)).append(" Колотил палкой всех, кто пробегал мимо").append("\n");
+        } catch (CustomUncheckedException e) {
+            output.append("Ошибка: ").append(e.getMessage()).append("\n");
+        }
 
         output.append(cup.thrown()).append("\n");
         output.append(boots.thrown()).append("\n");
@@ -231,19 +224,27 @@ public class Main {
 
         output.append("Они носили: ").append(drigl.getClothes()).append("\n");
 
-        output.append(electricStickDrigl.interacted(drigl)).append("\n");
-        output.append(electricStickSigl.interacted(sigl)).append("\n");
-        output.append(electricStickZhmigl.interacted(zhmigl)).append("\n");
-        output.append(electricStickPhigl.interacted(phigl)).append("\n");
-        fight.addImpact(drigl, driglImpact);
-        fight.addImpact(sigl, siglImpact);
-        fight.addImpact(zhmigl, zhmiglImpact);
-        fight.addImpact(phigl, phiglImpact);
+        try {
+            output.append(electroStick.interacted(drigl)).append("\n");
+            output.append(electroStick.interacted(sigl)).append("\n");
+            output.append(electroStick.interacted(zhmigl)).append("\n");
+            output.append(electroStick.interacted(phigl)).append("\n");
+            fight.addImpact(drigl, driglImpact);
+            fight.addImpact(sigl, siglImpact);
+            fight.addImpact(zhmigl, zhmiglImpact);
+            fight.addImpact(phigl, phiglImpact);
+        } catch (CustomUncheckedException e) {
+            output.append("Ошибка: ").append(e.getMessage()).append("\n");
+        }
 
-        output.append(fight.finish()).append("\n");
+        try {
+            output.append(fight.finish()).append("\n");
+        } catch (CustomUncheckedException e) {
+            output.append("Ошибка: ").append(e.getMessage());
+        }
 
         System.out.print(output);
     }
 }
 
-// todo lambda, func interfaces, annotations, dto
+// todo lambda, func interfaces, annotations, dto(done)
