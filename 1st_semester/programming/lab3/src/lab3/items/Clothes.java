@@ -1,8 +1,8 @@
-package neznayka;
+package lab3.items;
 
-import java.util.Objects;
+import lab3.interfaces.CanBeThrown;
 
-public class Clothes {
+public class Clothes implements CanBeThrown {
     String type;
 
     public Clothes(String type) {

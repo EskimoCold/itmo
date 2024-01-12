@@ -1,4 +1,4 @@
-package neznayka;
+package lab3.cords;
 
 public class Coordinate {
     double X;

@@ -1,15 +1,14 @@
-package neznayka;
+package lab3.fight;
 
 import java.util.Random;
 
-public class Argument {
+public class FightImpact {
     int power;
     String about;
-    private Random randomizer = new Random();
 
-    public Argument(String about) {
+    public FightImpact(String about, int damage) {
         this.about = about;
-        this.power = (int) Math.round(this.randomizer.nextDouble()*100);
+        this.power = damage;
     }
 
     public String getAbout() {
@@ -36,7 +35,7 @@ public class Argument {
             return false;
         }
 
-        Argument m = (Argument) o;
+        FightImpact m = (FightImpact) o;
 
         return this.about.equals(m.about) && this.power == m.power;
     }

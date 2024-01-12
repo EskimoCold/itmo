@@ -1,4 +1,8 @@
-package neznayka;
+package lab3.items;
+
+import lab3.Character;
+import lab3.cords.Coordinate;
+import lab3.cords.RadiusCoordinateArea;
 
 import java.util.Objects;
 

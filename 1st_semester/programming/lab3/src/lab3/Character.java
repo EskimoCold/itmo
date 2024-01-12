@@ -1,7 +1,8 @@
-package neznayka;
+package lab3;
 
-import neznayka.enums.MentalState;
-import neznayka.enums.Planet;
+import lab3.cords.Coordinate;
+import lab3.cords.RadiusCoordinateArea;
+import lab3.items.Clothes;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -10,16 +11,12 @@ public abstract class Character {
     Coordinate cords;
     RadiusCoordinateArea area;
     String name;
-    MentalState mental;
-    Planet planet;
     ArrayList<Clothes> clothes;
 
-    public Character(Coordinate cords, RadiusCoordinateArea area, String name, MentalState mental, Planet planet, ArrayList<Clothes> clothes) {
+    public Character(Coordinate cords, RadiusCoordinateArea area, String name, ArrayList<Clothes> clothes) {
         this.cords = cords;
         this.area = area;
         this.name = name;
-        this.mental = mental;
-        this.planet = planet;
         this.clothes = clothes;
     }
 
@@ -31,12 +28,12 @@ public abstract class Character {
         return !this.clothes.isEmpty();
     }
 
-    public Planet getPlanet() {
-        return planet;
+    public ArrayList<Clothes> getClothes() {
+        return this.clothes;
     }
 
-    public void setPlanet(Planet planet) {
-        this.planet = planet;
+    public String getName() {
+        return this.name;
     }
 
     public Coordinate getCords() {
@@ -59,7 +56,7 @@ public abstract class Character {
             return false;
         }
 
-        Item m = (Item) o;
+        Character m = (Character) o;
 
         return this.cords.equals(m.cords) && Objects.equals(m.name, this.name);
     }

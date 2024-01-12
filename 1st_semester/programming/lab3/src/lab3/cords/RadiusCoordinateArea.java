@@ -1,4 +1,4 @@
-package neznayka;
+package lab3.cords;
 
 public class RadiusCoordinateArea {
     double radius;
