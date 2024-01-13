@@ -15,7 +15,28 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
-    public static void main(String[] args) throws CustomCheckedException {
+
+    // Статический вложенный класс
+    final static class History {
+        private static final ArrayList<String> data = new ArrayList<String>();
+
+        public static void addMessage(String str) {
+            data.add(str);
+        }
+
+        public static String getMessages() {
+            String str = "";
+
+            for (String el : data) {
+                str += el + "\n";
+            }
+
+            return str;
+        }
+
+    }
+
+    public static void main(String[] args) {
         Random randomizer = new Random();
 
         // clothes
@@ -185,66 +206,62 @@ public class Main {
         FightImpact phiglImpact = new FightImpact("Пхигль тыкал дерущихся электрическими дубинками", 2*randomizer.nextInt(100));
 
         // main
-        StringBuilder output = new StringBuilder();
-
-        output.append(fight.start()).append("\n");
-        output.append(kozlikImpact.getAbout()).append("\n");
+        History.addMessage(fight.start());
+        History.addMessage(kozlikImpact.getAbout());
 
         fight.addImpact(kozlik, kozlikImpact);
 
-        output.append("Стрига поспешил на помощь своему другу").append("\n");
+        History.addMessage("Стрига поспешил на помощь своему другу");
         fight.addParticipant(striga);
 
-        output.append(strigaImpact.getAbout()).append("\n");
+        History.addMessage(strigaImpact.getAbout());
         fight.addImpact(striga, strigaImpact);
         fight.addImpact(vihor, vihorImpact);
 
         for (Character obj : fight.getParticipants()) {
-            output.append(obj.getName()).append(" визжал, стонал и крякал от ударов").append("\n");
+            History.addMessage(obj.getName() + " визжал, стонал и крякал от ударов");
         }
 
-        output.append(stickShorty.getName()).append(" забрался на верхнюю полку").append("\n");
+        History.addMessage(stickShorty.getName() + " забрался на верхнюю полку");
         stickShorty.move(stickShorty.getCords().getCoordinates()[0], stickShorty.getCords().getCoordinates()[1] + 2);
 
         try {
-            output.append(stick.interacted(stickShorty)).append(" Колотил палкой всех, кто пробегал мимо").append("\n");
+            History.addMessage(stick.interacted(stickShorty) + " Колотил палкой всех, кто пробегал мимо");
         } catch (CustomUncheckedException e) {
-            output.append("Ошибка: ").append(e.getMessage()).append("\n");
+            History.addMessage("Ошибка: " + e.getMessage());
         }
 
-        output.append(cup.thrown()).append("\n");
-        output.append(boots.thrown()).append("\n");
-        output.append(spoon.thrown()).append("\n");
+        History.addMessage(cup.thrown());
+        History.addMessage(boots.thrown());
+        History.addMessage(spoon.thrown());
 
-        output.append("Ворвались четверо полицейских: Дригль, Сигль, Жмигль и Пхигль.").append("\n");
+        History.addMessage("Ворвались четверо полицейских: Дригль, Сигль, Жмигль и Пхигль.");
         fight.addParticipant(drigl);
         fight.addParticipant(sigl);
         fight.addParticipant(zhmigl);
         fight.addParticipant(phigl);
 
-        output.append("Они носили: ").append(drigl.getClothes()).append("\n");
+        History.addMessage("Они носили: " + drigl.getClothes());
 
         try {
-            output.append(electroStick.interacted(drigl)).append("\n");
-            output.append(electroStick.interacted(sigl)).append("\n");
-            output.append(electroStick.interacted(zhmigl)).append("\n");
-            output.append(electroStick.interacted(phigl)).append("\n");
+            History.addMessage(electroStick.interacted(drigl));
+            History.addMessage(electroStick.interacted(sigl));
+            History.addMessage(electroStick.interacted(zhmigl));
+            History.addMessage(electroStick.interacted(phigl));
             fight.addImpact(drigl, driglImpact);
             fight.addImpact(sigl, siglImpact);
             fight.addImpact(zhmigl, zhmiglImpact);
             fight.addImpact(phigl, phiglImpact);
         } catch (CustomUncheckedException e) {
-            output.append("Ошибка: ").append(e.getMessage()).append("\n");
+            History.addMessage("Ошибка: " + e.getMessage());
         }
 
         try {
-            output.append(fight.finish()).append("\n");
+            History.addMessage(fight.finish());
         } catch (CustomUncheckedException e) {
-            output.append("Ошибка: ").append(e.getMessage());
+            History.addMessage("Ошибка: " + e.getMessage());
         }
 
-        System.out.print(output);
+        System.out.print(History.getMessages());
     }
 }
-
-// todo lambda, func interfaces, annotations, dto(done)

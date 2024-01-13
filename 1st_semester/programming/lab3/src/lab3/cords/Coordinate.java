@@ -4,7 +4,6 @@ public class Coordinate {
     double X;
     double Y;
 
-
     public Coordinate(double X, double Y) {
         this.X = X;
         this.Y = Y;

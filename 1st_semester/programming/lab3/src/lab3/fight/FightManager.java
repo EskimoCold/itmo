@@ -12,6 +12,30 @@ public class FightManager {
     HashMap<Character, ArrayList<FightImpact>> args = new HashMap<Character, ArrayList<FightImpact>>();
     FightStatus status = FightStatus.NOT_STARTED;
 
+    // Нестатичный вложенный класс
+    public class LeaderPowerDTO {
+        private final Character leader;
+        private final Integer power;
+
+        public LeaderPowerDTO(Character leader, Integer power) {
+            this.leader = leader;
+            this.power = power;
+        }
+
+        public int getPower() {
+            return this.power;
+        }
+
+        public Character getLeader() {
+            return leader;
+        }
+
+        @Override
+        public String toString(){
+            return this.leader.getName() + " " + this.power;
+        }
+    }
+
     public FightManager(ArrayList <Character> participants) {
         this.participants = participants;
 
