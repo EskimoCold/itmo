@@ -2,8 +2,8 @@ import lab3.*;
 import lab3.Character;
 import lab3.cords.Coordinate;
 import lab3.cords.RadiusCoordinateArea;
-import lab3.exceptions.CustomCheckedException;
-import lab3.exceptions.CustomUncheckedException;
+import lab3.exceptions.NegativeRadiusException;
+import lab3.exceptions.NotInRadiusException;
 import lab3.fight.FightImpact;
 import lab3.fight.FightManager;
 import lab3.items.Clothes;
@@ -104,164 +104,176 @@ public class Main {
         Coordinate cupCords = new Coordinate(3.4, 2.1);
 
         // characters
-        Shorty vihor = new Shorty(
-                vihorCords,
-                new RadiusCoordinateArea(2, vihorCords),
-                "Вихор",
-                vihorClothes
-        );
+        try {
+            Shorty vihor = new Shorty(
+                    vihorCords,
+                    new RadiusCoordinateArea(2, vihorCords),
+                    "Вихор",
+                    vihorClothes
+            );
 
-        Shorty kozlik = new Shorty(
-                kozlikCords,
-                new RadiusCoordinateArea(2, kozlikCords),
-                "Козлик",
-                kozlikClothes
-        );
+            Shorty kozlik = new Shorty(
+                    kozlikCords,
+                    new RadiusCoordinateArea(2, kozlikCords),
+                    "Козлик",
+                    kozlikClothes
+            );
 
-        Shorty striga = new Shorty(
-                strigaCords,
-                new RadiusCoordinateArea(2, strigaCords),
-                "Стрига",
-                strigaClothes
-        );
+            Shorty striga = new Shorty(
+                    strigaCords,
+                    new RadiusCoordinateArea(2, strigaCords),
+                    "Стрига",
+                    strigaClothes
+            );
 
-        Shorty sigl = new Shorty(
-                siglCords,
-                new RadiusCoordinateArea(2, siglCords),
-                "Сигль",
-                siglClothes
-        );
+            Shorty sigl = new Shorty(
+                    siglCords,
+                    new RadiusCoordinateArea(2, siglCords),
+                    "Сигль",
+                    siglClothes
+            );
 
-        Shorty drigl = new Shorty(
-                driglCords,
-                new RadiusCoordinateArea(2, driglCords),
-                "Дригль",
-                driglClothes
-        );
+            Shorty drigl = new Shorty(
+                    driglCords,
+                    new RadiusCoordinateArea(2, driglCords),
+                    "Дригль",
+                    driglClothes
+            );
 
-        Shorty zhmigl = new Shorty(
-                zhmiglCords,
-                new RadiusCoordinateArea(2, zhmiglCords),
-                "Жмигль",
-                zhmiglClothes
-        );
+            Shorty zhmigl = new Shorty(
+                    zhmiglCords,
+                    new RadiusCoordinateArea(2, zhmiglCords),
+                    "Жмигль",
+                    zhmiglClothes
+            );
 
-        Shorty phigl = new Shorty(
-                phiglCords,
-                new RadiusCoordinateArea(2, phiglCords),
-                "Пхигль",
-                phiglClothes
-        );
+            Shorty phigl = new Shorty(
+                    phiglCords,
+                    new RadiusCoordinateArea(2, phiglCords),
+                    "Пхигль",
+                    phiglClothes
+            );
 
-        Shorty stickShorty = new Shorty(
-                stickShortyCords,
-                new RadiusCoordinateArea(2, stickShortyCords),
-                "Коротышка",
-                stickShortyClothes
-        );
+            Shorty stickShorty = new Shorty(
+                    stickShortyCords,
+                    new RadiusCoordinateArea(2, stickShortyCords),
+                    "Коротышка",
+                    stickShortyClothes
+            );
 
-        // items
-        Spoon spoon = new Spoon(
-                "Ложка",
-                spoonCords,
-                new RadiusCoordinateArea(2, spoonCords)
-        );
+            // items
+            Spoon spoon = new Spoon(
+                    "Ложка",
+                    spoonCords,
+                    new RadiusCoordinateArea(2, spoonCords)
+            );
 
-        Cup cup = new Cup(
-                "Кружка",
-                cupCords,
-                new RadiusCoordinateArea(2, cupCords)
-        );
+            Cup cup = new Cup(
+                    "Кружка",
+                    cupCords,
+                    new RadiusCoordinateArea(2, cupCords)
+            );
 
-        Stick stick = new Stick(
-                "Дубинка",
-                stickShortyCords,
-                new RadiusCoordinateArea(0.5, stickShortyCords)
-        );
+            Stick stick = new Stick(
+                    "Дубинка",
+                    stickShortyCords,
+                    new RadiusCoordinateArea(0.5, stickShortyCords)
+            );
 
-        // anonymous class
-        Stick electroStick = new Stick("Дубинка", siglCords, new RadiusCoordinateArea(0.5, siglCords)) {
-            @Override
-            public String interacted(Character obj) {
-                if (!this.area.compareWithCoordinate(obj.getCords())) {
-                    throw new CustomUncheckedException("Слишком далеко от объекта, чтобы воспользоваться им");
+            // anonymous class
+            Stick electroStick = new Stick("Дубинка", siglCords, new RadiusCoordinateArea(0.5, siglCords)) {
+                @Override
+                public String interacted(Character obj) {
+                    if (!this.area.compareWithCoordinate(obj.getCords())) {
+                        throw new NotInRadiusException("Слишком далеко от объекта, чтобы воспользоваться им");
+                    }
+                    return obj.getName() + " воспользовался электрической дубинкой.";
                 }
-                return  obj.getName() + " воспользовался электрической дубинкой.";
+            };
+
+            // fight
+            ArrayList<Character> shortiesInArgument = new ArrayList<>();
+            shortiesInArgument.add(vihor);
+            shortiesInArgument.add(kozlik);
+            FightManager fight = new FightManager(shortiesInArgument);
+
+            // fight impacts
+            FightImpact kozlikImpact = new FightImpact("Козлик нанес такой удар, что Вихор полетел в сторону", randomizer.nextInt(100));
+            FightImpact vihorImpact = new FightImpact("Они вдвоем принялись тузить противника", randomizer.nextInt(100));
+            FightImpact strigaImpact = new FightImpact("Они вдвоем принялись тузить противника", randomizer.nextInt(100));
+            FightImpact siglImpact = new FightImpact("Сигль тыкал дерущихся электрическими дубинками", 2 * randomizer.nextInt(100));
+            FightImpact driglImpact = new FightImpact("Дригль тыкал дерущихся электрическими дубинками", 2 * randomizer.nextInt(100));
+            FightImpact zhmiglImpact = new FightImpact("Жмигль тыкал дерущихся электрическими дубинками", 2 * randomizer.nextInt(100));
+            FightImpact phiglImpact = new FightImpact("Пхигль тыкал дерущихся электрическими дубинками", 2 * randomizer.nextInt(100));
+
+            // main
+            History.addMessage(fight.start());
+            History.addMessage(kozlikImpact.getAbout());
+
+            fight.addImpact(kozlik, kozlikImpact);
+
+            History.addMessage("Стрига поспешил на помощь своему другу");
+            fight.addParticipant(striga);
+
+            History.addMessage(strigaImpact.getAbout());
+            fight.addImpact(striga, strigaImpact);
+            fight.addImpact(vihor, vihorImpact);
+
+            History.addMessage("Они носили: " + vihor.getClothes());
+
+            for (Character obj : fight.getParticipants()) {
+                History.addMessage(obj.getName() + " визжал, стонал и крякал от ударов");
             }
-        };
 
-        // fight
-        ArrayList<Character> shortiesInArgument = new ArrayList<>();
-        shortiesInArgument.add(vihor);
-        shortiesInArgument.add(kozlik);
-        FightManager fight = new FightManager(shortiesInArgument);
+            History.addMessage(stickShorty.getName() + " забрался на верхнюю полку");
+            stickShorty.move(stickShorty.getCords().getCoordinates()[0], stickShorty.getCords().getCoordinates()[1] + 2);
 
-        // fight impacts
-        FightImpact kozlikImpact = new FightImpact("Козлик нанес такой удар, что Вихор полетел в сторону", randomizer.nextInt(100));
-        FightImpact vihorImpact = new FightImpact("Они вдвоем принялись тузить противника", randomizer.nextInt(100));
-        FightImpact strigaImpact = new FightImpact("Они вдвоем принялись тузить противника", randomizer.nextInt(100));
-        FightImpact siglImpact = new FightImpact("Сигль тыкал дерущихся электрическими дубинками", 2*randomizer.nextInt(100));
-        FightImpact driglImpact = new FightImpact("Дригль тыкал дерущихся электрическими дубинками", 2*randomizer.nextInt(100));
-        FightImpact zhmiglImpact = new FightImpact("Жмигль тыкал дерущихся электрическими дубинками", 2*randomizer.nextInt(100));
-        FightImpact phiglImpact = new FightImpact("Пхигль тыкал дерущихся электрическими дубинками", 2*randomizer.nextInt(100));
+            try {
+                History.addMessage(stick.interacted(stickShorty) + " Колотил палкой всех, кто пробегал мимо");
+            } catch (Exception e) {
+                History.addMessage("Ошибка: " + e.getMessage());
+            }
 
-        // main
-        History.addMessage(fight.start());
-        History.addMessage(kozlikImpact.getAbout());
+            History.addMessage(cup.thrown());
+            History.addMessage(boots.thrown());
+            History.addMessage(spoon.thrown());
 
-        fight.addImpact(kozlik, kozlikImpact);
+            History.addMessage("Ворвались четверо полицейских: Дригль, Сигль, Жмигль и Пхигль.");
+            fight.addParticipant(drigl);
+            fight.addParticipant(sigl);
+            fight.addParticipant(zhmigl);
+            fight.addParticipant(phigl);
 
-        History.addMessage("Стрига поспешил на помощь своему другу");
-        fight.addParticipant(striga);
+            History.addMessage("Они носили: " + drigl.getClothes());
 
-        History.addMessage(strigaImpact.getAbout());
-        fight.addImpact(striga, strigaImpact);
-        fight.addImpact(vihor, vihorImpact);
+            try {
+                History.addMessage(electroStick.interacted(drigl));
+                History.addMessage(electroStick.interacted(sigl));
+                History.addMessage(electroStick.interacted(zhmigl));
+                History.addMessage(electroStick.interacted(phigl));
+                fight.addImpact(drigl, driglImpact);
+                fight.addImpact(sigl, siglImpact);
+                fight.addImpact(zhmigl, zhmiglImpact);
+                fight.addImpact(phigl, phiglImpact);
+            } catch (NotInRadiusException e) {
+                History.addMessage("Ошибка: " + e.getMessage());
+            }
 
-        for (Character obj : fight.getParticipants()) {
-            History.addMessage(obj.getName() + " визжал, стонал и крякал от ударов");
+            try {
+                History.addMessage(fight.finish());
+            } catch (NotInRadiusException e) {
+                History.addMessage("Ошибка: " + e.getMessage());
+            }
+
+            History.addMessage("");
+            History.addMessage("Участия в драке и их силы:");
+            History.addMessage(fight.getStats().toString());
+
+        } catch (NegativeRadiusException e) {
+            History.addMessage("Фатальная ошибка: " + e.getMessage());
+        } finally {
+            System.out.print(History.getMessages());
+
         }
-
-        History.addMessage(stickShorty.getName() + " забрался на верхнюю полку");
-        stickShorty.move(stickShorty.getCords().getCoordinates()[0], stickShorty.getCords().getCoordinates()[1] + 2);
-
-        try {
-            History.addMessage(stick.interacted(stickShorty) + " Колотил палкой всех, кто пробегал мимо");
-        } catch (CustomUncheckedException e) {
-            History.addMessage("Ошибка: " + e.getMessage());
-        }
-
-        History.addMessage(cup.thrown());
-        History.addMessage(boots.thrown());
-        History.addMessage(spoon.thrown());
-
-        History.addMessage("Ворвались четверо полицейских: Дригль, Сигль, Жмигль и Пхигль.");
-        fight.addParticipant(drigl);
-        fight.addParticipant(sigl);
-        fight.addParticipant(zhmigl);
-        fight.addParticipant(phigl);
-
-        History.addMessage("Они носили: " + drigl.getClothes());
-
-        try {
-            History.addMessage(electroStick.interacted(drigl));
-            History.addMessage(electroStick.interacted(sigl));
-            History.addMessage(electroStick.interacted(zhmigl));
-            History.addMessage(electroStick.interacted(phigl));
-            fight.addImpact(drigl, driglImpact);
-            fight.addImpact(sigl, siglImpact);
-            fight.addImpact(zhmigl, zhmiglImpact);
-            fight.addImpact(phigl, phiglImpact);
-        } catch (CustomUncheckedException e) {
-            History.addMessage("Ошибка: " + e.getMessage());
-        }
-
-        try {
-            History.addMessage(fight.finish());
-        } catch (CustomUncheckedException e) {
-            History.addMessage("Ошибка: " + e.getMessage());
-        }
-
-        System.out.print(History.getMessages());
     }
 }

@@ -1,10 +1,16 @@
 package lab3.cords;
 
+import lab3.exceptions.NegativeRadiusException;
+
 public class RadiusCoordinateArea {
     double radius;
     public Coordinate coordinate;
 
-    public RadiusCoordinateArea(double radius, Coordinate coordinate) {
+    public RadiusCoordinateArea(double radius, Coordinate coordinate) throws NegativeRadiusException {
+        if (radius < 0) {
+            throw new NegativeRadiusException("Отрицательный радиус");
+        }
+
         this.radius = radius;
         this.coordinate = coordinate;
     }

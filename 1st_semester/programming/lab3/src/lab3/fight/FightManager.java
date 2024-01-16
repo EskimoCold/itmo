@@ -2,10 +2,12 @@ package lab3.fight;
 
 import lab3.Character;
 import lab3.enums.FightStatus;
-import lab3.exceptions.CustomUncheckedException;
+import lab3.exceptions.NotInRadiusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Comparator;
+import java.util.List;
 
 public class FightManager {
     ArrayList <Character> participants;
@@ -46,7 +48,7 @@ public class FightManager {
 
     public String start() {
         if (this.status == FightStatus.STARTED) {
-            throw new CustomUncheckedException("Драка уже идет");
+            throw new NotInRadiusException("Драка уже идет");
         }
 
         this.status = FightStatus.STARTED;
@@ -61,7 +63,7 @@ public class FightManager {
 
     public String finish() {
         if (this.status == FightStatus.FINISHED) {
-            throw new CustomUncheckedException("Драка уже закончена");
+            throw new NotInRadiusException("Драка уже закончена");
         }
 
         this.status = FightStatus.FINISHED;
@@ -107,6 +109,28 @@ public class FightManager {
         }
 
         return new LeaderPowerDTO(leader, maxPower);
+    }
+
+    public List<ArrayList<FightImpact>> getStats() {
+        Comparator<ArrayList<FightImpact>> sortByPower = new Comparator<ArrayList<FightImpact>>() {
+            @Override
+            public int compare(ArrayList<FightImpact> o1, ArrayList<FightImpact> o2) {
+                int power1 = 0;
+                int power2 = 0;
+
+                for (FightImpact arg: o1) {
+                    power1 += arg.getPower();
+                }
+
+                for (FightImpact arg: o2) {
+                    power2 += arg.getPower();
+                }
+
+                return power1 - power2;
+            }
+        };
+
+        return this.args.values().stream().sorted(sortByPower).toList();
     }
 
     @Override
