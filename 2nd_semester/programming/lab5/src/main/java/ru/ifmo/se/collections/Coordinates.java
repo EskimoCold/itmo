@@ -72,6 +72,13 @@ public class Coordinates {
         }
     }
 
+    public String toXml(){
+        return "\t\t<coordinates>\n" +
+                        "\t\t\t<x>" + this.x + "</x>\n" +
+                        "\t\t\t<y>" + this.y + "</y>\n" +
+                    "\t\t</coordinates>\n";
+    }
+
     @Override
     public String toString() {
         return "Coordinates(x: " + this.x + ", y: " + this.y + ")";

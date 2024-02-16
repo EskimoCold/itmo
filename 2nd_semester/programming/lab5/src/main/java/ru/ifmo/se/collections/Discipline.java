@@ -72,6 +72,13 @@ public class Discipline {
         }
     }
 
+    public String toXml(){
+        return "\t\t<discipline>\n" +
+                            "\t\t\t<name>" + this.name + "</name>\n" +
+                            "\t\t\t<selfStudyHours>" + this.selfStudyHours + "</selfStudyHours>\n" +
+                        "\t\t</discipline>\n";
+    }
+
     @Override
     public String toString() {
         return "Discipline " + this.name + ": " + this.selfStudyHours + " hours";

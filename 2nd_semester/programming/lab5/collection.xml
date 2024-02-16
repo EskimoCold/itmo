@@ -1,0 +1,17 @@
+<labWorks><labWork id="1">
+	<name>test</name>
+		<coordinates>
+			<x>3</x>
+			<y>3</y>
+		</coordinates>
+	<creationDate>2024-02-15T11:30:22.910201</creationDate>
+	<minimalPoint>23.0</minimalPoint>
+	<tunedInWorks>3</tunedInWorks>
+	<averagePoint>2.0</averagePoint>
+	<difficulty>Very Hard</difficulty>
+		<discipline>
+			<name>test</name>
+			<selfStudyHours>3</selfStudyHours>
+		</discipline>
+</labWork>
+</labWorks>
