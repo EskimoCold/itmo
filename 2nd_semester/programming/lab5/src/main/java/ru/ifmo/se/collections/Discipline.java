@@ -1,5 +1,7 @@
 package ru.ifmo.se.collections;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import ru.ifmo.se.exceptions.InvalidParameterException;
 import ru.ifmo.se.handlers.IOHandler;
 
@@ -7,8 +9,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+@XmlRootElement
 public class Discipline {
+    @XmlElement
     private String name; //Поле не может быть null, Строка не может быть пустой
+    @XmlElement
     private Long selfStudyHours; //Поле может быть null
     private BufferedReader reader;
 
@@ -70,13 +75,6 @@ public class Discipline {
             IOHandler.println(e.getMessage());
             inputSelfStudyHours();
         }
-    }
-
-    public String toXml(){
-        return "\t\t<discipline>\n" +
-                            "\t\t\t<name>" + this.name + "</name>\n" +
-                            "\t\t\t<selfStudyHours>" + this.selfStudyHours + "</selfStudyHours>\n" +
-                        "\t\t</discipline>\n";
     }
 
     @Override

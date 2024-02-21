@@ -1,5 +1,7 @@
 package ru.ifmo.se.collections;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import ru.ifmo.se.exceptions.InvalidParameterException;
 import ru.ifmo.se.handlers.IOHandler;
 
@@ -7,8 +9,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+@XmlRootElement
 public class Coordinates {
+    @XmlElement
     private Long x; //Поле не может быть null
+    @XmlElement
     private Long y; //Поле не может быть null
     private BufferedReader reader;
 
@@ -70,13 +75,6 @@ public class Coordinates {
             IOHandler.println(e.getMessage());
             inputY();
         }
-    }
-
-    public String toXml(){
-        return "\t\t<coordinates>\n" +
-                        "\t\t\t<x>" + this.x + "</x>\n" +
-                        "\t\t\t<y>" + this.y + "</y>\n" +
-                    "\t\t</coordinates>\n";
     }
 
     @Override

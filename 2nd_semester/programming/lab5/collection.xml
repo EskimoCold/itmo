@@ -1,17 +1,16 @@
-<labWorks><labWork id="1">
-	<name>test</name>
-		<coordinates>
-			<x>3</x>
-			<y>3</y>
-		</coordinates>
-	<creationDate>2024-02-15T11:30:22.910201</creationDate>
-	<minimalPoint>23.0</minimalPoint>
-	<tunedInWorks>3</tunedInWorks>
-	<averagePoint>2.0</averagePoint>
-	<difficulty>Very Hard</difficulty>
-		<discipline>
-			<name>test</name>
-			<selfStudyHours>3</selfStudyHours>
-		</discipline>
+<labWorks>
+<labWork>
+    <id>1</id>
+    <name>254</name>
+    <coordinates>
+        <x>45</x>
+        <y>234</y>
+    </coordinates>
+    <creationDate/>
+    <minimalPoint>243.0</minimalPoint>
+    <tunedInWorks>4567</tunedInWorks>
+    <averagePoint>423.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline/>
 </labWork>
 </labWorks>

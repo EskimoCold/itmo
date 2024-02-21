@@ -32,7 +32,7 @@ public class Save implements Command {
             return;
         }
 
-        StringBuilder output = new StringBuilder("<labWorks>");
+        StringBuilder output = new StringBuilder("<labWorks>\n");
 
         for (LabWork lw : collection) {
             output.append(lw.toXml());
