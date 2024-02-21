@@ -2,7 +2,10 @@ package ru.ifmo.se.handlers;
 
 import ru.ifmo.se.collections.LabWork;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.Collections;
@@ -13,16 +16,7 @@ public class CollectionHandler {
     private final String filepath = System.getenv("LAB5_FILEPATH");
 
     public CollectionHandler() {
-        if (filepath == null) {
-            IOHandler.println("There is no environment variable with collection file path. It must be named: <LAB5_FILEPATH>");
-            return;
-        }
-
-        File file = FileHandler.process(filepath);
-
-        if (file != null) {
-
-        }
+        String content = FileHandler.read(filepath);
     }
 
     public String info() {

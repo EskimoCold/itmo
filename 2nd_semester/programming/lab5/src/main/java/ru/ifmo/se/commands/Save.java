@@ -18,7 +18,7 @@ public class Save implements Command {
 
     @Override
     public String getDescription() {
-        return this.getName() + "                            -- save collection to file\n";
+        return this.getName() + "                            - save collection to file\n";
     }
 
     @Override
@@ -26,11 +26,6 @@ public class Save implements Command {
         ArrayDeque<LabWork> collection = collectionHandler.getCollection();
 
         String savePath = System.getenv("LAB5_FILEPATH");
-
-        if (savePath == null) {
-            IOHandler.println("There is no environment variable with collection file path");
-            return;
-        }
 
         StringBuilder output = new StringBuilder("<labWorks>\n");
 
@@ -40,20 +35,6 @@ public class Save implements Command {
 
         output.append("</labWorks>");
 
-        File file = FileHandler.process(savePath);
-
-        if (file == null){
-            return;
-        }
-
-        try {
-            PrintWriter writer = new PrintWriter(file);
-            writer.write(output.toString());
-            writer.close();
-            IOHandler.println("Collection has been successfully written to file: " + savePath);
-
-        } catch (FileNotFoundException e) {
-            IOHandler.println("Error writing to file: " + e.getMessage());
-        }
+        FileHandler.save(savePath, output.toString());
     }
 }
