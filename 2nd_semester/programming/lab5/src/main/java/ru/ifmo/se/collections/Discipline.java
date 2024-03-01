@@ -2,6 +2,7 @@ package ru.ifmo.se.collections;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
 import ru.ifmo.se.exceptions.InvalidParameterException;
 import ru.ifmo.se.handlers.IOHandler;
 
@@ -9,21 +10,29 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-@XmlRootElement
+@XmlRootElement(name = "Discipline")
 public class Discipline {
     @XmlElement
+    @Getter
     private String name; //Поле не может быть null, Строка не может быть пустой
     @XmlElement
+    @Getter
     private Long selfStudyHours; //Поле может быть null
     private BufferedReader reader;
 
     public Discipline() {
-        IOHandler.println("Input parameters of Discipline:");
-        BufferedInputStream inputStream = new BufferedInputStream(System.in);
-        this.reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        inputName();
-        inputSelfStudyHours();
+    }
+
+    public Discipline(Boolean fromFile) {
+        if (!fromFile) {
+            IOHandler.println("Input parameters of Discipline:");
+            BufferedInputStream inputStream = new BufferedInputStream(System.in);
+            this.reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            inputName();
+            inputSelfStudyHours();
+        }
     }
 
     public Discipline(String name, Long selfStudyHours) throws InvalidParameterException{
@@ -74,6 +83,16 @@ public class Discipline {
         catch (Exception e) {
             IOHandler.println(e.getMessage());
             inputSelfStudyHours();
+        }
+    }
+
+    public static void validate(Discipline obj) throws InvalidParameterException {
+        if (obj.getName() == null || obj.getName().isBlank()) {
+            throw new InvalidParameterException("name can't be null");
+        }
+
+        if (obj.getSelfStudyHours() == null) {
+            throw new InvalidParameterException("selfStudyHours can't be null");
         }
     }
 

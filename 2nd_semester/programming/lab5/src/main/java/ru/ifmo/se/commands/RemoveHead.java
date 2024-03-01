@@ -5,19 +5,20 @@ import ru.ifmo.se.handlers.CollectionHandler;
 
 import java.util.ArrayDeque;
 
-public class Clear implements Command{
+public class RemoveHead implements Command{
     @Override
     public String getName() {
-        return "clear";
+        return "remove_first";
     }
 
     @Override
     public String getDescription() {
-        return this.getName() + "                           - clear the collection\n";
+        return this.getName() + "                    - remove first element from collection\n";
     }
 
     @Override
     public void execute(CollectionHandler collectionHandler, String[] args) {
-        collectionHandler.setCollection(new ArrayDeque<LabWork>());
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+        collection.removeFirst();
     }
 }

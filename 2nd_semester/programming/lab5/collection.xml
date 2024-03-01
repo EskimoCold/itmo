@@ -1,16 +1,36 @@
 <labWorks>
-<labWork>
+<LabWork>
     <id>1</id>
-    <name>254</name>
+    <name>gr</name>
     <coordinates>
-        <x>45</x>
-        <y>234</y>
+        <x>23</x>
+        <y>3</y>
     </coordinates>
-    <creationDate/>
-    <minimalPoint>243.0</minimalPoint>
-    <tunedInWorks>4567</tunedInWorks>
-    <averagePoint>423.0</averagePoint>
+    <creationDate>2024-02-27T17:42:29.517568</creationDate>
+    <minimalPoint>3.0</minimalPoint>
+    <tunedInWorks>3</tunedInWorks>
+    <averagePoint>3.0</averagePoint>
     <difficulty>VERY_HARD</difficulty>
-    <discipline/>
-</labWork>
+    <discipline>
+        <name>fs</name>
+        <selfStudyHours>3</selfStudyHours>
+    </discipline>
+</LabWork>
+<LabWork>
+    <id>2</id>
+    <name>ffffffffffff</name>
+    <coordinates>
+        <x>323</x>
+        <y>23</y>
+    </coordinates>
+    <creationDate>2024-02-27T17:43:16.676805</creationDate>
+    <minimalPoint>3.0</minimalPoint>
+    <tunedInWorks>3</tunedInWorks>
+    <averagePoint>3.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>3</name>
+        <selfStudyHours>3</selfStudyHours>
+    </discipline>
+</LabWork>
 </labWorks>

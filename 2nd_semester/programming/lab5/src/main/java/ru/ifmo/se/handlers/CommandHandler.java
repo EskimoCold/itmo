@@ -19,11 +19,6 @@ public class CommandHandler {
             return;
         }
 
-//        else if (fromFile & command instanceof CommandWithElement){
-//            CommandWithElement commandWithElement = (CommandWithElement) command;
-//            commandWithElement.executeFromFile(collectionHandler, args);
-//        }
-
         command.execute(collectionHandler, args);
     }
 }

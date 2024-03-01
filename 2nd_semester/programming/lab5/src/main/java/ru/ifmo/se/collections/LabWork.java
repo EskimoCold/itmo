@@ -4,6 +4,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import lombok.Getter;
 import org.w3c.dom.Document;
 import ru.ifmo.se.exceptions.InvalidParameterException;
 import ru.ifmo.se.handlers.IOHandler;
@@ -14,41 +16,76 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@XmlRootElement
-public class LabWork {
+@XmlRootElement(name = "LabWork")
+public class LabWork implements Comparable<LabWork>{
     @XmlElement
+    @Getter
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @XmlElement
+    @Getter
     private String name; //Поле не может быть null, Строка не может быть пустой
+    @Getter
     @XmlElement
     private Coordinates coordinates; //Поле не может быть null
-    @XmlElement
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @Getter
     private LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     @XmlElement
+    @Getter
     private double minimalPoint; //Значение поля должно быть больше 0
     @XmlElement
+    @Getter
     private int tunedInWorks;
     @XmlElement
+    @Getter
     private Double averagePoint; //Поле может быть null, Значение поля должно быть больше 0
     @XmlElement
+    @Getter
     private Difficulty difficulty; //Поле не может быть null
     @XmlElement
+    @Getter
     private Discipline discipline; //Поле может быть null
     private BufferedReader reader;
     private static final List<Long> usedIds = new ArrayList<>();
 
     public LabWork() {
-        this.id = this.generateId();
+
+    }
+
+    public LabWork(long id) throws InvalidParameterException {
+        if (usedIds.contains(id)) {
+            throw new InvalidParameterException("this id is already used!");
+        }
+
+        this.id = id;
+        this.creationDate = LocalDateTime.now();
         this.fillFields();
+    }
+
+    public LabWork(Boolean fromFile) {
+        if (!fromFile) {
+            this.id = this.generateId();
+            this.creationDate = LocalDateTime.now();
+            this.fillFields();
+        }
+    }
+
+    public LabWork(ArrayList<String> elements) throws InvalidParameterException {
+        this.id = this.generateId();
+        this.creationDate = LocalDateTime.now();
+        this.name = elements.get(0);
+        this.coordinates = new Coordinates(Long.parseLong(elements.get(1)), Long.parseLong(elements.get(2)));
+        this.minimalPoint = Double.parseDouble(elements.get(3));
+        this.tunedInWorks = Integer.parseInt(elements.get(4));
+        this.averagePoint = Double.parseDouble(elements.get(5));
+        this.difficulty = Difficulty.parseDifficulty(elements.get(6));
+        this.discipline = new Discipline(elements.get(7), Long.parseLong(elements.get(8)));
     }
 
     private void fillFields() {
@@ -57,18 +94,16 @@ public class LabWork {
         BufferedInputStream inputStream = new BufferedInputStream(System.in);
         this.reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        this.creationDate = LocalDateTime.now();
-
         this.inputName();
 
-        this.coordinates = new Coordinates();
+        this.coordinates = new Coordinates(Boolean.FALSE);
 
         this.inputMinimalPoint();
         this.inputTunedInWorks();
         this.inputAveragePoint();
         this.inputDifficulty();
 
-        this.discipline = new Discipline();
+        this.discipline = new Discipline(Boolean.FALSE);
     }
 
     private long generateId() {
@@ -79,7 +114,13 @@ public class LabWork {
             i++;
         }
 
+        usedIds.add(i);
+
         return i;
+    }
+
+    public static void removeId(long id){
+        usedIds.remove(id);
     }
 
     private void inputName() {
@@ -106,7 +147,7 @@ public class LabWork {
             String input = this.reader.readLine();
 
             if (input.isEmpty()) {
-                throw new InvalidParameterException("name can't be null or contains only whitespaces");
+                throw new InvalidParameterException("minimal point can not be null");
             }
 
             double parsed = Double.parseDouble(input);
@@ -161,7 +202,6 @@ public class LabWork {
     }
 
     private void inputDifficulty() {
-        IOHandler.println(Difficulty.values());
         IOHandler.print("difficulty parameter of LabWork >> ");
 
         try {
@@ -177,7 +217,7 @@ public class LabWork {
     public String toXml() {
         String xmlString = null;
         try {
-            JAXBContext context = JAXBContext.newInstance(LabWork.class);
+            JAXBContext context = JAXBContext.newInstance(LabWork.class, Coordinates.class, Discipline.class);
             Marshaller marshaller = context.createMarshaller();
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -201,5 +241,40 @@ public class LabWork {
             IOHandler.println(e.getMessage());
         }
         return xmlString;
+    }
+
+    public static void validate(LabWork lw) throws InvalidParameterException {
+        Coordinates.validate(lw.getCoordinates());
+        Discipline.validate(lw.getDiscipline());
+
+        if (lw.getName().isEmpty() || lw.getName().isBlank()) {
+            throw new InvalidParameterException("name can't be null or contains only whitespaces");
+        }
+
+        if (lw.getMinimalPoint() <= 0) {
+            throw new InvalidParameterException("minimal point must be > 0");
+        }
+
+        if (lw.getAveragePoint() != null && lw.getAveragePoint() <= 0) {
+            throw new InvalidParameterException("minimal point must be > 0");
+        }
+    }
+
+    @Override
+    public int compareTo(LabWork lw) {
+        return Double.compare(lw.getAveragePoint(), this.getAveragePoint());
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + this.id + "\n" +
+                "name: " + this.name + "\n" +
+                "coordinates: " + this.coordinates.toString() + "\n" +
+                "creation date: " + this.creationDate.toString() + "\n" +
+                "minimal point: " + this.minimalPoint + "\n" +
+                "tuned in works: " + this.tunedInWorks + "\n" +
+                "average point: " + this.averagePoint + "\n" +
+                "difficulty: " + this.difficulty + "\n" +
+                "discipline: " + this.discipline;
     }
 }

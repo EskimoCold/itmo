@@ -2,6 +2,7 @@ package ru.ifmo.se.collections;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
 import ru.ifmo.se.exceptions.InvalidParameterException;
 import ru.ifmo.se.handlers.IOHandler;
 
@@ -9,21 +10,27 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-@XmlRootElement
+@XmlRootElement(name = "Coordinates")
 public class Coordinates {
-    @XmlElement
+    @XmlElement @Getter
     private Long x; //Поле не может быть null
-    @XmlElement
+    @XmlElement @Getter
     private Long y; //Поле не может быть null
     private BufferedReader reader;
 
     public Coordinates() {
-        IOHandler.println("Input parameters of Coordinates:");
-        BufferedInputStream inputStream = new BufferedInputStream(System.in);
-        this.reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        inputX();
-        inputY();
+    }
+
+    public Coordinates(Boolean fromFile) {
+        if (!fromFile) {
+            IOHandler.println("Input parameters of Coordinates:");
+            BufferedInputStream inputStream = new BufferedInputStream(System.in);
+            this.reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            inputX();
+            inputY();
+        }
     }
 
     public Coordinates(Long x, Long y) throws InvalidParameterException {
@@ -80,5 +87,15 @@ public class Coordinates {
     @Override
     public String toString() {
         return "Coordinates(x: " + this.x + ", y: " + this.y + ")";
+    }
+
+    public static void validate(Coordinates obj) throws InvalidParameterException {
+        if (obj.getX() == null){
+            throw new InvalidParameterException("Coordinates x can't be null");
+        }
+
+        if (obj.getY() == null) {
+            throw new InvalidParameterException("Coordinates y can't be null");
+        }
     }
 }

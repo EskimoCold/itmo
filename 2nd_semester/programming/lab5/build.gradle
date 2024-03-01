@@ -19,7 +19,10 @@ dependencies {
     implementation 'org.reflections:reflections:0.10.2'
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
     implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
     api group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
 }
 
 test {

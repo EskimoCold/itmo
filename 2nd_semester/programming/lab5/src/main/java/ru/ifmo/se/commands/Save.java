@@ -35,6 +35,10 @@ public class Save implements Command {
 
         output.append("</labWorks>");
 
-        FileHandler.save(savePath, output.toString());
+        try {
+            FileHandler.save(savePath, output.toString());
+        } catch (Exception e) {
+            IOHandler.println(e.getMessage());
+        }
     }
 }
