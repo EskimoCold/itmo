@@ -21,6 +21,7 @@
 
 ## Data Bases
 1. <a href="2nd_semester/db/lab1">Subject domains</a>
+2. <a href="2nd_semester/db/lab2">Simple selects</a>
 
 # Projects
 ## History
