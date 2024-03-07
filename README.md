@@ -17,7 +17,10 @@
 
 ## Computer science
 1. <a href="1st_semester/computer_science/lab0">Terminal basics</a>  
-2. <a href="1st_semester/computer_science/lab1">Basic ECM</a>  
+2. <a href="1st_semester/computer_science/lab1">Basic ECM</a>
+
+## Data Bases
+1. <a href="2nd_semester/db/lab1">Subject domains</a>
 
 # Projects
 ## History
