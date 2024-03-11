@@ -8,6 +8,7 @@ import ru.ifmo.se.handlers.PackageParser;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 
 public class ExecuteScript implements Command{
@@ -46,33 +47,43 @@ public class ExecuteScript implements Command{
                     continue;
                 }
 
-                if (command instanceof CommandWithElement) {
-                    int stop = i + 10;
-                    ArrayList<String> lineArgs = new ArrayList<String>();
+                String[] lineArgs = new String[split.length - 1];
 
-                    for (int j = i; j <= stop; j++) {
+                for (int j = 1; j < split.length - 1; j++) {
+                    if (!Objects.equals(split[j], commandName)) {
+                        lineArgs[j - 1] = split[j];
+                    }
+                }
+
+                if (command instanceof CommandWithElement) {
+                    Set<Command> allCommands = PackageParser.getAllCommands();
+                    ArrayList<String> commandsNames = new ArrayList<String>();
+
+                    for (Command c : allCommands) {
+                        commandsNames.add(c.getName());
+                    }
+
+                    ArrayList<String> element = new ArrayList<String>();
+
+                    i++;
+
+                    while (i < lines.length && !commandsNames.contains(lines[i])) {
+                        element.add(lines[i]);
                         i++;
-                        lineArgs.add(lines[i]);
                     }
 
                     try {
-                        LabWork lw = new LabWork(lineArgs);
+                        System.out.println(element);
+                        LabWork lw = new LabWork(element);
+                        System.out.println(lw);
                         LabWork.validate(lw);
-                        ((CommandWithElement) command).executeFromFile(collectionHandler, lw);
+                        ((CommandWithElement) command).executeFromFile(collectionHandler, lw, lineArgs);
 
                     } catch (Exception e) {
                         IOHandler.println(e.getMessage());
                     }
 
                 } else {
-                    String[] lineArgs = new String[split.length - 1];
-
-                    for (int j = 1; j < split.length - 1; j++) {
-                        if (!Objects.equals(split[j], commandName)) {
-                            lineArgs[j - 1] = split[j];
-                        }
-                    }
-
                     command.execute(collectionHandler, lineArgs);
                 }
             }

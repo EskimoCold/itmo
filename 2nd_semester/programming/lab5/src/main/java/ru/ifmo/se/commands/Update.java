@@ -7,7 +7,7 @@ import ru.ifmo.se.handlers.IOHandler;
 
 import java.util.ArrayDeque;
 
-public class Update implements Command{
+public class Update implements CommandWithElement{
     @Override
     public String getName() {
         return "update";
@@ -33,6 +33,29 @@ public class Update implements Command{
                     newCollection.add(newLab);
                 } else {
                     newCollection.add(lw);
+                }
+            }
+
+            collectionHandler.setCollection(newCollection);
+        } catch (Exception e) {
+            IOHandler.println("Invalid id provided");
+        }
+    }
+
+    @Override
+    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+        ArrayDeque<LabWork> newCollection = new ArrayDeque<LabWork>();
+
+        try {
+            long targetId = Integer.parseInt(args[0]);
+
+            for (LabWork lab : collection) {
+                if (lab.getId() == targetId) {
+                    LabWork.removeId(targetId);
+                    newCollection.add(lw);
+                } else {
+                    newCollection.add(lab);
                 }
             }
 

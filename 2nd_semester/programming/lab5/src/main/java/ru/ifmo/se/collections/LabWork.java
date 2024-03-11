@@ -76,7 +76,7 @@ public class LabWork implements Comparable<LabWork>{
         }
     }
 
-    public LabWork(ArrayList<String> elements) throws InvalidParameterException {
+    public LabWork(ArrayList<String> elements) throws Exception {
         this.id = this.generateId();
         this.creationDate = LocalDateTime.now();
         this.name = elements.get(0);
