@@ -24,7 +24,7 @@ public class Save implements Command {
         ArrayList<LabWork> labs = new ArrayList<LabWork>(collectionHandler.getCollection());
 
         try {
-            XMLManager.write(labs, savePath);
+            XMLManager.XMLWriter.write(labs, savePath);
         } catch (Exception e) {
             IOHandler.println(e.getMessage());
         }

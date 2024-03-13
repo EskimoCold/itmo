@@ -3,6 +3,7 @@ package ru.ifmo.se.handlers;
 import lombok.Getter;
 import lombok.Setter;
 import ru.ifmo.se.collections.LabWork;
+import ru.ifmo.se.handlers.XMLManager.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
@@ -17,7 +18,7 @@ public class CollectionHandler {
 
     public CollectionHandler() {
         try {
-            ArrayList<LabWork> labs = XMLManager.read(filepath);
+            ArrayList<LabWork> labs = XMLReader.read(filepath);
 
             for (LabWork lw : labs) {
                 try {
