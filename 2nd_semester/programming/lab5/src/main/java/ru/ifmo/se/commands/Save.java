@@ -2,13 +2,10 @@ package ru.ifmo.se.commands;
 
 import ru.ifmo.se.collections.LabWork;
 import ru.ifmo.se.handlers.CollectionHandler;
-import ru.ifmo.se.handlers.FileHandler;
 import ru.ifmo.se.handlers.IOHandler;
+import ru.ifmo.se.handlers.XMLManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 public class Save implements Command {
     @Override
@@ -23,20 +20,11 @@ public class Save implements Command {
 
     @Override
     public void execute(CollectionHandler collectionHandler, String[] args) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
-
         String savePath = System.getenv("LAB5_FILEPATH");
-
-        StringBuilder output = new StringBuilder("<labWorks>\n");
-
-        for (LabWork lw : collection) {
-            output.append(lw.toXml());
-        }
-
-        output.append("</labWorks>");
+        ArrayList<LabWork> labs = new ArrayList<LabWork>(collectionHandler.getCollection());
 
         try {
-            FileHandler.save(savePath, output.toString());
+            XMLManager.XMLWriter.write(labs, savePath);
         } catch (Exception e) {
             IOHandler.println(e.getMessage());
         }
