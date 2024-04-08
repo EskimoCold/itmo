@@ -5,7 +5,8 @@
 2. <a href="1st_semester/programming/lab1">Pokemons</a>
 3. <a href="1st_semester/programming/lab2">SOLID architecture</a>
 4. <a href="1st_semester/programming/lab3">SOLID architecture upgrade</a>
-5. <a href="2nd_semester/programming/lab5">CLI app working with collections</a>  
+5. <a href="2nd_semester/programming/lab5">CLI app working with collections</a>
+6. <a href="2nd_semester/programming/lab6">Client-Server app</a>  
 
 ## Informatics
 1. <a href="1st_semester/informatics/lab0">Numeral systems</a>  
