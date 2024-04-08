@@ -1,0 +1,54 @@
+plugins {
+    id 'application'
+    id 'java-library'
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation project(':common')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'client.Main'
+    }
+}
+
+shadowJar {
+    archiveBaseName = 'lab5'
+    version = '1.0.0'
+    manifest {
+        attributes 'Main-Class': 'client.Main'
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+processResources {
+    duplicatesStrategy = 'include'
+}
+
+application {
+    mainClass = 'client.Main'
+}
+
+run {
+    standardInput = System.in
+}

@@ -1,0 +1,53 @@
+<labWorks>
+<LabWork>
+    <id>1</id>
+    <name>gr</name>
+    <coordinates>
+        <x>23</x>
+        <y>3</y>
+    </coordinates>
+    <creationDate>2024-02-27T17:42:29.517568</creationDate>
+    <minimalPoint>3.0</minimalPoint>
+    <tunedInWorks>3</tunedInWorks>
+    <averagePoint>3.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>fs</name>
+        <selfStudyHours>3</selfStudyHours>
+    </discipline>
+</LabWork>
+<LabWork>
+    <id>2</id>
+    <name>ffffffffffff</name>
+    <coordinates>
+        <x>323</x>
+        <y>23</y>
+    </coordinates>
+    <creationDate>2024-02-27T17:43:16.676805</creationDate>
+    <minimalPoint>3.0</minimalPoint>
+    <tunedInWorks>3</tunedInWorks>
+    <averagePoint>3.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>3</name>
+        <selfStudyHours>3</selfStudyHours>
+    </discipline>
+</LabWork>
+<LabWork>
+    <id>1</id>
+    <name>242124</name>
+    <coordinates>
+        <x>12</x>
+        <y>4</y>
+    </coordinates>
+    <creationDate>2024-03-08T15:47:36.182963</creationDate>
+    <minimalPoint>2.0</minimalPoint>
+    <tunedInWorks>4</tunedInWorks>
+    <averagePoint>4.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>4</name>
+        <selfStudyHours>3</selfStudyHours>
+    </discipline>
+</LabWork>
+</labWorks>
