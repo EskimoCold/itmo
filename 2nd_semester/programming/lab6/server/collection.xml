@@ -33,4 +33,21 @@
         <selfStudyHours>33</selfStudyHours>
     </discipline>
 </LabWork>
+<LabWork>
+    <id>2</id>
+    <name>141245215</name>
+    <coordinates>
+        <x>125</x>
+        <y>1</y>
+    </coordinates>
+    <creationDate>2024-04-23T17:57:34.484421</creationDate>
+    <minimalPoint>125.0</minimalPoint>
+    <tunedInWorks>125</tunedInWorks>
+    <averagePoint>12.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>23</name>
+        <selfStudyHours>42</selfStudyHours>
+    </discipline>
+</LabWork>
 </labWorks>

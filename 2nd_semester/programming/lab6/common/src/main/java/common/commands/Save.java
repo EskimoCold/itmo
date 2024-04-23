@@ -20,15 +20,6 @@ public class Save extends Command {
 
     @Override
     public Response execute(ArrayDeque<LabWork> collection) {
-//        String savePath = System.getenv("LAB5_FILEPATH");
-//        ArrayList<LabWork> labs = new ArrayList<LabWork>(collectionHandler.getCollection());
-//
-//        try {
-//            XMLManager.XMLWriter.write(labs, savePath);
-//        } catch (Exception e) {
-//            IOHandler.println(e.getMessage());
-//        }
-
         return new Response("Saved");
     }
 }
