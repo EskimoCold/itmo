@@ -70,11 +70,16 @@ public class ExecuteScript extends Command {
                         i++;
                     }
 
+                    i--;
+
                     try {
                         LabWork lw = new LabWork(element);
-                        LabWork.validate(lw);
+                        lw.setId(LabWork.generateId());
+                        LabWork.validateWithOutId(lw);
                         Request request = new Request(command, lw);
                         client.sendRequest(request);
+                        Response response = client.getResponse(false);
+                        IOHandler.println(response);
 
                     } catch (Exception e) {
                         IOHandler.println(e.getMessage());
@@ -83,11 +88,12 @@ public class ExecuteScript extends Command {
                     if (command instanceof ExecuteScript) {
                         ((ExecuteScript) command).retrieveCommands(client);
                     } else {
-                        IOHandler.println("Sending command" + command.getName());
+                        IOHandler.println("Sending command " + command.getName());
                         client.sendRequest(new Request(command));
+                        Response response = client.getResponse(false);
+                        IOHandler.println(response);
                     }
                 }
-
             }
 
         } catch (Exception e) {

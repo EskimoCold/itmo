@@ -115,6 +115,11 @@ public class UDPServer {
                     IOManager.output(socket, packet, response);
                     logger.log(Level.INFO, "Response sent: " + response);
 
+                } else if (command instanceof Info) {
+                    Response response = new Response(collectionHandler.info());
+                    IOManager.output(socket, packet, response);
+                    logger.log(Level.INFO, "Response sent: " + response);
+
                 } else {
                     Response response = command.execute(collection);
                     IOManager.output(socket, packet, response);

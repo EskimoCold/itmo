@@ -39,7 +39,7 @@ public class UDPClient {
         }
     }
 
-    public Response getResponse() {
+    public Response getResponse(boolean close) {
         byte[] bufResponse = new byte[4096];
 
         while (true) {
@@ -53,7 +53,11 @@ public class UDPClient {
 
                 try {
                     Response response = (Response) is.readObject();
-                    this.closeConnection();
+
+                    if (close) {
+                        this.closeConnection();
+                    }
+
                     return response;
 
                 } catch (ClassNotFoundException e){

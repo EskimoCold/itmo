@@ -42,7 +42,7 @@ public class Main {
                         client.sendRequest(request);
                     }
 
-                    Response response = client.getResponse();
+                    Response response = client.getResponse(true);
                     IOHandler.println(response);
                 }
             } catch (Exception e) {

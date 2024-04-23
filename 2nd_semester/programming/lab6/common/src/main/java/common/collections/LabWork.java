@@ -269,6 +269,23 @@ public class LabWork implements Serializable, Comparable<LabWork>{
         }
     }
 
+    public static void validateWithOutId(LabWork lw) throws InvalidParameterException {
+        Coordinates.validate(lw.getCoordinates());
+        Discipline.validate(lw.getDiscipline());
+
+        if (lw.getName().isEmpty() || lw.getName().isBlank()) {
+            throw new InvalidParameterException("name can't be null or contains only whitespaces");
+        }
+
+        if (lw.getMinimalPoint() <= 0) {
+            throw new InvalidParameterException("minimal point must be > 0");
+        }
+
+        if (lw.getAveragePoint() != null && lw.getAveragePoint() <= 0) {
+            throw new InvalidParameterException("minimal point must be > 0");
+        }
+    }
+
     @Override
     public int compareTo(LabWork lw) {
         return Double.compare(lw.getAveragePoint(), this.getAveragePoint());
