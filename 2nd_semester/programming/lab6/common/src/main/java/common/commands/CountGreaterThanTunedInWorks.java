@@ -1,9 +1,10 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.handlers.IOHandler;
 import common.network.Response;
+
+import java.util.ArrayDeque;
 
 public class CountGreaterThanTunedInWorks extends CommandWithElement {
     @Override
@@ -17,22 +18,16 @@ public class CountGreaterThanTunedInWorks extends CommandWithElement {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        long count = collectionHandler.getCollection().stream()
-                .filter(lab -> this.lab.getTunedInWorks() > lab.getTunedInWorks())
+    public Response execute(ArrayDeque<LabWork> collection) {
+        return null;
+    }
+
+    @Override
+    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
+        long count = collection.stream()
+                .filter(lw -> lab.getTunedInWorks() > lw.getTunedInWorks())
                 .count();
 
         return new Response("Count: " + count);
-    }
-
-    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {
-        int count = 0;
-        for (LabWork lab: collectionHandler.getCollection()) {
-            if (lw.getTunedInWorks() > lab.getTunedInWorks()) {
-                count += 1;
-            }
-        }
-
-        IOHandler.println(count);
     }
 }

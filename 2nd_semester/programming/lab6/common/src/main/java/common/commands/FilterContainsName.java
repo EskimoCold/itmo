@@ -1,8 +1,6 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
-import common.handlers.IOHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -20,8 +18,7 @@ public class FilterContainsName extends Command {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(ArrayDeque<LabWork> collection) {
         String substring = args[0].toLowerCase();
 
         String output = collection.stream()

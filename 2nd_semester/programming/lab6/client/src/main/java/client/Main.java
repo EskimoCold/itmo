@@ -7,6 +7,7 @@ import common.commands.ExecuteScript;
 import common.commands.Exit;
 import common.handlers.CommandHandler;
 import common.handlers.IOHandler;
+import common.network.Request;
 import common.network.Response;
 import common.network.UDPClient;
 
@@ -15,9 +16,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        UDPClient client = new UDPClient(9000);
 
         while (true) {
+            UDPClient client = new UDPClient(9000);
             System.out.println("Client Shell>>");
             String input = scanner.nextLine();
 
@@ -29,15 +30,18 @@ public class Main {
                     System.exit(0);
                 }
 
-                if (command instanceof CommandWithElement) {
-                    LabWork lab = new LabWork(false);
-                    ((CommandWithElement) command).setLab(lab);
-                }
-
                 if (command instanceof ExecuteScript) {
                     ((ExecuteScript) command).retrieveCommands(client);
                 } else {
-                    client.sendRequest(command);
+                    if (command instanceof CommandWithElement) {
+                        LabWork lab = new LabWork(false);
+                        Request request = new Request(command, lab);
+                        client.sendRequest(request);
+                    } else {
+                        Request request = new Request(command);
+                        client.sendRequest(request);
+                    }
+
                     Response response = client.getResponse();
                     IOHandler.println(response);
                 }

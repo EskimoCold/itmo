@@ -1,9 +1,7 @@
 package common.commands;
 
 import common.network.Response;
-import lombok.SneakyThrows;
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.handlers.IOHandler;
 
 import java.util.ArrayDeque;
@@ -21,9 +19,12 @@ public class Update extends CommandWithElement{
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(ArrayDeque<LabWork> collection) {
+        return null;
+    }
 
+    @Override
+    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
         try {
             long targetId = Integer.parseInt(args[0]);
 
@@ -31,39 +32,17 @@ public class Update extends CommandWithElement{
                     .filter(l -> l.getId() == targetId)
                     .findFirst();
 
-            if(labWork.isPresent()) {
+            if (labWork.isPresent()) {
                 collection.remove(labWork.get());
-                this.lab.setId(labWork.get().getId());
-                collection.add(this.lab);
-                return new Response("Updated");
+                lab.setId(targetId);
+                collection.add(lab);
+                return new Response(collection);
             }
 
-            return new Response("Element with provided id not found in collection");
+            return new Response(2);
 
         } catch (NumberFormatException e) {
-            return new Response("Invalid id provided");
-        }
-    }
-
-    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
-        ArrayDeque<LabWork> newCollection = new ArrayDeque<LabWork>();
-
-        try {
-            long targetId = Integer.parseInt(args[0]);
-
-            for (LabWork lab : collection) {
-                if (lab.getId() == targetId) {
-                    LabWork.removeId(targetId);
-                    newCollection.add(lw);
-                } else {
-                    newCollection.add(lab);
-                }
-            }
-
-            collectionHandler.setCollection(newCollection);
-        } catch (Exception e) {
-            IOHandler.println("Invalid id provided");
+            return new Response(1);
         }
     }
 }

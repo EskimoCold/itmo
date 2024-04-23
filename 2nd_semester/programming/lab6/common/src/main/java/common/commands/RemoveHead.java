@@ -1,7 +1,6 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -18,9 +17,7 @@ public class RemoveHead extends Command{
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
-        collection.removeFirst();
+    public Response execute(ArrayDeque<LabWork> collection) {
         return new Response("Removed");
     }
 }

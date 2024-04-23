@@ -1,12 +1,10 @@
 package common.commands;
 
-import common.handlers.CollectionHandler;
-import common.handlers.IOHandler;
+import common.collections.LabWork;
 import common.handlers.PackageParser;
 import common.network.Response;
 
-import java.io.Serial;
-import java.util.Arrays;
+import java.util.ArrayDeque;
 import java.util.Set;
 
 public class Help extends Command {
@@ -21,7 +19,7 @@ public class Help extends Command {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
+    public Response execute(ArrayDeque<LabWork> collection) {
         Set<Command> commands = PackageParser.getAllCommands();
 
         StringBuilder output = new StringBuilder();

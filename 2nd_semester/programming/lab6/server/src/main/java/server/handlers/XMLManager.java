@@ -1,5 +1,7 @@
-package common.handlers;
+package server.handlers;
 
+import common.handlers.FileHandler;
+import common.handlers.IOHandler;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import common.collections.Coordinates;

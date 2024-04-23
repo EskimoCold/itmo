@@ -1,9 +1,10 @@
-package common.handlers;
+package server.handlers;
 
+import common.handlers.IOHandler;
 import lombok.Getter;
 import lombok.Setter;
 import common.collections.LabWork;
-import common.handlers.XMLManager.*;
+import server.handlers.XMLManager.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
@@ -23,6 +24,7 @@ public class CollectionHandler {
             for (LabWork lw : labs) {
                 try {
                     LabWork.validate(lw);
+                    LabWork.addId(lw.getId());
                     this.collection.add(lw);
 
                 } catch (Exception e) {

@@ -1,13 +1,17 @@
 package server.network;
 
-import common.commands.Command;
-import common.handlers.CollectionHandler;
+import common.collections.LabWork;
+import common.commands.*;
+import common.network.Request;
+import server.handlers.CollectionHandler;
 import common.network.Response;
+import server.handlers.IOManager;
 
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.ArrayDeque;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,32 +33,93 @@ public class UDPServer {
 
         while (true) {
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
+
             try {
-                socket.receive(packet);
-                byte[] data = packet.getData();
-                ByteArrayInputStream in = new ByteArrayInputStream(data);
-                ObjectInputStream is = new ObjectInputStream(in);
+                Request request = IOManager.input(socket, packet);
+                Command command = request.getCommand();
+                LabWork lab = request.getLab();
+                logger.log(Level.INFO, "Command received: " + command.getName());
 
-                try {
-                    Command command = (Command) is.readObject();
+                ArrayDeque<LabWork> collection = collectionHandler.getCollection();
 
-                    logger.log(Level.INFO, "Command received: " + command.getName());
-                    Response response = command.execute(collectionHandler);
+                if (lab != null) {
+                    if (command instanceof Add) {
+                        lab.setId(LabWork.generateId());
+                        collection.add(lab);
+                        collectionHandler.setCollection(collection);
+                        Response response = ((Add) command).execute(collection, lab);
+                        IOManager.output(socket, packet, response);
+                        logger.log(Level.INFO, "Response sent: " + response);
+                    }
 
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    ObjectOutputStream os = new ObjectOutputStream(outputStream);
-                    os.writeObject(response);
-                    byte[] bufResponse = outputStream.toByteArray();
-                    DatagramPacket responsePacket = new DatagramPacket(bufResponse, bufResponse.length, packet.getAddress(), packet.getPort());
-                    socket.send(responsePacket);
+                    else if (command instanceof AddIfMin) {
+                        Response commandResponse = ((AddIfMin) command).execute(collection, lab);
+
+                        if (commandResponse.getObj().equals(true)) {
+                            collection.add(lab);
+                            collectionHandler.setCollection(collection);
+                            Response response = new Response("Added");
+                            IOManager.output(socket, packet, response);
+                            logger.log(Level.INFO, "Response sent: " + response);
+
+                        } else {
+                            Response response = new Response("Not added");
+                            IOManager.output(socket, packet, response);
+                            logger.log(Level.INFO, "Response sent: " + response);
+                        }
+                    }
+
+                    else if (command instanceof RemoveById | command instanceof Update) {
+                        Response commandResponse = command.execute(collection);
+
+                        if (commandResponse.getObj().equals(1)) {
+                            Response response = new Response("Invalid id provided!");
+                            IOManager.output(socket, packet, response);
+                            logger.log(Level.INFO, "Response sent: " + response);
+
+                        } if (commandResponse.getObj().equals(2)) {
+                            Response response = new Response("Element with provided id not found in collection");
+                            IOManager.output(socket, packet, response);
+                            logger.log(Level.INFO, "Response sent: " + response);
+
+                        } else {
+                            collectionHandler.setCollection((ArrayDeque<LabWork>) commandResponse.getObj());
+                            Response response = new Response("Done");
+                            IOManager.output(socket, packet, response);
+                            logger.log(Level.INFO, "Response sent: " + response);
+                        }
+
+                    }
+
+                    else if (command instanceof RemoveGreater) {
+                        Response commandResponse = command.execute(collection);
+                        collectionHandler.setCollection((ArrayDeque<LabWork>) commandResponse.getObj());
+                        Response response = new Response("Done");
+                        IOManager.output(socket, packet, response);
+                        logger.log(Level.INFO, "Response sent: " + response);
+                    }
+
+                    else {
+                        Response response = ((CommandWithElement) command).execute(collection, lab);
+                        IOManager.output(socket, packet, response);
+                        logger.log(Level.INFO, "Response sent: " + response);
+                    }
+
+                } else if (command instanceof RemoveHead) {
+                    Response response = command.execute(collection);
+                    collection.removeFirst();
+                    collectionHandler.setCollection(collection);
+                    IOManager.output(socket, packet, response);
                     logger.log(Level.INFO, "Response sent: " + response);
 
-                } catch (ClassNotFoundException e) {
-                    logger.log(Level.SEVERE, e.getMessage());
+                } else {
+                    Response response = command.execute(collection);
+                    IOManager.output(socket, packet, response);
+                    logger.log(Level.INFO, "Response sent: " + response);
                 }
 
-            } catch (IOException ioe) {
-                logger.log(Level.SEVERE,"Не удалось получить данные: " + ioe.getMessage(), ioe.getMessage());
+            } catch (ClassNotFoundException | IOException e) {
+                logger.log(Level.SEVERE, e.getMessage());
             }
         }
     }

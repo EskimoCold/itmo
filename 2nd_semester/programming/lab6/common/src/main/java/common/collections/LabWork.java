@@ -25,7 +25,6 @@ import java.util.*;
 public class LabWork implements Serializable, Comparable<LabWork>{
     @XmlElement
     @Getter
-    @Setter
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @XmlElement
     @Getter
@@ -51,6 +50,7 @@ public class LabWork implements Serializable, Comparable<LabWork>{
     @XmlElement
     @Getter
     private Discipline discipline; //Поле может быть null
+    @Getter
     private static final List<Long> usedIds = new ArrayList<>();
 
     public LabWork() {
@@ -87,6 +87,14 @@ public class LabWork implements Serializable, Comparable<LabWork>{
         this.discipline = new Discipline(elements.get(7), Long.parseLong(elements.get(8)));
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public static void addId(long id) {
+        usedIds.add(id);
+    }
+
     private void fillFields() {
         IOHandler.println("Input parameters for LabWork:");
         Scanner scanner = new Scanner(System.in);
@@ -102,7 +110,7 @@ public class LabWork implements Serializable, Comparable<LabWork>{
         this.discipline = new Discipline(Boolean.FALSE);
     }
 
-    private long generateId() {
+    public static long generateId() {
         Collections.sort(usedIds);
 
         long i = 1;
@@ -198,7 +206,8 @@ public class LabWork implements Serializable, Comparable<LabWork>{
     }
 
     private void inputDifficulty(Scanner scanner) {
-        IOHandler.print("difficulty parameter of LabWork >> ");
+        Object[] possibleValues = Difficulty.class.getEnumConstants();
+        IOHandler.print("difficulty parameter of LabWork" + Arrays.toString(possibleValues) + " >> ");
 
         try {
             String input = scanner.nextLine();
@@ -240,6 +249,10 @@ public class LabWork implements Serializable, Comparable<LabWork>{
     }
 
     public static void validate(LabWork lw) throws InvalidParameterException {
+        if (usedIds.contains(lw.getId())) {
+            throw new InvalidParameterException("this id is already taken");
+        }
+
         Coordinates.validate(lw.getCoordinates());
         Discipline.validate(lw.getDiscipline());
 

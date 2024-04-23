@@ -1,7 +1,7 @@
 package server;
 
 import common.commands.Save;
-import common.handlers.*;
+import server.handlers.CollectionHandler;
 import server.network.UDPServer;
 
 import java.util.Scanner;
@@ -17,12 +17,10 @@ public class Main {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to file...");
-            System.out.println("Shutdown hook invoked. Saving collection to file...");
-
-            // TODO: save
             Save saveCommand = new Save();
-//            saveCommand.save(collectionHandler);
+            logger.log(Level.INFO, saveCommand.execute(collectionHandler.getCollection()).toString());
         }));
+
         try {
             new Thread(() -> server.run(collectionHandler)).start();
 

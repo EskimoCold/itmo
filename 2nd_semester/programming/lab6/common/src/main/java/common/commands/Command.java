@@ -1,13 +1,12 @@
 package common.commands;
 
-import common.handlers.CollectionHandler;
+import common.collections.LabWork;
 import common.network.Response;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.PrintWriter;
-import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayDeque;
 
 public abstract class Command implements Serializable {
     @Getter
@@ -17,5 +16,5 @@ public abstract class Command implements Serializable {
 
     abstract public String getDescription();
 
-    abstract public Response execute(CollectionHandler collectionHandler);
+    abstract public Response execute(ArrayDeque<LabWork> collection);
 }

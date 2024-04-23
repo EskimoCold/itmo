@@ -1,16 +1,15 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.handlers.FileHandler;
 import common.handlers.IOHandler;
 import common.handlers.PackageParser;
+import common.network.Request;
 import common.network.Response;
 import common.network.UDPClient;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 
@@ -26,7 +25,7 @@ public class ExecuteScript extends Command {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler){
+    public Response execute(ArrayDeque<LabWork> collection){
         return new Response("Executing commands...");
     }
 
@@ -74,8 +73,8 @@ public class ExecuteScript extends Command {
                     try {
                         LabWork lw = new LabWork(element);
                         LabWork.validate(lw);
-                        ((CommandWithElement) command).setLab(lw);
-                        client.sendRequest(command);
+                        Request request = new Request(command, lw);
+                        client.sendRequest(request);
 
                     } catch (Exception e) {
                         IOHandler.println(e.getMessage());
@@ -85,7 +84,7 @@ public class ExecuteScript extends Command {
                         ((ExecuteScript) command).retrieveCommands(client);
                     } else {
                         IOHandler.println("Sending command" + command.getName());
-                        client.sendRequest(command);
+                        client.sendRequest(new Request(command));
                     }
                 }
 

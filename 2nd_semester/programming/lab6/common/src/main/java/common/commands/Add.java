@@ -1,8 +1,9 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.network.Response;
+
+import java.util.ArrayDeque;
 
 public class Add extends CommandWithElement {
     @Override
@@ -16,12 +17,12 @@ public class Add extends CommandWithElement {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        collectionHandler.add(this.lab);
-        return new Response("Added\n");
+    public Response execute(ArrayDeque<LabWork> collection) {
+        return null;
     }
 
-    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {
-        collectionHandler.add(lw);
+    @Override
+    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
+        return new Response("Added");
     }
 }

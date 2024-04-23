@@ -1,7 +1,6 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -18,8 +17,7 @@ public class Clear extends Command{
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        collectionHandler.setCollection(new ArrayDeque<LabWork>());
+    public Response execute(ArrayDeque<LabWork> collection) {
         return new Response("Cleared");
     }
 }

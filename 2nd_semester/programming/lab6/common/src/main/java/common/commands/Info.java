@@ -1,8 +1,9 @@
 package common.commands;
 
-import common.handlers.CollectionHandler;
-import common.handlers.IOHandler;
+import common.collections.LabWork;
 import common.network.Response;
+
+import java.util.ArrayDeque;
 
 public class Info extends Command {
     @Override
@@ -16,7 +17,7 @@ public class Info extends Command {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        return new Response(collectionHandler.info());
+    public Response execute(ArrayDeque<LabWork> collection) {
+        return new Response("INFO");
     }
 }

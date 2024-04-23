@@ -14,9 +14,11 @@ import java.util.Scanner;
 
 @XmlRootElement(name = "Coordinates")
 public class Coordinates implements Serializable {
-    @XmlElement @Getter
+    @XmlElement
+    @Getter
     private Long x; //Поле не может быть null
-    @XmlElement @Getter
+    @XmlElement
+    @Getter
     private Long y; //Поле не может быть null
     public Coordinates() {
 

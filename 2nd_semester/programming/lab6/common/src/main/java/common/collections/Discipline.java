@@ -6,9 +6,6 @@ import lombok.Getter;
 import common.exceptions.InvalidParameterException;
 import common.handlers.IOHandler;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -57,9 +54,8 @@ public class Discipline implements Serializable {
             }
 
             this.name = input;
-        }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             IOHandler.println(e.getMessage());
             inputName(scanner);
         }

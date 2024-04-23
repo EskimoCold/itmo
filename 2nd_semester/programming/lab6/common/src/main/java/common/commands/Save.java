@@ -1,11 +1,10 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
 import common.handlers.IOHandler;
-import common.handlers.XMLManager;
 import common.network.Response;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class Save extends Command {
@@ -20,15 +19,15 @@ public class Save extends Command {
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
-        String savePath = System.getenv("LAB5_FILEPATH");
-        ArrayList<LabWork> labs = new ArrayList<LabWork>(collectionHandler.getCollection());
-
-        try {
-            XMLManager.XMLWriter.write(labs, savePath);
-        } catch (Exception e) {
-            IOHandler.println(e.getMessage());
-        }
+    public Response execute(ArrayDeque<LabWork> collection) {
+//        String savePath = System.getenv("LAB5_FILEPATH");
+//        ArrayList<LabWork> labs = new ArrayList<LabWork>(collectionHandler.getCollection());
+//
+//        try {
+//            XMLManager.XMLWriter.write(labs, savePath);
+//        } catch (Exception e) {
+//            IOHandler.println(e.getMessage());
+//        }
 
         return new Response("Saved");
     }

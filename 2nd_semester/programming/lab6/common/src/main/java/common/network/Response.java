@@ -1,8 +1,6 @@
 package common.network;
 
 import lombok.Getter;
-
-import java.io.Serial;
 import java.io.Serializable;
 
 public class Response implements Serializable {

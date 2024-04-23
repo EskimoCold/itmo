@@ -1,14 +1,12 @@
 package common.commands;
 
 import common.collections.LabWork;
-import common.handlers.CollectionHandler;
+import common.network.Response;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class CommandWithElement extends Command {
-     @Getter
-     @Setter
-     protected LabWork lab;
+import java.util.ArrayDeque;
 
-     public void executeFromFile(){}
+public abstract class CommandWithElement extends Command {
+     abstract public Response execute(ArrayDeque<LabWork> collection, LabWork lab);
 }

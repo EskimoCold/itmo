@@ -25,11 +25,11 @@ public class UDPClient {
         }
     }
 
-    public void sendRequest(Command command) {
+    public void sendRequest(Request request) {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ObjectOutputStream os = new ObjectOutputStream(outputStream);
-            os.writeObject(command);
+            os.writeObject(request);
             buf = outputStream.toByteArray();
             DatagramPacket sendPacket = new DatagramPacket(buf, buf.length, address, this.port);
             socket.send(sendPacket);
@@ -52,7 +52,9 @@ public class UDPClient {
                 ObjectInputStream is = new ObjectInputStream(in);
 
                 try {
-                    return (Response) is.readObject();
+                    Response response = (Response) is.readObject();
+                    this.closeConnection();
+                    return response;
 
                 } catch (ClassNotFoundException e){
                     logger.log(Level.SEVERE, e.getMessage());

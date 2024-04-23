@@ -1,7 +1,9 @@
 package common.commands;
 
-import common.handlers.CollectionHandler;
+import common.collections.LabWork;
 import common.network.Response;
+
+import java.util.ArrayDeque;
 
 public class Exit extends Command{
     @Override
@@ -15,7 +17,7 @@ public class Exit extends Command{
     }
 
     @Override
-    public Response execute(CollectionHandler collectionHandler) {
+    public Response execute(ArrayDeque<LabWork> collection) {
         System.exit(0);
         return new Response("Exited");
     }
