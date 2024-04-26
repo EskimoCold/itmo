@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -17,8 +18,8 @@ public class PrintAveragePointDesc extends Command {
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
-        ArrayDeque<LabWork> sortedCollection = (ArrayDeque<LabWork>) collection.stream().sorted();
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
+        ArrayDeque<LabWork> sortedCollection = (ArrayDeque<LabWork>) collectionHandler.getCollection().stream().sorted();
 
         StringBuilder output = new StringBuilder();
 

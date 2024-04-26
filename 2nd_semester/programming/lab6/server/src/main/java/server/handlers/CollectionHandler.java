@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-public class CollectionHandler {
+public class CollectionHandler implements common.handlers.CollectionHandler {
     private final LocalDateTime dateCreated = LocalDateTime.now();
     @Getter
     @Setter

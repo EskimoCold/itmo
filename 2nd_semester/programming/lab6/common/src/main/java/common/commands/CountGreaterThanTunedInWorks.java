@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.handlers.IOHandler;
 import common.network.Response;
 
@@ -18,12 +19,13 @@ public class CountGreaterThanTunedInWorks extends CommandWithElement {
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         return null;
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab) {
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
         long count = collection.stream()
                 .filter(lw -> lab.getTunedInWorks() > lw.getTunedInWorks())
                 .count();

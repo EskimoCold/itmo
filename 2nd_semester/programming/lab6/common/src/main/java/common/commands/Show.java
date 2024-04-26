@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -17,7 +18,8 @@ public class Show extends Command{
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
         StringBuilder output = new StringBuilder();
 
         if (collection.isEmpty()) {

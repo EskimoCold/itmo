@@ -1,301 +1,63 @@
 <labWorks>
 <LabWork>
     <id>1</id>
-    <name>ff</name>
+    <name>lab_name</name>
     <coordinates>
-        <x>2</x>
+        <x>1</x>
         <y>2</y>
     </coordinates>
-    <creationDate>2024-04-09T00:47:54.936091</creationDate>
-    <minimalPoint>1.0</minimalPoint>
+    <creationDate>2024-04-24T11:54:46.04898</creationDate>
+    <minimalPoint>3.0</minimalPoint>
     <tunedInWorks>4</tunedInWorks>
-    <averagePoint>22.0</averagePoint>
+    <averagePoint>5.0</averagePoint>
     <difficulty>VERY_HARD</difficulty>
     <discipline>
-        <name>4</name>
-        <selfStudyHours>2</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>4</id>
-    <name>2525</name>
-    <coordinates>
-        <x>2525</x>
-        <y>33</y>
-    </coordinates>
-    <creationDate>2024-04-09T01:14:52.051338</creationDate>
-    <minimalPoint>1.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>11.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>2424</name>
-        <selfStudyHours>33</selfStudyHours>
+        <name>discipline_name</name>
+        <selfStudyHours>6</selfStudyHours>
     </discipline>
 </LabWork>
 <LabWork>
     <id>2</id>
-    <name>141245215</name>
+    <name>2222222</name>
     <coordinates>
-        <x>125</x>
-        <y>1</y>
+        <x>22222222</x>
+        <y>2222222</y>
     </coordinates>
-    <creationDate>2024-04-23T17:57:34.484421</creationDate>
-    <minimalPoint>125.0</minimalPoint>
-    <tunedInWorks>125</tunedInWorks>
-    <averagePoint>12.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
+    <creationDate>2024-04-24T11:55:01.064775</creationDate>
+    <minimalPoint>2222222.0</minimalPoint>
+    <tunedInWorks>2222222</tunedInWorks>
+    <averagePoint>2222222.0</averagePoint>
+    <difficulty>IMPOSSIBLE</difficulty>
     <discipline>
-        <name>23</name>
-        <selfStudyHours>42</selfStudyHours>
+        <name>2222222</name>
+        <selfStudyHours>222222222</selfStudyHours>
     </discipline>
 </LabWork>
 <LabWork>
     <id>3</id>
-    <name>235253235</name>
+    <name>33333</name>
     <coordinates>
-        <x>235325235</x>
-        <y>523235235</y>
+        <x>33333</x>
+        <y>33333</y>
     </coordinates>
-    <creationDate>2024-04-23T21:53:18.860263</creationDate>
-    <minimalPoint>3.52235235E8</minimalPoint>
-    <tunedInWorks>523235235</tunedInWorks>
-    <averagePoint>5.23235325E8</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
+    <creationDate>2024-04-26T13:27:33.455988</creationDate>
+    <minimalPoint>333333.0</minimalPoint>
+    <tunedInWorks>3333333</tunedInWorks>
+    <averagePoint>33333.0</averagePoint>
+    <difficulty>TERRIBLE</difficulty>
     <discipline>
-        <name>2525</name>
-        <selfStudyHours>235235</selfStudyHours>
+        <name>33333</name>
+        <selfStudyHours>3333333</selfStudyHours>
     </discipline>
 </LabWork>
 <LabWork>
-    <id>5</id>
-    <name>4122412</name>
-    <coordinates>
-        <x>124</x>
-        <y>124</y>
-    </coordinates>
-    <creationDate>2024-04-23T21:53:53.90252</creationDate>
-    <minimalPoint>142.0</minimalPoint>
-    <tunedInWorks>124</tunedInWorks>
-    <averagePoint>124.0</averagePoint>
-    <difficulty>IMPOSSIBLE</difficulty>
-    <discipline>
-        <name>234</name>
-        <selfStudyHours>234</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>6</id>
+    <id>4</id>
     <name>lab_name</name>
     <coordinates>
         <x>1</x>
         <y>2</y>
     </coordinates>
-    <creationDate>2024-04-23T21:56:57.400121</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>7</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T21:57:10.441588</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>8</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T21:57:35.537664</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>9</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:02:41.307395</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>10</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:02:57.270064</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>11</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:03:30.405975</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>12</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:03:57.509138</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>13</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:04:20.599973</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>14</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:06:16.020297</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>15</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:07:00.168259</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>16</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:07:03.077833</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>17</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:10:06.154247</creationDate>
-    <minimalPoint>3.0</minimalPoint>
-    <tunedInWorks>4</tunedInWorks>
-    <averagePoint>5.0</averagePoint>
-    <difficulty>VERY_HARD</difficulty>
-    <discipline>
-        <name>discipline_name</name>
-        <selfStudyHours>6</selfStudyHours>
-    </discipline>
-</LabWork>
-<LabWork>
-    <id>18</id>
-    <name>lab_name</name>
-    <coordinates>
-        <x>1</x>
-        <y>2</y>
-    </coordinates>
-    <creationDate>2024-04-23T22:14:51.452964</creationDate>
+    <creationDate>2024-04-26T13:37:23.728202</creationDate>
     <minimalPoint>3.0</minimalPoint>
     <tunedInWorks>4</tunedInWorks>
     <averagePoint>5.0</averagePoint>

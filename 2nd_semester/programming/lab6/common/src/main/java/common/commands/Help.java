@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.handlers.PackageParser;
 import common.network.Response;
 
@@ -19,7 +20,7 @@ public class Help extends Command {
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         Set<Command> commands = PackageParser.getAllCommands();
 
         StringBuilder output = new StringBuilder();

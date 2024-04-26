@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -18,16 +19,18 @@ public class RemoveGreater extends CommandWithElement{
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         return null;
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
-        ArrayDeque<LabWork> updatedCollection = collection.stream()
+    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab) {
+        ArrayDeque<LabWork> updatedCollection = collectionHandler.getCollection().stream()
                 .filter(labWork -> lab.compareTo(labWork) <= 0)
                 .collect(Collectors.toCollection(ArrayDeque::new));
 
-        return new Response(updatedCollection);
+        collectionHandler.setCollection(updatedCollection);
+
+        return new Response("Removed");
     }
 }

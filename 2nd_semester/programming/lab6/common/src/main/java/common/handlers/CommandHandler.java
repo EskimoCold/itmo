@@ -1,5 +1,6 @@
 package common.handlers;
 
+import common.collections.CommandArgsDTO;
 import common.commands.Command;
 import common.exceptions.InvalidParameterException;
 import common.exceptions.NoSuchCommandException;
@@ -7,7 +8,7 @@ import common.exceptions.NoSuchCommandException;
 import java.util.Arrays;
 
 public class CommandHandler {
-    public static Command process(String input) throws NoSuchCommandException {
+    public static CommandArgsDTO process(String input) throws NoSuchCommandException {
         String[] args = input.split("\\s+");
         String commandName = args[0].strip();
 
@@ -21,8 +22,6 @@ public class CommandHandler {
             throw new NoSuchCommandException("No such command: " + commandName);
         }
 
-        command.setArgs(Arrays.copyOfRange(args, 1, args.length));
-
-        return command;
+        return new CommandArgsDTO(command, Arrays.copyOfRange(args, 1, args.length));
     }
 }

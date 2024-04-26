@@ -39,7 +39,7 @@ jar {
 }
 
 shadowJar {
-    archiveBaseName = 'lab5'
+    archiveBaseName = 'server'
     version = '1.0.0'
     manifest {
         attributes 'Main-Class': 'server.Main'

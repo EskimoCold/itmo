@@ -1,5 +1,6 @@
 package common.commands;
 
+import common.handlers.CollectionHandler;
 import common.network.Response;
 import common.collections.LabWork;
 import common.handlers.IOHandler;
@@ -19,12 +20,14 @@ public class Update extends CommandWithElement{
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         return null;
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab) {
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+
         try {
             long targetId = Integer.parseInt(args[0]);
 
@@ -36,13 +39,14 @@ public class Update extends CommandWithElement{
                 collection.remove(labWork.get());
                 lab.setId(targetId);
                 collection.add(lab);
-                return new Response(collection);
+                collectionHandler.setCollection(collection);
+                return new Response("Updated");
             }
 
-            return new Response(2);
+            return new Response("Element with provided id not found in collection");
 
         } catch (NumberFormatException e) {
-            return new Response(1);
+            return new Response("Invalid id provided!");
         }
     }
 }

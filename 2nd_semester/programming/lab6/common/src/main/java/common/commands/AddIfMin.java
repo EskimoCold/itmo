@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -17,15 +18,23 @@ public class AddIfMin extends CommandWithElement {
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         return null;
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection, LabWork lab) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab) {
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+
         boolean shouldAdd = collection.stream()
                 .anyMatch(lw -> lab.getAveragePoint() > lw.getAveragePoint());
 
-        return new Response(shouldAdd);
+        if (shouldAdd) {
+            lab.setId(LabWork.generateId());
+            collectionHandler.add(lab);
+            return  new Response("Added");
+        } else {
+            return new Response("Not added");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package client;
 
+import common.collections.CommandArgsDTO;
 import common.collections.LabWork;
 import common.commands.Command;
 import common.commands.CommandWithElement;
@@ -9,7 +10,6 @@ import common.handlers.CommandHandler;
 import common.handlers.IOHandler;
 import common.network.Request;
 import common.network.Response;
-import common.network.UDPClient;
 
 import java.util.Scanner;
 
@@ -23,25 +23,25 @@ public class Main {
             String input = scanner.nextLine();
 
             try {
-                Command command = CommandHandler.process(input);
+                CommandArgsDTO commandWithArgs = CommandHandler.process(input);
+                Command command = commandWithArgs.command();
+                String[] commandArgs = commandWithArgs.args();
 
                 if (command instanceof Exit) {
                     client.closeConnection();
                     System.exit(0);
                 }
-
+                Request request;
                 if (command instanceof ExecuteScript) {
-                    ((ExecuteScript) command).retrieveCommands(client);
+                    ClientExecuteScript.retrieveCommands(commandArgs, client);
                 } else {
                     if (command instanceof CommandWithElement) {
                         LabWork lab = new LabWork(false);
-                        Request request = new Request(command, lab);
-                        client.sendRequest(request);
+                        request = new Request(command, commandArgs, lab);
                     } else {
-                        Request request = new Request(command);
-                        client.sendRequest(request);
+                         request = new Request(command, commandArgs);
                     }
-
+                    client.sendRequest(request);
                     Response response = client.getResponse(true);
                     IOHandler.println(response);
                 }

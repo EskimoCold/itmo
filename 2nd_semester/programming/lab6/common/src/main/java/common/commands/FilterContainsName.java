@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -18,8 +19,9 @@ public class FilterContainsName extends Command {
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         String substring = args[0].toLowerCase();
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
 
         String output = collection.stream()
                 .filter(lw -> lw.getName().toLowerCase().contains(substring))

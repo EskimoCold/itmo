@@ -1,6 +1,7 @@
 package common.commands;
 
 import common.collections.LabWork;
+import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -17,21 +18,23 @@ public class RemoveById extends Command{
     }
 
     @Override
-    public Response execute(ArrayDeque<LabWork> collection) {
+    public Response execute(String[] args, CollectionHandler collectionHandler) {
         ArrayDeque<LabWork> newCollection = new ArrayDeque<LabWork>();
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
 
         try {
             long targetId = Integer.parseInt(args[0]);
 
             collection.stream()
-                    .filter(route -> route.getId() == targetId)
+                    .filter(lw -> lw.getId() == targetId)
                     .findFirst()
                     .ifPresent(collection::remove);
 
-            return new Response(newCollection);
+            collectionHandler.setCollection(newCollection);
+            return new Response("Removed");
 
         } catch (NumberFormatException e) {
-            return new Response(1);
+            return new Response("Invalid id provided!");
         }
     }
 }

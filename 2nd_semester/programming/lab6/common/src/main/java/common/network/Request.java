@@ -8,18 +8,20 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
     @Getter
-    private String[] args = null;
+    private String[] args;
     @Getter
     private Command command;
     @Getter
     private LabWork lab = null;
 
-    public Request(Command command) {
+    public Request(Command command, String[] args) {
         this.command = command;
+        this.args = args;
     }
 
-    public Request(Command command, LabWork lab) {
+    public Request(Command command, String[] args, LabWork lab) {
         this.command = command;
+        this.args = args;
         this.lab = lab;
     }
 }
