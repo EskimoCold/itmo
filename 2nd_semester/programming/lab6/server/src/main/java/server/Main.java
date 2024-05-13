@@ -1,12 +1,15 @@
 package server;
 
 import common.collections.LabWork;
-import common.commands.Save;
 import server.handlers.CollectionHandler;
 import server.handlers.XMLManager;
 import server.network.UDPServer;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -15,37 +18,47 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = Logger.getLogger("logger");
 
-        CollectionHandler collectionHandler = new CollectionHandler();
-        UDPServer server = new UDPServer(9000);
+        try {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            InputStream resourceAsStream = classLoader.getResourceAsStream("server.properties");
+            Properties prop = System.getProperties();
+            prop.load(resourceAsStream);
+            int port = Integer.parseInt(prop.getProperty("port"));
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to file...");
+            CollectionHandler collectionHandler = new CollectionHandler();
+            UDPServer server = new UDPServer(port);
 
-            String savePath = System.getenv("LAB5_FILEPATH");
-            ArrayList<LabWork> labs = new ArrayList<>(collectionHandler.getCollection());
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to file...");
+
+                String savePath = System.getenv("LAB5_FILEPATH");
+                ArrayList<LabWork> labs = new ArrayList<>(collectionHandler.getCollection());
+
+                try {
+                    XMLManager.XMLWriter.write(labs, savePath);
+                    logger.log(Level.FINE, "Saved");
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                }
+            }));
 
             try {
-                XMLManager.XMLWriter.write(labs, savePath);
-                logger.log(Level.FINE, "Saved");
+                new Thread(() -> server.run(collectionHandler)).start();
+
+                while (true) {
+                    System.out.println("Server Shell>>");
+                    Scanner s = new Scanner(System.in);
+                    String input = s.nextLine().trim();
+                    String commandName = input.split("\\s+")[0].trim();
+
+                    if (commandName.equals("save")) {
+                        System.exit(0);
+                    }
+                }
             } catch (Exception e) {
                 logger.log(Level.SEVERE, e.getMessage());
             }
-        }));
-
-        try {
-            new Thread(() -> server.run(collectionHandler)).start();
-
-            while (true) {
-                System.out.println("Server Shell>>");
-                Scanner s = new Scanner(System.in);
-                String input = s.nextLine().trim();
-                String commandName = input.split("\\s+")[0].trim();
-
-                if (commandName.equals("save")) {
-                    System.exit(0);
-                }
-            }
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
     }
