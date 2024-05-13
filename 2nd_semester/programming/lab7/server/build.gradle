@@ -1,0 +1,72 @@
+plugins {
+    id 'application'
+    id 'java-library'
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    implementation 'org.postgresql:postgresql:42.1.4'
+//    implementation 'postgresql:postgresql:9.0-801.jdbc4'
+//    implementation 'org.postgresql:postgresql:9.3-1100-jdbc4'
+//    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.reflections:reflections:0.10.2'
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.slf4j:slf4j-api:1.7.5'
+    implementation 'org.slf4j:slf4j-simple:1.6.4'
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
+    api group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
+    implementation project(':common')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'server.Main'
+    }
+}
+
+shadowJar {
+    archiveBaseName = 'server'
+    version = '1.0.0'
+    manifest {
+        attributes 'Main-Class': 'server.Main'
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+processResources {
+    duplicatesStrategy = 'include'
+}
+
+application {
+    mainClass = 'server.Main'
+}
+
+run {
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
