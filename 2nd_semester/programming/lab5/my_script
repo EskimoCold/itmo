@@ -10,3 +10,4 @@ lab_name
 very hard
 discipline_name
 6
+execute_script my_script

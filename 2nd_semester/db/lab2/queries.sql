@@ -128,3 +128,13 @@ FROM Н_ЛЮДИ p
 WHERE p.ИД NOT IN (SELECT p.ИД
                     FROM Н_ЛЮДИ p
                     LEFT JOIN Н_УЧЕНИКИ s ON p.ИД = s.ЧЛВК_ИД);
+
+
+1 a
+2 b
+3 c
+4 d
+
+1a
+1b
+++

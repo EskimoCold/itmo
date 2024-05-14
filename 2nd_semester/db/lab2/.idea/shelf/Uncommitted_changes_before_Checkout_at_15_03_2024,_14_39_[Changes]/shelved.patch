@@ -1,0 +1,269 @@
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/commands/Add.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.commands;\n\nimport ru.ifmo.se.collections.LabWork;\nimport ru.ifmo.se.handlers.CollectionHandler;\n\npublic class Add implements CommandWithElement {\n    @Override\n    public String getName() {\n        return \"add\";\n    }\n\n    @Override\n    public String getDescription() {\n        return this.getName() + \"                             - add new LabWork to collection\\n\";\n    }\n\n    @Override\n    public void execute(CollectionHandler collectionHandler, String[] args) {\n        LabWork lab = new LabWork(Boolean.FALSE);\n        collectionHandler.add(lab);\n    }\n\n    @Override\n    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {\n        collectionHandler.add(lw);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/Add.java b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/Add.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/Add.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/Add.java	
+@@ -17,11 +17,13 @@
+     @Override
+     public void execute(CollectionHandler collectionHandler, String[] args) {
+         LabWork lab = new LabWork(Boolean.FALSE);
++        LabWork.addId(lab.getId());
+         collectionHandler.add(lab);
+     }
+ 
+     @Override
+     public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {
+         collectionHandler.add(lw);
++        LabWork.addId(lw.getId());
+     }
+ }
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/collections/LabWork.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.collections;\n\nimport jakarta.xml.bind.JAXBContext;\nimport jakarta.xml.bind.Marshaller;\nimport jakarta.xml.bind.annotation.XmlElement;\nimport jakarta.xml.bind.annotation.XmlRootElement;\nimport jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;\nimport lombok.Getter;\nimport org.w3c.dom.Document;\nimport ru.ifmo.se.exceptions.InvalidParameterException;\nimport ru.ifmo.se.handlers.IOHandler;\n\nimport javax.xml.parsers.DocumentBuilder;\nimport javax.xml.parsers.DocumentBuilderFactory;\nimport javax.xml.transform.Transformer;\nimport javax.xml.transform.TransformerFactory;\nimport javax.xml.transform.dom.DOMSource;\nimport javax.xml.transform.stream.StreamResult;\nimport java.io.*;\nimport java.time.LocalDateTime;\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\n\n@XmlRootElement(name = \"LabWork\")\npublic class LabWork implements Comparable<LabWork>{\n    @XmlElement\n    @Getter\n    private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически\n    @XmlElement\n    @Getter\n    private String name; //Поле не может быть null, Строка не может быть пустой\n    @Getter\n    @XmlElement\n    private Coordinates coordinates; //Поле не может быть null\n    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)\n    @Getter\n    private LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически\n    @XmlElement\n    @Getter\n    private double minimalPoint; //Значение поля должно быть больше 0\n    @XmlElement\n    @Getter\n    private int tunedInWorks;\n    @XmlElement\n    @Getter\n    private Double averagePoint; //Поле может быть null, Значение поля должно быть больше 0\n    @XmlElement\n    @Getter\n    private Difficulty difficulty; //Поле не может быть null\n    @XmlElement\n    @Getter\n    private Discipline discipline; //Поле может быть null\n    private BufferedReader reader;\n    private static final List<Long> usedIds = new ArrayList<>();\n\n    public LabWork() {\n\n    }\n\n    public LabWork(long id) throws InvalidParameterException {\n        if (usedIds.contains(id)) {\n            throw new InvalidParameterException(\"this id is already used!\");\n        }\n\n        this.id = id;\n        this.creationDate = LocalDateTime.now();\n        this.fillFields();\n    }\n\n    public LabWork(Boolean fromFile) {\n        if (!fromFile) {\n            this.id = this.generateId();\n            this.creationDate = LocalDateTime.now();\n            this.fillFields();\n        }\n    }\n\n    public LabWork(ArrayList<String> elements) throws Exception {\n        this.id = this.generateId();\n        this.creationDate = LocalDateTime.now();\n        this.name = elements.get(0);\n        this.coordinates = new Coordinates(Long.parseLong(elements.get(1)), Long.parseLong(elements.get(2)));\n        this.minimalPoint = Double.parseDouble(elements.get(3));\n        this.tunedInWorks = Integer.parseInt(elements.get(4));\n        this.averagePoint = Double.parseDouble(elements.get(5));\n        this.difficulty = Difficulty.parseDifficulty(elements.get(6));\n        this.discipline = new Discipline(elements.get(7), Long.parseLong(elements.get(8)));\n    }\n\n    private void fillFields() {\n        IOHandler.println(\"Input parameters for LabWork:\");\n\n        BufferedInputStream inputStream = new BufferedInputStream(System.in);\n        this.reader = new BufferedReader(new InputStreamReader(inputStream));\n\n        this.inputName();\n\n        this.coordinates = new Coordinates(Boolean.FALSE);\n\n        this.inputMinimalPoint();\n        this.inputTunedInWorks();\n        this.inputAveragePoint();\n        this.inputDifficulty();\n\n        this.discipline = new Discipline(Boolean.FALSE);\n    }\n\n    private long generateId() {\n        Collections.sort(usedIds);\n\n        long i = 1;\n        while (usedIds.contains(i)) {\n            i++;\n        }\n\n        usedIds.add(i);\n\n        return i;\n    }\n\n    public static void removeId(long id){\n        usedIds.remove(id);\n    }\n\n    private void inputName() {\n        IOHandler.print(\"name parameter of LabWork >> \");\n\n        try {\n            String input = this.reader.readLine();\n\n            if (input.isEmpty() || input.isBlank()) {\n                throw new InvalidParameterException(\"name can't be null or contains only whitespaces\");\n            }\n\n            this.name = input;\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n            inputName();\n        }\n    }\n\n    private void inputMinimalPoint() {\n        IOHandler.print(\"minimal point parameter of LabWork >> \");\n\n        try {\n            String input = this.reader.readLine();\n\n            if (input.isEmpty()) {\n                throw new InvalidParameterException(\"minimal point can not be null\");\n            }\n\n            double parsed = Double.parseDouble(input);\n            if (parsed <= 0) {\n                throw new InvalidParameterException(\"minimal point must be > 0\");\n            }\n\n            this.minimalPoint = parsed;\n\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n            inputMinimalPoint();\n        }\n    }\n\n    private void inputTunedInWorks() {\n        IOHandler.print(\"tuned in works parameter of LabWork >> \");\n\n        try {\n            String input = this.reader.readLine();\n            this.tunedInWorks = Integer.parseInt(input);\n\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n            inputTunedInWorks();\n        }\n    }\n\n    private void inputAveragePoint() {\n        IOHandler.print(\"average point parameter of LabWork >> \");\n\n        try {\n            String input = this.reader.readLine();\n\n            if (input.isBlank()) {\n                this.averagePoint = null;\n                return;\n            }\n\n            double parsed = Double.parseDouble(input);\n\n            if (parsed <= 0) {\n                throw new InvalidParameterException(\"minimal point must be > 0\");\n            }\n\n            this.averagePoint = parsed;\n\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n            inputTunedInWorks();\n        }\n    }\n\n    private void inputDifficulty() {\n        IOHandler.print(\"difficulty parameter of LabWork >> \");\n\n        try {\n            String input = this.reader.readLine();\n            this.difficulty = Difficulty.parseDifficulty(input);\n\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n            inputDifficulty();\n        }\n    }\n\n    public String toXml() {\n        String xmlString = null;\n        try {\n            JAXBContext context = JAXBContext.newInstance(LabWork.class, Coordinates.class, Discipline.class);\n            Marshaller marshaller = context.createMarshaller();\n\n            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);\n            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);\n\n            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();\n            DocumentBuilder db = dbf.newDocumentBuilder();\n            Document document = db.newDocument();\n\n            marshaller.marshal(this, document);\n\n            TransformerFactory tf = TransformerFactory.newInstance();\n            Transformer transformer = tf.newTransformer();\n            transformer.setOutputProperty(\"omit-xml-declaration\", \"yes\");\n            transformer.setOutputProperty(\"indent\", \"yes\");\n\n            StringWriter writer = new StringWriter();\n            transformer.transform(new DOMSource(document), new StreamResult(writer));\n            xmlString = writer.toString();\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n        }\n        return xmlString;\n    }\n\n    public static void validate(LabWork lw) throws InvalidParameterException {\n        Coordinates.validate(lw.getCoordinates());\n        Discipline.validate(lw.getDiscipline());\n\n        if (lw.getName().isEmpty() || lw.getName().isBlank()) {\n            throw new InvalidParameterException(\"name can't be null or contains only whitespaces\");\n        }\n\n        if (lw.getMinimalPoint() <= 0) {\n            throw new InvalidParameterException(\"minimal point must be > 0\");\n        }\n\n        if (lw.getAveragePoint() != null && lw.getAveragePoint() <= 0) {\n            throw new InvalidParameterException(\"minimal point must be > 0\");\n        }\n    }\n\n    @Override\n    public int compareTo(LabWork lw) {\n        return Double.compare(lw.getAveragePoint(), this.getAveragePoint());\n    }\n\n    @Override\n    public String toString() {\n        return \"id: \" + this.id + \"\\n\" +\n                \"name: \" + this.name + \"\\n\" +\n                \"coordinates: \" + this.coordinates.toString() + \"\\n\" +\n                \"creation date: \" + this.creationDate.toString() + \"\\n\" +\n                \"minimal point: \" + this.minimalPoint + \"\\n\" +\n                \"tuned in works: \" + this.tunedInWorks + \"\\n\" +\n                \"average point: \" + this.averagePoint + \"\\n\" +\n                \"difficulty: \" + this.difficulty + \"\\n\" +\n                \"discipline: \" + this.discipline;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/collections/LabWork.java b/../../programming/lab5/src/main/java/ru/ifmo/se/collections/LabWork.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/collections/LabWork.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/collections/LabWork.java	
+@@ -77,6 +77,10 @@
+     }
+ 
+     public LabWork(ArrayList<String> elements) throws Exception {
++        if (elements.stream().count() < 8) {
++            throw new InvalidParameterException("not enough fields in element");
++        }
++
+         this.id = this.generateId();
+         this.creationDate = LocalDateTime.now();
+         this.name = elements.get(0);
+@@ -114,15 +118,17 @@
+             i++;
+         }
+ 
+-        usedIds.add(i);
+-
+         return i;
+     }
+ 
+-    public static void removeId(long id){
++    public static void removeId(long id) {
+         usedIds.remove(id);
+     }
+ 
++    public static void addId(long id) {
++        usedIds.add(id);
++    }
++
+     private void inputName() {
+         IOHandler.print("name parameter of LabWork >> ");
+ 
+@@ -244,6 +250,11 @@
+     }
+ 
+     public static void validate(LabWork lw) throws InvalidParameterException {
++        if (usedIds.contains(lw.getId())) {
++            System.out.println(usedIds);
++            throw new InvalidParameterException("this id is already used");
++        }
++
+         Coordinates.validate(lw.getCoordinates());
+         Discipline.validate(lw.getDiscipline());
+ 
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/handlers/CollectionHandler.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.handlers;\n\nimport lombok.Getter;\nimport lombok.Setter;\nimport ru.ifmo.se.collections.LabWork;\nimport ru.ifmo.se.handlers.XMLManager.*;\n\nimport java.time.LocalDateTime;\nimport java.util.ArrayDeque;\nimport java.util.ArrayList;\n\npublic class CollectionHandler {\n    private final LocalDateTime dateCreated = LocalDateTime.now();\n    @Getter\n    @Setter\n    private ArrayDeque<LabWork> collection = new ArrayDeque<LabWork>();\n    private final String filepath = System.getenv(\"LAB5_FILEPATH\");\n\n    public CollectionHandler() {\n        try {\n            ArrayList<LabWork> labs = XMLReader.read(filepath);\n\n            for (LabWork lw : labs) {\n                try {\n                    LabWork.validate(lw);\n                    this.collection.add(lw);\n\n                } catch (Exception e) {\n                    IOHandler.println(e.getMessage());\n                    IOHandler.println(\"Skipping this LabWork...\");\n                }\n            }\n\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n        }\n    }\n\n    public void add(LabWork lw) {\n        this.collection.add(lw);\n    }\n\n    public String info() {\n        return \"Collection \" + this.collection.getClass().getSimpleName() + \".\\n\" +\n                \"Containing \" + this.collection.size() + \" of object LabWork.\\n\" +\n                \"Collection created on \" + dateCreated + \".\\n\" +\n                \"Collection stored at \" + filepath + \".\\n\";\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/handlers/CollectionHandler.java b/../../programming/lab5/src/main/java/ru/ifmo/se/handlers/CollectionHandler.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/handlers/CollectionHandler.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/handlers/CollectionHandler.java	
+@@ -23,6 +23,7 @@
+             for (LabWork lw : labs) {
+                 try {
+                     LabWork.validate(lw);
++                    LabWork.addId(lw.getId());
+                     this.collection.add(lw);
+ 
+                 } catch (Exception e) {
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/commands/ExecuteScript.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.commands;\n\nimport ru.ifmo.se.collections.LabWork;\nimport ru.ifmo.se.handlers.CollectionHandler;\nimport ru.ifmo.se.handlers.FileHandler;\nimport ru.ifmo.se.handlers.IOHandler;\nimport ru.ifmo.se.handlers.PackageParser;\n\nimport java.util.ArrayList;\nimport java.util.Objects;\nimport java.util.Set;\n\n\npublic class ExecuteScript implements Command{\n    @Override\n    public String getName() {\n        return \"execute_script\";\n    }\n\n    @Override\n    public String getDescription() {\n        return getName() + \" file_name        - read and execute script from provided file\\n\";\n    }\n\n    @Override\n    public void execute(CollectionHandler collectionHandler, String[] args) {\n        try {\n            String scriptName = args[1];\n\n            String content = FileHandler.read(scriptName);\n\n            if (content.contains(scriptName)) {\n                IOHandler.println(\"Script cannot call itself or have an infinite loop\");\n                return;\n            }\n\n            String[] lines = content.split(\"\\n\");\n\n            for (int i = 0; i < lines.length; i++) {\n                String[] split = lines[i].split(\"\\\\s+\");\n                String commandName = split[0];\n\n                Command command = PackageParser.getCommand(commandName);\n\n                if (command == null) {\n                    IOHandler.println(commandName + \": this command does not exist\");\n                    continue;\n                }\n\n                String[] lineArgs = new String[split.length - 1];\n\n                for (int j = 1; j < split.length - 1; j++) {\n                    if (!Objects.equals(split[j], commandName)) {\n                        lineArgs[j - 1] = split[j];\n                    }\n                }\n\n                if (command instanceof CommandWithElement) {\n                    Set<Command> allCommands = PackageParser.getAllCommands();\n                    ArrayList<String> commandsNames = new ArrayList<String>();\n\n                    for (Command c : allCommands) {\n                        commandsNames.add(c.getName());\n                    }\n\n                    ArrayList<String> element = new ArrayList<String>();\n\n                    i++;\n\n                    while (i < lines.length && !commandsNames.contains(lines[i])) {\n                        element.add(lines[i]);\n                        i++;\n                    }\n\n                    try {\n                        System.out.println(element);\n                        LabWork lw = new LabWork(element);\n                        System.out.println(lw);\n                        LabWork.validate(lw);\n                        ((CommandWithElement) command).executeFromFile(collectionHandler, lw, lineArgs);\n\n                    } catch (Exception e) {\n                        IOHandler.println(e.getMessage());\n                    }\n\n                } else {\n                    command.execute(collectionHandler, lineArgs);\n                }\n            }\n\n        } catch (Exception e) {\n            IOHandler.println(e.getMessage());\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/ExecuteScript.java b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/ExecuteScript.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/ExecuteScript.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/ExecuteScript.java	
+@@ -7,7 +7,6 @@
+ import ru.ifmo.se.handlers.PackageParser;
+ 
+ import java.util.ArrayList;
+-import java.util.Objects;
+ import java.util.Set;
+ 
+ 
+@@ -47,14 +46,6 @@
+                     continue;
+                 }
+ 
+-                String[] lineArgs = new String[split.length - 1];
+-
+-                for (int j = 1; j < split.length - 1; j++) {
+-                    if (!Objects.equals(split[j], commandName)) {
+-                        lineArgs[j - 1] = split[j];
+-                    }
+-                }
+-
+                 if (command instanceof CommandWithElement) {
+                     Set<Command> allCommands = PackageParser.getAllCommands();
+                     ArrayList<String> commandsNames = new ArrayList<String>();
+@@ -67,24 +58,24 @@
+ 
+                     i++;
+ 
+-                    while (i < lines.length && !commandsNames.contains(lines[i])) {
++                    while (i < lines.length && !commandsNames.contains(lines[i].split("\\s+")[0])) {
+                         element.add(lines[i]);
+                         i++;
+                     }
+ 
++                    i--;
++
+                     try {
+-                        System.out.println(element);
+                         LabWork lw = new LabWork(element);
+-                        System.out.println(lw);
+                         LabWork.validate(lw);
+-                        ((CommandWithElement) command).executeFromFile(collectionHandler, lw, lineArgs);
++                        ((CommandWithElement) command).executeFromFile(collectionHandler, lw, split);
+ 
+                     } catch (Exception e) {
+                         IOHandler.println(e.getMessage());
+                     }
+ 
+                 } else {
+-                    command.execute(collectionHandler, lineArgs);
++                    command.execute(collectionHandler, split);
+                 }
+             }
+ 
+Index: ../../programming/lab5/collection.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><labWorks>\n<LabWork>\n    <id>1</id>\n    <name>gr</name>\n    <coordinates>\n        <x>23</x>\n        <y>3</y>\n    </coordinates>\n    <creationDate>2024-02-27T17:42:29.517568</creationDate>\n    <minimalPoint>3.0</minimalPoint>\n    <tunedInWorks>3</tunedInWorks>\n    <averagePoint>3.0</averagePoint>\n    <difficulty>VERY_HARD</difficulty>\n    <discipline>\n        <name>fs</name>\n        <selfStudyHours>3</selfStudyHours>\n    </discipline>\n</LabWork>\n<LabWork>\n    <id>2</id>\n    <name>ffffffffffff</name>\n    <coordinates>\n        <x>323</x>\n        <y>23</y>\n    </coordinates>\n    <creationDate>2024-02-27T17:43:16.676805</creationDate>\n    <minimalPoint>3.0</minimalPoint>\n    <tunedInWorks>3</tunedInWorks>\n    <averagePoint>3.0</averagePoint>\n    <difficulty>VERY_HARD</difficulty>\n    <discipline>\n        <name>3</name>\n        <selfStudyHours>3</selfStudyHours>\n    </discipline>\n</LabWork>\n<LabWork>\n    <id>1</id>\n    <name>242124</name>\n    <coordinates>\n        <x>12</x>\n        <y>4</y>\n    </coordinates>\n    <creationDate>2024-03-08T15:47:36.182963</creationDate>\n    <minimalPoint>2.0</minimalPoint>\n    <tunedInWorks>4</tunedInWorks>\n    <averagePoint>4.0</averagePoint>\n    <difficulty>VERY_HARD</difficulty>\n    <discipline>\n        <name>4</name>\n        <selfStudyHours>3</selfStudyHours>\n    </discipline>\n</LabWork>\n</labWorks>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../programming/lab5/collection.xml b/../../programming/lab5/collection.xml
+--- a/../../programming/lab5/collection.xml	
++++ b/../../programming/lab5/collection.xml	
+@@ -35,19 +35,19 @@
+ </LabWork>
+ <LabWork>
+     <id>1</id>
+-    <name>242124</name>
++    <name>&lt;name&gt;a&lt;/name&gt;</name>
+     <coordinates>
+-        <x>12</x>
+-        <y>4</y>
++        <x>1</x>
++        <y>12</y>
+     </coordinates>
+-    <creationDate>2024-03-08T15:47:36.182963</creationDate>
+-    <minimalPoint>2.0</minimalPoint>
+-    <tunedInWorks>4</tunedInWorks>
+-    <averagePoint>4.0</averagePoint>
++    <creationDate>2024-03-15T12:35:01.849748</creationDate>
++    <minimalPoint>1.0</minimalPoint>
++    <tunedInWorks>1</tunedInWorks>
++    <averagePoint>1.0</averagePoint>
+     <difficulty>VERY_HARD</difficulty>
+     <discipline>
+-        <name>4</name>
+-        <selfStudyHours>3</selfStudyHours>
++        <name>§</name>
++        <selfStudyHours>12</selfStudyHours>
+     </discipline>
+ </LabWork>
+ </labWorks>
+\ No newline at end of file
+Index: ../../programming/lab5/my_script
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>info\nshow\nadd\nlab_name\n1\n2\n3\n4\n5\nvery hard\ndiscipline_name\n6
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../programming/lab5/my_script b/../../programming/lab5/my_script
+--- a/../../programming/lab5/my_script	
++++ b/../../programming/lab5/my_script	
+@@ -9,4 +9,5 @@
+ 5
+ very hard
+ discipline_name
+-6
+\ No newline at end of file
++6
++execute_script s.txt
+\ No newline at end of file
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/commands/FilterContainsName.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.commands;\n\nimport ru.ifmo.se.collections.LabWork;\nimport ru.ifmo.se.handlers.CollectionHandler;\nimport ru.ifmo.se.handlers.IOHandler;\n\nimport java.util.ArrayDeque;\n\npublic class FilterContainsName implements Command {\n    @Override\n    public String getName() {\n        return \"filter_by_name\";\n    }\n\n    @Override\n    public String getDescription() {\n        return this.getName() + \" {substring}                   - print all elements contain this substring\";\n    }\n\n    @Override\n    public void execute(CollectionHandler collectionHandler, String[] args) {\n        ArrayDeque<LabWork> collection = collectionHandler.getCollection();\n\n        String substring = args[1];\n\n        for (LabWork lw: collection) {\n            if (lw.getName().toLowerCase().contains(substring)) {\n                IOHandler.println(lw);\n            }\n        }\n    }\n}\n
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/FilterContainsName.java b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/FilterContainsName.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/FilterContainsName.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/FilterContainsName.java	
+@@ -14,7 +14,7 @@
+ 
+     @Override
+     public String getDescription() {
+-        return this.getName() + " {substring}                   - print all elements contain this substring";
++        return this.getName() + " {substring}                   - print all elements contain this substring\n";
+     }
+ 
+     @Override
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/commands/AddIfMin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.commands;\n\nimport ru.ifmo.se.collections.LabWork;\nimport ru.ifmo.se.handlers.CollectionHandler;\n\npublic class AddIfMin implements CommandWithElement {\n    @Override\n    public String getName() {\n        return \"add_if_min\";\n    }\n\n    @Override\n    public String getDescription() {\n        return this.getName() + \" {element}            - add if minimalPoint greater than minimum element\";\n    }\n\n    @Override\n    public void execute(CollectionHandler collectionHandler, String[] args) {\n        LabWork lab = new LabWork(Boolean.FALSE);\n\n        for (LabWork lw: collectionHandler.getCollection()) {\n            if (lab.getAveragePoint() > lw.getAveragePoint()) {\n                collectionHandler.add(lab);\n                break;\n            }\n        }\n    }\n\n    @Override\n    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {\n        for (LabWork lab: collectionHandler.getCollection()) {\n            if (lw.getAveragePoint() > lab.getAveragePoint()) {\n                collectionHandler.add(lw);\n                break;\n            }\n        }\n    }\n}\n
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/AddIfMin.java b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/AddIfMin.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/AddIfMin.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/AddIfMin.java	
+@@ -11,7 +11,7 @@
+ 
+     @Override
+     public String getDescription() {
+-        return this.getName() + " {element}            - add if minimalPoint greater than minimum element";
++        return this.getName() + " {element}            - add if minimalPoint greater than minimum element\n";
+     }
+ 
+     @Override
+Index: ../../programming/lab5/src/main/java/ru/ifmo/se/commands/CountGreaterThanTunedInWorks.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.ifmo.se.commands;\n\nimport ru.ifmo.se.collections.LabWork;\nimport ru.ifmo.se.handlers.CollectionHandler;\nimport ru.ifmo.se.handlers.IOHandler;\n\npublic class CountGreaterThanTunedInWorks implements CommandWithElement {\n\n    @Override\n    public String getName() {\n        return \"greater_tuned2work\";\n    }\n\n    @Override\n    public String getDescription() {\n        return getName() + \"                 - print count of elements that have a greater tuned in works\";\n    }\n\n    @Override\n    public void execute(CollectionHandler collectionHandler, String[] args) {\n        LabWork lw = new LabWork(Boolean.FALSE);\n\n        int count = 0;\n        for (LabWork lab: collectionHandler.getCollection()) {\n            if (lw.getTunedInWorks() > lab.getTunedInWorks()) {\n                count += 1;\n            }\n        }\n\n        IOHandler.println(count);\n    }\n\n    @Override\n    public void executeFromFile(CollectionHandler collectionHandler, LabWork lw, String[] args) {\n        int count = 0;\n        for (LabWork lab: collectionHandler.getCollection()) {\n            if (lw.getTunedInWorks() > lab.getTunedInWorks()) {\n                count += 1;\n            }\n        }\n\n        IOHandler.println(count);\n    }\n}\n
+===================================================================
+diff --git a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/CountGreaterThanTunedInWorks.java b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/CountGreaterThanTunedInWorks.java
+--- a/../../programming/lab5/src/main/java/ru/ifmo/se/commands/CountGreaterThanTunedInWorks.java	
++++ b/../../programming/lab5/src/main/java/ru/ifmo/se/commands/CountGreaterThanTunedInWorks.java	
+@@ -13,7 +13,7 @@
+ 
+     @Override
+     public String getDescription() {
+-        return getName() + "                 - print count of elements that have a greater tuned in works";
++        return getName() + "                 - print count of elements that have a greater tuned in works\n";
+     }
+ 
+     @Override
