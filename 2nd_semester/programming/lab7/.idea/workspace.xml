@@ -7,6 +7,23 @@
     <list default="true" id="c8656d21-adf5-4b81-8aeb-2e333c95f6e6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../db/lab2/queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../db/lab2/queries.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lab5/my_script" beforeDir="false" afterPath="$PROJECT_DIR$/../lab5/my_script" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e1789d1f-9b51-4dc8-af16-b188577640e3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e1789d1f-9b51-4dc8-af16-b188577640e3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e1789d1f-9b51-4dc8-af16-b188577640e3/storage_v2/_src_/database/programming.2WBHPA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e1789d1f-9b51-4dc8-af16-b188577640e3/storage_v2/_src_/database/programming.2WBHPA/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/client/network/UDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/client/network/UDPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/common/commands/auth/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/common/commands/auth/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/common/handlers/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/common/handlers/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/common/network/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/common/network/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +57,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -50,6 +70,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Shell Script.Unnamed.executor": "Run",
@@ -72,7 +96,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Shell Script.run client">
+  <component name="RunManager" selected="Shell Script.run server">
     <configuration name="run client" type="ShConfigurationType">
       <option name="SCRIPT_TEXT" value="./gradlew run -q --console=plain" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
@@ -130,6 +154,7 @@
       <workItem from="1715598935804" duration="18000" />
       <workItem from="1715598958204" duration="670000" />
       <workItem from="1715600075208" duration="6851000" />
+      <workItem from="1715608850640" duration="11778000" />
     </task>
     <servers />
   </component>

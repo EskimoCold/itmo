@@ -36,6 +36,6 @@ public class Login extends AuthCommand {
             info = "User does not exist";
         }
 
-        return new Response(this.getUser(), info);
+        return new Response(user, info);
     }
 }

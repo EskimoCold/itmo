@@ -6,6 +6,7 @@ import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
+import java.util.Objects;
 
 public class RemoveById extends CollectionCommand {
     @Override
@@ -27,6 +28,7 @@ public class RemoveById extends CollectionCommand {
             long targetId = Integer.parseInt(args[0]);
 
             collection.stream()
+                    .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))
                     .filter(lw -> lw.getId() == targetId)
                     .findFirst()
                     .ifPresent(collection::remove);

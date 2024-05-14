@@ -5,6 +5,7 @@ import common.network.Response;
 import common.collections.LabWork;
 
 import java.util.ArrayDeque;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Update extends CommandWithElement{
@@ -31,6 +32,7 @@ public class Update extends CommandWithElement{
             long targetId = Integer.parseInt(args[0]);
 
             Optional<LabWork> labWork = collection.stream()
+                    .filter(labb -> Objects.equals(this.getUser().getUsername(), labb.getUsername()))
                     .filter(l -> l.getId() == targetId)
                     .findFirst();
 

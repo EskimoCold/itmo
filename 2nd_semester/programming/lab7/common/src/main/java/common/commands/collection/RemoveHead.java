@@ -6,6 +6,7 @@ import common.handlers.CollectionHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
+import java.util.Objects;
 
 public class RemoveHead extends CollectionCommand {
     @Override
@@ -20,9 +21,13 @@ public class RemoveHead extends CollectionCommand {
 
     @Override
     public Response execute(String[] args, CollectionHandler collectionHandler) {
-        ArrayDeque<LabWork> newCollection = collectionHandler.getCollection();
-        newCollection.removeFirst();
-        collectionHandler.setCollection(newCollection);
+        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+
+        collection.stream()
+                .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))
+                .findFirst()
+                .ifPresent(collection::remove);
+
         return new Response(null, "Removed");
     }
 }

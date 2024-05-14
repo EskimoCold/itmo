@@ -9,11 +9,13 @@ repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencies {
-//    implementation 'org.postgresql:postgresql:42.1.4'
-//    implementation 'postgresql:postgresql:9.0-801.jdbc4'
-//    implementation 'org.postgresql:postgresql:9.3-1100-jdbc4'
-//    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql:42.1.4'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation 'org.reflections:reflections:0.10.2'

@@ -9,7 +9,9 @@
         </processorPath>
         <module name="lab6.server.main" />
         <module name="lab6.server.test" />
+        <module name="lab6.client.main" />
         <module name="lab6.common.main" />
+        <module name="lab6.client.test" />
         <module name="lab6.common.test" />
       </profile>
     </annotationProcessing>

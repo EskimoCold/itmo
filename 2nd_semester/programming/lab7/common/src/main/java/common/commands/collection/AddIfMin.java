@@ -2,6 +2,7 @@ package common.commands.collection;
 
 import common.collections.LabWork;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -30,8 +31,12 @@ public class AddIfMin extends CommandWithElement {
                 .anyMatch(lw -> lab.getAveragePoint() > lw.getAveragePoint());
 
         if (shouldAdd) {
-            lab.setId(LabWork.generateId());
-            collectionHandler.add(lab);
+            LabWork labWork = DBHandler.createLab(lab, this.getUser(), true);
+
+            if (labWork != null) {
+                collectionHandler.add(labWork);
+            }
+
             return  new Response(null, "Added");
         } else {
             return new Response(null, "Not added");

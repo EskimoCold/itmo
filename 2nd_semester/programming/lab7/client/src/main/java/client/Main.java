@@ -32,9 +32,9 @@ public class Main {
             int port = Integer.parseInt(prop.getProperty("CLIENT_PORT"));
 
             Scanner scanner = new Scanner(System.in);
+            UDPClient client = new UDPClient(port);
 
             while (true) {
-                UDPClient client = new UDPClient(port);
                 System.out.println("Client Shell>>");
                 String input = scanner.nextLine();
 
@@ -50,6 +50,8 @@ public class Main {
 
                     Request request;
                     if (command instanceof CollectionCommand && client.getUser() != null) {
+                        ((CollectionCommand) command).setUser(client.getUser());
+
                         if (command instanceof ExecuteScript) {
                             ClientExecuteScript.retrieveCommands(commandArgs, client);
                         } else {
@@ -60,6 +62,7 @@ public class Main {
                                 request = new Request(null, command, commandArgs);
                             }
 
+                            client.createConnection();
                             client.sendRequest(request);
                             Response response = client.getResponse(true);
                             IOHandler.println(response);
@@ -69,6 +72,8 @@ public class Main {
                         User user = new User();
                         ((AuthCommand) command).setUser(user);
                         request = new Request(null, command, commandArgs);
+
+                        client.createConnection();
                         client.sendRequest(request);
                         Response response = client.getResponse(true);
                         IOHandler.println(response);

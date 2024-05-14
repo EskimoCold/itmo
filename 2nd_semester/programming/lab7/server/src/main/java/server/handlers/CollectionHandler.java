@@ -1,5 +1,6 @@
 package server.handlers;
 
+import common.handlers.DBHandler;
 import common.handlers.IOHandler;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,19 +20,7 @@ public class CollectionHandler implements common.handlers.CollectionHandler {
 
     public CollectionHandler() {
         try {
-            ArrayList<LabWork> labs = XMLReader.read(filepath);
-
-            for (LabWork lw : labs) {
-                try {
-                    LabWork.validate(lw);
-                    LabWork.addId(lw.getId());
-                    this.collection.add(lw);
-
-                } catch (Exception e) {
-                    IOHandler.println(e.getMessage());
-                    IOHandler.println("Skipping this LabWork...");
-                }
-            }
+            this.collection = DBHandler.loadCollectionToMemory();
 
         } catch (Exception e) {
             IOHandler.println(e.getMessage());

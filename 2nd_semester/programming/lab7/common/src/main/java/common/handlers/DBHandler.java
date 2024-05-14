@@ -1,9 +1,11 @@
 package common.handlers;
 
+import common.collections.LabWork;
 import common.exceptions.UserException;
 import common.network.User;
 
 import java.sql.*;
+import java.util.ArrayDeque;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -96,6 +98,122 @@ public class DBHandler {
             return user.getPassword().equals(userToCheck.getPassword());
         } else{
             throw new UserException("User does not exist");
+        }
+    }
+
+    public static LabWork createLab(LabWork lab, User user, boolean setFields){
+        String addLabQuery;
+
+        if (setFields){
+            addLabQuery = "INSERT INTO labworks(id, lab_name, coordinates_x, coordinates_y, date_created, minimal_point, tuned_in_works, average_point, difficulty, discipline_name, self_study_hours, username) " +
+                    "VALUES (DEFAULT, ?,?,?, CURRENT_TIMESTAMP, ?,?,?,?,?,?,?)" +
+                    "RETURNING id, date_created;";
+        } else {
+            addLabQuery = "INSERT INTO labworks(id, lab_name, coordinates_x, coordinates_y, date_created, minimal_point, tuned_in_works, average_point, difficulty, discipline_name, self_study_hours, username) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)" +
+                    "RETURNING id, date_created;";
+        }
+
+        try(Connection connection = getConnection()){
+            try (PreparedStatement stmt = connection.prepareStatement(addLabQuery)){
+                if(!setFields){
+                    stmt.setInt(1, lab.getId().intValue());
+                    stmt.setString(2, lab.getName());
+                    stmt.setInt(3, lab.getCoordinates().getX().intValue());
+                    stmt.setInt(4, lab.getCoordinates().getY().intValue());
+                    stmt.setTimestamp(5, Timestamp.valueOf(lab.getCreationDate()));
+                    stmt.setDouble(6, lab.getMinimalPoint());
+                    stmt.setInt(7, lab.getTunedInWorks());
+                    stmt.setDouble(8, lab.getAveragePoint());
+                    stmt.setString(9, lab.getDifficulty().toString());
+                    stmt.setString(10, lab.getDiscipline().getName());
+                    stmt.setInt(11, lab.getDiscipline().getSelfStudyHours().intValue());
+                    stmt.setString(12, lab.getUsername());
+                    return lab;
+
+                } else{
+                    stmt.setString(1, lab.getName());
+                    stmt.setInt(2, lab.getCoordinates().getX().intValue());
+                    stmt.setInt(3, lab.getCoordinates().getY().intValue());
+                    stmt.setDouble(4, lab.getMinimalPoint());
+                    stmt.setInt(5, lab.getTunedInWorks());
+                    stmt.setDouble(6, lab.getAveragePoint());
+                    stmt.setString(7, lab.getDifficulty().toString());
+                    stmt.setString(8, lab.getDiscipline().getName());
+                    stmt.setInt(9, lab.getDiscipline().getSelfStudyHours().intValue());
+                    stmt.setString(10, lab.getUsername());
+
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        if (rs.next()) {
+                            lab.setId(rs.getInt(1));
+                            lab.setCreationDate(rs.getTimestamp(2).toLocalDateTime());
+                            lab.setUsername(user.getUsername());
+
+                            return lab;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e){
+            IOHandler.println(e.getClass().getSimpleName() + ": " + e.getMessage());
+            return null;
+        }
+
+        return null;
+    }
+
+    public static ArrayDeque<LabWork> loadCollectionToMemory(){
+        String getAllRoutesQuery = "SELECT * FROM labworks;";
+        ArrayDeque<LabWork> collection = new ArrayDeque<>();
+
+        try(Connection connection = getConnection()){
+            try(PreparedStatement stmt = connection.prepareStatement(getAllRoutesQuery)){
+                try(ResultSet rs = stmt.executeQuery()){
+                    while(rs.next()){
+                        try{
+                            LabWork lab = new LabWork(
+                                    rs.getLong(1),
+                                    rs.getString(2),
+                                    rs.getLong(3),
+                                    rs.getLong(4),
+                                    rs.getTimestamp(5).toLocalDateTime(),
+                                    rs.getDouble(6),
+                                    rs.getInt(7),
+                                    rs.getDouble(8),
+                                    rs.getString(9),
+                                    rs.getString(10),
+                                    rs.getLong(11),
+                                    rs.getString(12)
+                            );
+                            LabWork.validateWithOutId(lab);
+                            collection.add(lab);
+                        } catch (Exception e){
+                            IOHandler.println(e.getClass().getSimpleName() + ": " + e.getMessage());
+                        }
+                    }
+
+                    return collection;
+                }
+            }
+        } catch (SQLException e){
+            IOHandler.println(e.getClass().getSimpleName() + ": " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public static boolean removeAllUserLabs(User user){
+        String removeAllRoutesQuery = "DELETE FROM labworks WHERE username = ?";
+
+        try(Connection connection = getConnection()){
+            try(PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)){
+                stmt.setString(1, user.getUsername());
+                stmt.execute();
+
+                return true;
+            }
+        } catch (SQLException e){
+            return false;
         }
     }
 }

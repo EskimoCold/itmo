@@ -23,7 +23,9 @@ public class UDPClient {
 
     public UDPClient(int port) {
         this.port = port;
+    }
 
+    public void createConnection() {
         try {
             socket = new DatagramSocket();
             socket.setSoTimeout(5000);

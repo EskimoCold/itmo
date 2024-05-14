@@ -1,5 +1,6 @@
 package common.collections;
 
+import common.network.User;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -33,7 +34,7 @@ public class LabWork implements Serializable, Comparable<LabWork>{
     @XmlElement
     private Coordinates coordinates; //Поле не может быть null
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    @Getter
+    @Getter @Setter
     private LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     @XmlElement
     @Getter
@@ -52,6 +53,8 @@ public class LabWork implements Serializable, Comparable<LabWork>{
     private Discipline discipline; //Поле может быть null
     @Getter
     private static final List<Long> usedIds = new ArrayList<>();
+    @Getter @Setter
+    private String username;
 
     public LabWork() {
 
@@ -69,14 +72,14 @@ public class LabWork implements Serializable, Comparable<LabWork>{
 
     public LabWork(Boolean fromFile) {
         if (!fromFile) {
-            this.id = this.generateId();
+            this.id = generateId();
             this.creationDate = LocalDateTime.now();
             this.fillFields();
         }
     }
 
     public LabWork(ArrayList<String> elements) throws Exception {
-        this.id = this.generateId();
+        this.id = generateId();
         this.creationDate = LocalDateTime.now();
         this.name = elements.get(0);
         this.coordinates = new Coordinates(Long.parseLong(elements.get(1)), Long.parseLong(elements.get(2)));
@@ -85,6 +88,29 @@ public class LabWork implements Serializable, Comparable<LabWork>{
         this.averagePoint = Double.parseDouble(elements.get(5));
         this.difficulty = Difficulty.parseDifficulty(elements.get(6));
         this.discipline = new Discipline(elements.get(7), Long.parseLong(elements.get(8)));
+    }
+
+    public LabWork(long id,
+                   String name,
+                   Long x, Long y,
+                   LocalDateTime creationDate,
+                   double minimalPoint,
+                   int tunedInWorks,
+                   double averagePoint,
+                   String difficulty,
+                   String disciplineName, Long selfStudyHours,
+                   String username) throws InvalidParameterException {
+        this.id = id;
+        this.name = name;
+        this.coordinates = new Coordinates(x, y);
+        this.creationDate = creationDate;
+        this.minimalPoint = minimalPoint;
+        this.tunedInWorks = tunedInWorks;
+        this.averagePoint = averagePoint;
+        this.difficulty = Difficulty.parseDifficulty(difficulty);
+        this.discipline = new Discipline(disciplineName, selfStudyHours);
+        this.username = username;
+
     }
 
     public void setId(long id) {

@@ -1,6 +1,7 @@
 package server;
 
 import common.collections.LabWork;
+import common.commands.collection.Save;
 import server.handlers.CollectionHandler;
 import server.handlers.XMLManager;
 import server.network.UDPServer;
@@ -31,15 +32,8 @@ public class Main {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to file...");
 
-                String savePath = System.getenv("LAB5_FILEPATH");
-                ArrayList<LabWork> labs = new ArrayList<>(collectionHandler.getCollection());
+                // todo: save
 
-                try {
-                    XMLManager.XMLWriter.write(labs, savePath);
-                    logger.log(Level.FINE, "Saved");
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, e.getMessage());
-                }
             }));
 
             try {
