@@ -2,6 +2,7 @@ package common.commands.collection;
 
 import common.collections.LabWork;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -20,12 +21,12 @@ public class RemoveGreater extends CommandWithElement{
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         return null;
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab, DBHandler dbHandler) {
         ArrayDeque<LabWork> updatedCollection = collectionHandler.getCollection().stream()
                 .filter(labWork -> Objects.equals(this.getUser().getUsername(), labWork.getUsername()))
                 .filter(labWork -> lab.compareTo(labWork) <= 0)

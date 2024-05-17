@@ -2,6 +2,7 @@ package common.commands.collection;
 
 import common.commands.Command;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.handlers.PackageParser;
 import common.network.Response;
 
@@ -19,7 +20,7 @@ public class Help extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         Set<Command> commands = PackageParser.getAllCommands();
 
         StringBuilder output = new StringBuilder();

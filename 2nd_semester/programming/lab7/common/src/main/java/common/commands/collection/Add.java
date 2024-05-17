@@ -17,13 +17,13 @@ public class Add extends CommandWithElement {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         return null;
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab) {
-        LabWork labWork = DBHandler.createLab(lab, this.getUser(), true);
+    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab, DBHandler dbHandler) {
+        LabWork labWork = dbHandler.createLab(lab, this.getUser().getUsername(), true);
 
         if (labWork != null) {
             collectionHandler.add(labWork);

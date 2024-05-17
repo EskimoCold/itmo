@@ -1,6 +1,6 @@
 package common.commands.collection;
 
-import common.commands.Command;
+import common.collections.LabWork;
 import common.handlers.CollectionHandler;
 import common.handlers.DBHandler;
 import common.network.Response;
@@ -19,12 +19,11 @@ public class Save extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
-        DBHandler.removeAllUserLabs(this.getUser());
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+        dbHandler.removeAllLabs();
 
-        collectionHandler.getCollection().stream()
-                .filter(lab -> Objects.equals(lab.getUsername(), this.getUser().getUsername()))
-                .forEach(lab -> DBHandler.createLab(lab, this.getUser(), false));
+        collectionHandler.getCollection()
+                .forEach(lab -> dbHandler.createLab(lab, lab.getUsername(), false));
 
         return new Response(null, "Saved");
     }

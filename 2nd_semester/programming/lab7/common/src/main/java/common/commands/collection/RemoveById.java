@@ -3,6 +3,7 @@ package common.commands.collection;
 import common.collections.LabWork;
 import common.commands.Command;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -20,12 +21,18 @@ public class RemoveById extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
-        ArrayDeque<LabWork> newCollection = new ArrayDeque<LabWork>();
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         ArrayDeque<LabWork> collection = collectionHandler.getCollection();
 
         try {
             long targetId = Integer.parseInt(args[0]);
+
+            boolean shouldDelete = collection.stream()
+                    .anyMatch(lw -> (Objects.equals(this.getUser().getUsername(), lw.getUsername())) && lw.getId() == targetId);
+
+            if (!shouldDelete) {
+                return new Response(null, "Labwork with this id is not present");
+            }
 
             collection.stream()
                     .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))
@@ -33,7 +40,7 @@ public class RemoveById extends CollectionCommand {
                     .findFirst()
                     .ifPresent(collection::remove);
 
-            collectionHandler.setCollection(newCollection);
+            collectionHandler.setCollection(collection);
             return new Response(null, "Removed");
 
         } catch (NumberFormatException e) {

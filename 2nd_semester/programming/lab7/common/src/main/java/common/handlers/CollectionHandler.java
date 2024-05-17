@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 
 public interface CollectionHandler {
-    final LocalDateTime dateCreated = LocalDateTime.now();
     ArrayDeque<LabWork> collection = null;
-    final String filepath = null;
 
     void add(LabWork lw);
     String info();

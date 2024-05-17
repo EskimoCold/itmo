@@ -48,6 +48,8 @@ public class Main {
                         System.exit(0);
                     }
 
+                    client.createConnection();
+
                     Request request;
                     if (command instanceof CollectionCommand && client.getUser() != null) {
                         ((CollectionCommand) command).setUser(client.getUser());
@@ -57,12 +59,12 @@ public class Main {
                         } else {
                             if (command instanceof CommandWithElement) {
                                 LabWork lab = new LabWork(false);
+                                lab.setUsername(client.getUser().getUsername());
                                 request = new Request(null, command, commandArgs, lab);
                             } else {
                                 request = new Request(null, command, commandArgs);
                             }
 
-                            client.createConnection();
                             client.sendRequest(request);
                             Response response = client.getResponse(true);
                             IOHandler.println(response);

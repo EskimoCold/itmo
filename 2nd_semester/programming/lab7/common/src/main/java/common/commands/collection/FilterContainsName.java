@@ -3,6 +3,7 @@ package common.commands.collection;
 import common.collections.LabWork;
 import common.commands.Command;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -20,7 +21,7 @@ public class FilterContainsName extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         String substring = args[0].toLowerCase();
         ArrayDeque<LabWork> collection = collectionHandler.getCollection();
 

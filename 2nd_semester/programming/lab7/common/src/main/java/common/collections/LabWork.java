@@ -213,8 +213,7 @@ public class LabWork implements Serializable, Comparable<LabWork>{
             String input = scanner.nextLine();
 
             if (input.isBlank()) {
-                this.averagePoint = null;
-                return;
+                throw new InvalidParameterException("enter the value");
             }
 
             double parsed = Double.parseDouble(input);
@@ -327,6 +326,7 @@ public class LabWork implements Serializable, Comparable<LabWork>{
                 "tuned in works: " + this.tunedInWorks + "\n" +
                 "average point: " + this.averagePoint + "\n" +
                 "difficulty: " + this.difficulty + "\n" +
-                "discipline: " + this.discipline;
+                "discipline: " + this.discipline + "\n" +
+                "OWNER USERNAME: " + this.username;
     }
 }

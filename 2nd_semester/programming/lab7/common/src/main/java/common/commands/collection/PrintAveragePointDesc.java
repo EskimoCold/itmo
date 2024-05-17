@@ -3,6 +3,7 @@ package common.commands.collection;
 import common.collections.LabWork;
 import common.commands.Command;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
@@ -19,7 +20,7 @@ public class PrintAveragePointDesc extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         ArrayDeque<LabWork> sortedCollection = (ArrayDeque<LabWork>) collectionHandler.getCollection().stream().sorted();
 
         StringBuilder output = new StringBuilder();

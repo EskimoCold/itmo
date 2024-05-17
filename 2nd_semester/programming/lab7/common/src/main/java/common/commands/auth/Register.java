@@ -18,15 +18,15 @@ public class Register extends AuthCommand{
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         String info;
         User user = null;
 
-        if(DBHandler.checkUserPresence(this.getUser()) != null){
+        if(dbHandler.checkUserPresence(this.getUser()) != null){
             info = "User already exists";
         } else {
             try{
-                user = DBHandler.createUser(this.getUser());
+                user = dbHandler.createUser(this.getUser());
 
                 if(user != null){
                     info = "User successfully created";

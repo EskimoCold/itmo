@@ -2,6 +2,7 @@ package common.commands.collection;
 
 import common.commands.Command;
 import common.handlers.CollectionHandler;
+import common.handlers.DBHandler;
 import common.network.Response;
 
 public class Info extends CollectionCommand {
@@ -16,7 +17,7 @@ public class Info extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         return new Response(null, collectionHandler.info());
     }
 }

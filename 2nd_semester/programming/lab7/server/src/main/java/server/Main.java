@@ -1,15 +1,12 @@
 package server;
 
-import common.collections.LabWork;
 import common.commands.collection.Save;
 import server.handlers.CollectionHandler;
-import server.handlers.XMLManager;
+import server.handlers.DBHandler;
 import server.network.UDPServer;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -26,18 +23,26 @@ public class Main {
             prop.load(resourceAsStream);
             int port = Integer.parseInt(prop.getProperty("SERVER_PORT"));
 
-            CollectionHandler collectionHandler = new CollectionHandler();
+            final String jdbcUrl = System.getenv("DATABASE_URL");
+            final String username = System.getenv("DATABASE_USERNAME");
+            final String password = System.getenv("DATABASE_PASSWORD");
+
+            DBHandler dbHandler = new DBHandler(jdbcUrl, username, password);
+            CollectionHandler collectionHandler = new CollectionHandler(dbHandler);
             UDPServer server = new UDPServer(port);
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to file...");
+                logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to db...");
 
-                // todo: save
-
+                Save saveCommand = new Save();
+                saveCommand.execute(new String[]{}, collectionHandler, dbHandler);
+                logger.log(Level.FINE, "Collection was saved");
             }));
 
             try {
-                new Thread(() -> server.run(collectionHandler)).start();
+                new Thread(() -> {
+                    server.run(collectionHandler, dbHandler);
+                }).start();
 
                 while (true) {
                     System.out.println("Server Shell>>");

@@ -9,7 +9,6 @@ import java.net.DatagramSocket;
 
 public class IOManager {
     public static Request input(DatagramSocket socket, DatagramPacket packet) throws IOException, ClassNotFoundException {
-        socket.receive(packet);
         byte[] data = packet.getData();
         ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream is = new ObjectInputStream(in);

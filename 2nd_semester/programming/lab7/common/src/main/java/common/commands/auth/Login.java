@@ -18,13 +18,13 @@ public class Login extends AuthCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler) {
+    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
         String info;
-        User user = DBHandler.checkUserPresence(this.getUser());
+        User user = dbHandler.checkUserPresence(this.getUser());
 
         if (user != null){
             try{
-                if(DBHandler.checkUserPassword(this.getUser())){
+                if(dbHandler.checkUserPassword(this.getUser())){
                     info = "Found user " + this.getUser().getUsername();
                 } else {
                     info = "Passwords does not match";
