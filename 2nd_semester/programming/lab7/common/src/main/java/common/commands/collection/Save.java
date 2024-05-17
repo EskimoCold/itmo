@@ -1,11 +1,8 @@
 package common.commands.collection;
 
-import common.collections.LabWork;
 import common.handlers.CollectionHandler;
 import common.handlers.DBHandler;
 import common.network.Response;
-
-import java.util.Objects;
 
 public class Save extends CollectionCommand {
     @Override

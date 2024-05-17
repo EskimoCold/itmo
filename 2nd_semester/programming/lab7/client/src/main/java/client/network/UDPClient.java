@@ -1,16 +1,15 @@
 package client.network;
 
-import java.io.*;
-import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import common.commands.collection.CollectionCommand;
 import common.network.Request;
 import common.network.Response;
 import common.network.User;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.*;
+import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UDPClient {
     private final int port;

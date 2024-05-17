@@ -1,6 +1,7 @@
 package common.collections;
 
-import common.network.User;
+import common.exceptions.InvalidParameterException;
+import common.handlers.IOHandler;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -9,8 +10,6 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Getter;
 import lombok.Setter;
 import org.w3c.dom.Document;
-import common.exceptions.InvalidParameterException;
-import common.handlers.IOHandler;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,7 +17,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import java.io.Serializable;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.*;
 

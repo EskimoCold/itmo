@@ -1,9 +1,9 @@
 package server.handlers;
 
+import common.collections.LabWork;
 import common.handlers.IOHandler;
 import lombok.Getter;
 import lombok.Setter;
-import common.collections.LabWork;
 
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;

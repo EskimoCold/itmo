@@ -1,10 +1,7 @@
 package common.handlers;
 
 import common.collections.LabWork;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 
 public interface CollectionHandler {

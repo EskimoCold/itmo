@@ -1,8 +1,8 @@
 package common.handlers;
 
+import common.commands.Command;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
-import common.commands.Command;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
