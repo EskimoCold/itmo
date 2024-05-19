@@ -24,6 +24,8 @@
 ## Data Bases
 1. <a href="2nd_semester/db/lab1">Subject domains</a>
 2. <a href="2nd_semester/db/lab2">Simple selects</a>
+3. <a href="2nd_semester/db/lab3">Normal forms</a>
+4. <a href="2nd_semester/db/lab4">Query analysis</a>
 
 # Projects
 ## History
