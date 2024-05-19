@@ -2,6 +2,8 @@ package client.network;
 
 import common.collections.LabWork;
 import common.commands.Command;
+import common.commands.auth.AuthCommand;
+import common.commands.collection.CollectionCommand;
 import common.commands.collection.CommandWithElement;
 import common.commands.collection.ExecuteScript;
 import common.handlers.FileHandler;
@@ -40,6 +42,14 @@ public class ClientExecuteScript {
                     continue;
                 }
 
+                if (command instanceof AuthCommand) {
+                    IOHandler.println(commandName + " are not available to use in scripts");
+                }
+
+                if (command instanceof CollectionCommand) {
+                    ((CollectionCommand) command).setUser(client.getUser());
+                }
+
                 if (command instanceof CommandWithElement) {
                     Set<Command> allCommands = PackageParser.getAllCommands();
                     ArrayList<String> commandsNames = new ArrayList<String>();
@@ -63,6 +73,7 @@ public class ClientExecuteScript {
                         LabWork lw = new LabWork(element);
                         lw.setId(LabWork.generateId());
                         LabWork.validateWithOutId(lw);
+                        lw.setUsername(client.getUser().getUsername());
                         Request request = new Request(client.getUser(), command, commandArgs, lw);
                         IOHandler.println("Sending command " + command.getName());
                         client.sendRequest(request);
