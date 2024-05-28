@@ -42,7 +42,7 @@ public class Main {
 
             try {
                 new Thread(() -> {
-                    server.run(collectionHandler, dbHandler);
+                    server.run(collectionHandler);
                 }).start();
 
                 while (true) {

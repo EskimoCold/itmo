@@ -6,6 +6,7 @@ import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class RemoveHead extends CollectionCommand {
@@ -23,11 +24,19 @@ public class RemoveHead extends CollectionCommand {
     public Response execute(String[] args) {
         ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
-        collection.stream()
-                .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))
-                .findFirst()
-                .ifPresent(collection::remove);
+        try {
+            LabWork toDelete = collection.stream()
+                    .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))
+                    .findFirst()
+                    .get();
 
-        return new Response(null, "Removed");
+            this.getCollectionHandler().remove(toDelete);
+            this.getCollectionHandler().getDbHandler().removeLab(toDelete);
+
+            return new Response(null, "Removed");
+
+        } catch (NoSuchElementException e) {
+            return new Response(null, "Labwork is not present");
+        }
     }
 }

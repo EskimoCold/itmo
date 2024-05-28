@@ -42,6 +42,7 @@ public class DBHandler implements common.handlers.DBHandler {
         }
     }
 
+    @Override
     public Connection getConnection() {
         Connection connection = null;
 
@@ -55,6 +56,7 @@ public class DBHandler implements common.handlers.DBHandler {
         return connection;
     }
 
+    @Override
     public User checkUserPresence(User user) {
         Connection connection = getConnection();
 
@@ -75,6 +77,7 @@ public class DBHandler implements common.handlers.DBHandler {
         return null;
     }
 
+    @Override
     public User createUser(User user) throws UserException {
         if (checkUserPresence(user) != null) {
             throw new UserException("User already exists");
@@ -96,6 +99,7 @@ public class DBHandler implements common.handlers.DBHandler {
         return user;
     }
 
+    @Override
     public boolean checkUserPassword(User userToCheck) throws UserException {
         User user = checkUserPresence(userToCheck);
 
@@ -106,6 +110,7 @@ public class DBHandler implements common.handlers.DBHandler {
         }
     }
 
+    @Override
     public LabWork createLab(LabWork lab, String username, boolean setFields) {
         String addLabQuery;
 
@@ -121,36 +126,30 @@ public class DBHandler implements common.handlers.DBHandler {
 
         try (Connection connection = getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement(addLabQuery)) {
+                int index = 1;
                 if (!setFields) {
-                    stmt.setInt(1, lab.getId().intValue());
-                    stmt.setString(2, lab.getName());
-                    stmt.setInt(3, lab.getCoordinates().getX().intValue());
-                    stmt.setInt(4, lab.getCoordinates().getY().intValue());
-                    stmt.setTimestamp(5, Timestamp.valueOf(lab.getCreationDate()));
-                    stmt.setDouble(6, lab.getMinimalPoint());
-                    stmt.setInt(7, lab.getTunedInWorks());
-                    stmt.setDouble(8, lab.getAveragePoint());
-                    stmt.setString(9, lab.getDifficulty().toString());
-                    stmt.setString(10, lab.getDiscipline().getName());
-                    stmt.setInt(11, lab.getDiscipline().getSelfStudyHours().intValue());
-                    stmt.setString(12, lab.getUsername());
+                    stmt.setInt(index++, lab.getId().intValue());
+                }
+                stmt.setString(index++, lab.getName());
+                stmt.setInt(index++, lab.getCoordinates().getX().intValue());
+                stmt.setInt(index++, lab.getCoordinates().getY().intValue());
 
+                if (!setFields) {
+                    stmt.setTimestamp(index++, Timestamp.valueOf(lab.getCreationDate()));
+                }
+
+                stmt.setDouble(index++, lab.getMinimalPoint());
+                stmt.setInt(index++, lab.getTunedInWorks());
+                stmt.setDouble(index++, lab.getAveragePoint());
+                stmt.setString(index++, lab.getDifficulty().toString());
+                stmt.setString(index++, lab.getDiscipline().getName());
+                stmt.setInt(index++, lab.getDiscipline().getSelfStudyHours().intValue());
+                stmt.setString(index, lab.getUsername());
+
+                if (!setFields) {
                     stmt.execute();
-
                     return lab;
-
                 } else {
-                    stmt.setString(1, lab.getName());
-                    stmt.setInt(2, lab.getCoordinates().getX().intValue());
-                    stmt.setInt(3, lab.getCoordinates().getY().intValue());
-                    stmt.setDouble(4, lab.getMinimalPoint());
-                    stmt.setInt(5, lab.getTunedInWorks());
-                    stmt.setDouble(6, lab.getAveragePoint());
-                    stmt.setString(7, lab.getDifficulty().toString());
-                    stmt.setString(8, lab.getDiscipline().getName());
-                    stmt.setInt(9, lab.getDiscipline().getSelfStudyHours().intValue());
-                    stmt.setString(10, lab.getUsername());
-
                     try (ResultSet rs = stmt.executeQuery()) {
                         if (rs.next()) {
                             lab.setId(rs.getInt(1));
@@ -170,12 +169,27 @@ public class DBHandler implements common.handlers.DBHandler {
         return null;
     }
 
+    @Override
+    public void removeLab(LabWork lab) {
+        String removeQuery = "DELETE FROM labworks WHERE id = ?";
+
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(removeQuery)) {
+                stmt.setLong(1, lab.getId());
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+    }
+
+    @Override
     public ArrayDeque<LabWork> loadCollectionToMemory() {
-        String getAllRoutesQuery = "SELECT * FROM labworks;";
+        String getAllLabsQuery = "SELECT * FROM labworks;";
         ArrayDeque<LabWork> collection = new ArrayDeque<>();
 
         try (Connection connection = getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(getAllRoutesQuery)) {
+            try (PreparedStatement stmt = connection.prepareStatement(getAllLabsQuery)) {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         try {
@@ -210,11 +224,12 @@ public class DBHandler implements common.handlers.DBHandler {
         return null;
     }
 
+    @Override
     public void removeAllUserLabs(User user) {
-        String removeAllRoutesQuery = "DELETE FROM labworks WHERE username = ?";
+        String removeAllLabsQuery = "DELETE FROM labworks WHERE username = ?";
 
         try (Connection connection = getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)) {
+            try (PreparedStatement stmt = connection.prepareStatement(removeAllLabsQuery)) {
                 stmt.setString(1, user.getUsername());
                 stmt.execute();
             }
@@ -223,11 +238,12 @@ public class DBHandler implements common.handlers.DBHandler {
         }
     }
 
+    @Override
     public void removeAllLabs() {
-        String removeAllRoutesQuery = "DELETE FROM labworks";
+        String removeAllLabsQuery = "DELETE FROM labworks";
 
         try (Connection connection = getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)) {
+            try (PreparedStatement stmt = connection.prepareStatement(removeAllLabsQuery)) {
                 stmt.execute();
             }
         } catch (SQLException e) {

@@ -6,6 +6,7 @@ import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -27,12 +28,15 @@ public class RemoveGreater extends CommandWithElement{
 
     @Override
     public Response execute(String[] args, LabWork lab) {
-        ArrayDeque<LabWork> updatedCollection = this.getCollectionHandler().getCollection().stream()
+        ArrayList<LabWork> toDelete = this.getCollectionHandler().getCollection().stream()
                 .filter(labWork -> Objects.equals(this.getUser().getUsername(), labWork.getUsername()))
-                .filter(labWork -> lab.compareTo(labWork) <= 0)
-                .collect(Collectors.toCollection(ArrayDeque::new));
+                .filter(labWork -> lab.compareTo(labWork) > 0)
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        this.getCollectionHandler().setCollection(updatedCollection);
+        for (LabWork lw: toDelete) {
+            this.getCollectionHandler().remove(lw);
+            this.getCollectionHandler().getDbHandler().removeLab(lw);
+        }
 
         return new Response(null, "Removed");
     }

@@ -13,6 +13,7 @@ public interface DBHandler {
     User createUser(User user) throws UserException;
     boolean checkUserPassword(User userToCheck) throws UserException;
     LabWork createLab(LabWork lab, String username, boolean setFields);
+    void removeLab(LabWork lab);
     ArrayDeque<LabWork> loadCollectionToMemory();
     void removeAllUserLabs(User user);
     void removeAllLabs();

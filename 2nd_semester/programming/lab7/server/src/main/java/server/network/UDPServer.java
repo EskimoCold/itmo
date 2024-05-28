@@ -36,7 +36,7 @@ public class UDPServer {
         }
     }
 
-    public void run(CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public void run(CollectionHandler collectionHandler) {
         logger.log(Level.INFO, "RUNNING");
 
         while (true) {
@@ -45,14 +45,14 @@ public class UDPServer {
             try {
                 socket.receive(packet);
                 logger.log(Level.INFO, "Packet received from: " + packet.getAddress() + ":" + packet.getPort());
-                requestPool.submit(() -> handleRequest(packet, collectionHandler, dbHandler));
+                requestPool.submit(() -> handleRequest(packet, collectionHandler));
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage());
             }
         }
     }
 
-    private void handleRequest(DatagramPacket packet, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    private void handleRequest(DatagramPacket packet, CollectionHandler collectionHandler) {
         try {
             logger.log(Level.INFO, "Handling request...");
             Request request = IOManager.input(socket, packet);
@@ -62,44 +62,52 @@ public class UDPServer {
                 return;
             }
 
-            Command command = request.getCommand();
-            String[] args = request.getArgs();
-            LabWork lab = request.getLab();
-            logger.log(Level.INFO, "Command received: " + command.getName());
-
-            processPool.submit(() -> {
-                Response response;
-                try {
-                    command.setCollectionHandler(collectionHandler);
-
-                    if (lab != null) {
-                        response = ((CommandWithElement) command).execute(args, lab);
-                    } else {
-                        response = command.execute(args);
-                    }
-                    if (response == null) {
-                        logger.log(Level.SEVERE, "Response is null");
-                        return;
-                    }
-                    logger.log(Level.INFO, "Command executed, preparing response");
-                    responsePool.submit(() -> sendResponse(packet, response));
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, e.getMessage());
-                }
-            });
+            logger.log(Level.INFO, "Request parsed, submitting for processing");
+            submitForProcessing(request, packet, collectionHandler);
 
         } catch (ClassNotFoundException | IOException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
     }
 
-    private void sendResponse(DatagramPacket packet, Response response) {
-        try {
-            logger.log(Level.INFO, "Sending response...");
-            IOManager.output(socket, packet, response);
-            logger.log(Level.INFO, "Response sent: " + response);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
+    private void submitForProcessing(Request request, DatagramPacket packet, CollectionHandler collectionHandler) {
+        processPool.submit(() -> {
+            try {
+                Command command = request.getCommand();
+                String[] args = request.getArgs();
+                LabWork lab = request.getLab();
+                logger.log(Level.INFO, "Command received: " + command.getName());
+
+                command.setCollectionHandler(collectionHandler);
+                Response response;
+                if (lab != null) {
+                    response = ((CommandWithElement) command).execute(args, lab);
+                } else {
+                    response = command.execute(args);
+                }
+
+                if (response == null) {
+                    logger.log(Level.SEVERE, "Response is null");
+                    return;
+                }
+                logger.log(Level.INFO, "Command executed, preparing response");
+                submitForResponse(response, packet);
+
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage());
+            }
+        });
+    }
+
+    private void submitForResponse(Response response, DatagramPacket packet) {
+        responsePool.submit(() -> {
+            try {
+                logger.log(Level.INFO, "Sending response...");
+                IOManager.output(socket, packet, response);
+                logger.log(Level.INFO, "Response sent: " + response);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage());
+            }
+        });
     }
 }

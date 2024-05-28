@@ -11,8 +11,8 @@ import java.util.ArrayDeque;
 public class CollectionHandler implements common.handlers.CollectionHandler {
     private final LocalDateTime dateCreated = LocalDateTime.now();
     private ArrayDeque<LabWork> collection = new ArrayDeque<>();
-    @Getter @Setter
-    private common.handlers.DBHandler dbHandler;
+    @Getter
+    private final common.handlers.DBHandler dbHandler;
     private final String filepath = System.getenv("LAB5_FILEPATH");
     private final Object lock = new Object();
 
@@ -26,24 +26,35 @@ public class CollectionHandler implements common.handlers.CollectionHandler {
         }
     }
 
+    @Override
     public ArrayDeque<LabWork> getCollection(){
         synchronized (lock) {
             return collection;
         }
     }
 
+    @Override
     public void setCollection(ArrayDeque<LabWork> collection){
         synchronized (lock) {
             this.collection = collection;
         }
     }
 
+    @Override
     public void add(LabWork lw) {
         synchronized (lock) {
             this.collection.add(lw);
         }
     }
 
+    @Override
+    public void remove(LabWork lw) {
+        synchronized (lock) {
+            this.collection.remove(lw);
+        }
+    }
+
+    @Override
     public String info() {
         synchronized (lock) {
             return "Collection " + this.collection.getClass().getSimpleName() + ".\n" +

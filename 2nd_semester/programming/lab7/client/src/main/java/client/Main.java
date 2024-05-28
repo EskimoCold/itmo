@@ -94,9 +94,9 @@ public class Main {
     }
 }
 
-// independent pools
+// independent pools - DONE
 // hash to server - DONE
-// remove from db
+// remove from db - DONE
 // dbhandler to command - DONE
 // remove dbhandler from commands, relocate it to collectionHandler - DONE
-// remove duplicate lines in dbhandler
+// remove duplicate lines in dbhandler - DONE
