@@ -20,7 +20,7 @@ public class Help extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public Response execute(String[] args) {
         Set<Command> commands = PackageParser.getAllCommands();
 
         StringBuilder output = new StringBuilder();

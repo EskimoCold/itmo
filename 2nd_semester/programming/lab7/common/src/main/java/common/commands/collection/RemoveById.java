@@ -20,8 +20,8 @@ public class RemoveById extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(String[] args) {
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
         try {
             long targetId = Integer.parseInt(args[0]);
@@ -39,7 +39,7 @@ public class RemoveById extends CollectionCommand {
                     .findFirst()
                     .ifPresent(collection::remove);
 
-            collectionHandler.setCollection(collection);
+            this.getCollectionHandler().setCollection(collection);
             return new Response(null, "Removed");
 
         } catch (NumberFormatException e) {

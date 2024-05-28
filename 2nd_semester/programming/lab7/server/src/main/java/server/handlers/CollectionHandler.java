@@ -10,17 +10,31 @@ import java.util.ArrayDeque;
 
 public class CollectionHandler implements common.handlers.CollectionHandler {
     private final LocalDateTime dateCreated = LocalDateTime.now();
-    @Getter
-    @Setter
     private ArrayDeque<LabWork> collection = new ArrayDeque<>();
+    @Getter @Setter
+    private common.handlers.DBHandler dbHandler;
     private final String filepath = System.getenv("LAB5_FILEPATH");
     private final Object lock = new Object();
 
     public CollectionHandler(DBHandler dbHandler) {
+        this.dbHandler = dbHandler;
+
         try {
             this.collection = dbHandler.loadCollectionToMemory();
         } catch (Exception e) {
             IOHandler.println(e.getMessage());
+        }
+    }
+
+    public ArrayDeque<LabWork> getCollection(){
+        synchronized (lock) {
+            return collection;
+        }
+    }
+
+    public void setCollection(ArrayDeque<LabWork> collection){
+        synchronized (lock) {
+            this.collection = collection;
         }
     }
 

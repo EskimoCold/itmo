@@ -70,10 +70,12 @@ public class UDPServer {
             processPool.submit(() -> {
                 Response response;
                 try {
+                    command.setCollectionHandler(collectionHandler);
+
                     if (lab != null) {
-                        response = ((CommandWithElement) command).execute(args, collectionHandler, lab, dbHandler);
+                        response = ((CommandWithElement) command).execute(args, lab);
                     } else {
-                        response = command.execute(args, collectionHandler, dbHandler);
+                        response = command.execute(args);
                     }
                     if (response == null) {
                         logger.log(Level.SEVERE, "Response is null");

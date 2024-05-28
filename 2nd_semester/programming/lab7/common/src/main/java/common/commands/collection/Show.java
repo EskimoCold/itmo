@@ -19,8 +19,8 @@ public class Show extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(String[] args) {
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
         StringBuilder output = new StringBuilder();
 
         if (collection.isEmpty()) {

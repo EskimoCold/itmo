@@ -20,9 +20,9 @@ public class FilterContainsName extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public Response execute(String[] args) {
         String substring = args[0].toLowerCase();
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
         String output = collection.stream()
                 .filter(lw -> lw.getName().toLowerCase().contains(substring))

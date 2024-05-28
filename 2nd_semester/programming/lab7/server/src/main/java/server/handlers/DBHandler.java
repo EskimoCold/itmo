@@ -21,8 +21,8 @@ public class DBHandler implements common.handlers.DBHandler {
         this.username = username;
         this.password = password;
 
-        try(Connection connection = DriverManager.getConnection(jdbcUrl, username, password)){
-            try(Statement stmt = connection.createStatement()){
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
+            try (Statement stmt = connection.createStatement()) {
                 String createUsersTable = "CREATE TABLE IF NOT EXISTS users" +
                         "(username VARCHAR(100), password VARCHAR(64));";
 
@@ -36,18 +36,18 @@ public class DBHandler implements common.handlers.DBHandler {
                 stmt.execute(createUsersTable);
                 stmt.execute(createLWTable);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
             System.exit(0);
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         Connection connection = null;
 
-        try{
+        try {
             connection = DriverManager.getConnection(jdbcUrl, username, password);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, "Could not connect to database: " + e.getMessage());
             System.exit(0);
         }
@@ -55,20 +55,20 @@ public class DBHandler implements common.handlers.DBHandler {
         return connection;
     }
 
-    public User checkUserPresence(User user){
+    public User checkUserPresence(User user) {
         Connection connection = getConnection();
 
         String selectUserQuery = "SELECT * FROM users WHERE username = ? LIMIT 1";
 
-        try (PreparedStatement stmt = connection.prepareStatement(selectUserQuery)){
+        try (PreparedStatement stmt = connection.prepareStatement(selectUserQuery)) {
             stmt.setString(1, user.getUsername());
 
-            try (ResultSet resultSet = stmt.executeQuery()){
-                if (resultSet.next()){
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
                     return new User(resultSet.getString(1), resultSet.getString(2));
                 }
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             IOHandler.println(e.getMessage());
         }
 
@@ -76,40 +76,40 @@ public class DBHandler implements common.handlers.DBHandler {
     }
 
     public User createUser(User user) throws UserException {
-        if(checkUserPresence(user) != null){
+        if (checkUserPresence(user) != null) {
             throw new UserException("User already exists");
         }
 
         String addUserQuery = "INSERT INTO users VALUES(?, ?);";
 
-        try(Connection connection = getConnection()){
-            try (PreparedStatement stmt = connection.prepareStatement(addUserQuery)){
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(addUserQuery)) {
                 stmt.setString(1, user.getUsername());
                 stmt.setString(2, user.getPassword());
 
                 stmt.executeUpdate();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             return null;
         }
 
         return user;
     }
 
-    public boolean checkUserPassword(User userToCheck) throws UserException{
+    public boolean checkUserPassword(User userToCheck) throws UserException {
         User user = checkUserPresence(userToCheck);
 
-        if (user != null){
+        if (user != null) {
             return user.getPassword().equals(userToCheck.getPassword());
-        } else{
+        } else {
             throw new UserException("User does not exist");
         }
     }
 
-    public LabWork createLab(LabWork lab, String username, boolean setFields){
+    public LabWork createLab(LabWork lab, String username, boolean setFields) {
         String addLabQuery;
 
-        if (setFields){
+        if (setFields) {
             addLabQuery = "INSERT INTO labworks(id, lab_name, coordinates_x, coordinates_y, date_created, minimal_point, tuned_in_works, average_point, difficulty, discipline_name, self_study_hours, username) " +
                     "VALUES (DEFAULT, ?,?,?, CURRENT_TIMESTAMP, ?,?,?,?,?,?,?)" +
                     "RETURNING id, date_created;";
@@ -119,9 +119,9 @@ public class DBHandler implements common.handlers.DBHandler {
                     "RETURNING id, date_created;";
         }
 
-        try(Connection connection = getConnection()){
-            try (PreparedStatement stmt = connection.prepareStatement(addLabQuery)){
-                if(!setFields){
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(addLabQuery)) {
+                if (!setFields) {
                     stmt.setInt(1, lab.getId().intValue());
                     stmt.setString(2, lab.getName());
                     stmt.setInt(3, lab.getCoordinates().getX().intValue());
@@ -139,7 +139,7 @@ public class DBHandler implements common.handlers.DBHandler {
 
                     return lab;
 
-                } else{
+                } else {
                     stmt.setString(1, lab.getName());
                     stmt.setInt(2, lab.getCoordinates().getX().intValue());
                     stmt.setInt(3, lab.getCoordinates().getY().intValue());
@@ -162,7 +162,7 @@ public class DBHandler implements common.handlers.DBHandler {
                     }
                 }
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             IOHandler.println(e.getClass().getSimpleName() + ": " + e.getMessage());
             return null;
         }
@@ -170,15 +170,15 @@ public class DBHandler implements common.handlers.DBHandler {
         return null;
     }
 
-    public ArrayDeque<LabWork> loadCollectionToMemory(){
+    public ArrayDeque<LabWork> loadCollectionToMemory() {
         String getAllRoutesQuery = "SELECT * FROM labworks;";
         ArrayDeque<LabWork> collection = new ArrayDeque<>();
 
-        try(Connection connection = getConnection()){
-            try(PreparedStatement stmt = connection.prepareStatement(getAllRoutesQuery)){
-                try(ResultSet rs = stmt.executeQuery()){
-                    while(rs.next()){
-                        try{
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(getAllRoutesQuery)) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        try {
                             LabWork lab = new LabWork(
                                     rs.getLong(1),
                                     rs.getString(2),
@@ -195,7 +195,7 @@ public class DBHandler implements common.handlers.DBHandler {
                             );
                             LabWork.validateWithOutId(lab);
                             collection.add(lab);
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             IOHandler.println(e.getClass().getSimpleName() + ": " + e.getMessage());
                         }
                     }
@@ -203,34 +203,34 @@ public class DBHandler implements common.handlers.DBHandler {
                     return collection;
                 }
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             IOHandler.println(e.getClass().getSimpleName() + ": " + e.getMessage());
         }
 
         return null;
     }
 
-    public void removeAllUserLabs(User user){
+    public void removeAllUserLabs(User user) {
         String removeAllRoutesQuery = "DELETE FROM labworks WHERE username = ?";
 
-        try(Connection connection = getConnection()){
-            try(PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)){
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)) {
                 stmt.setString(1, user.getUsername());
                 stmt.execute();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
     }
 
-    public void removeAllLabs(){
+    public void removeAllLabs() {
         String removeAllRoutesQuery = "DELETE FROM labworks";
 
-        try(Connection connection = getConnection()){
-            try(PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)){
+        try (Connection connection = getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(removeAllRoutesQuery)) {
                 stmt.execute();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
     }

@@ -19,13 +19,13 @@ public class CountGreaterThanTunedInWorks extends CommandWithElement {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public Response execute(String[] args) {
         return null;
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab, DBHandler dbHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(String[] args, LabWork lab) {
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
         long count = collection.stream()
                 .filter(lw -> lab.getTunedInWorks() > lw.getTunedInWorks())
                 .count();

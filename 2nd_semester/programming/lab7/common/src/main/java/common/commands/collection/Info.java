@@ -16,7 +16,7 @@ public class Info extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
-        return new Response(null, collectionHandler.info());
+    public Response execute(String[] args) {
+        return new Response(null, this.getCollectionHandler().info());
     }
 }

@@ -21,18 +21,18 @@ public class RemoveGreater extends CommandWithElement{
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public Response execute(String[] args) {
         return null;
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab, DBHandler dbHandler) {
-        ArrayDeque<LabWork> updatedCollection = collectionHandler.getCollection().stream()
+    public Response execute(String[] args, LabWork lab) {
+        ArrayDeque<LabWork> updatedCollection = this.getCollectionHandler().getCollection().stream()
                 .filter(labWork -> Objects.equals(this.getUser().getUsername(), labWork.getUsername()))
                 .filter(labWork -> lab.compareTo(labWork) <= 0)
                 .collect(Collectors.toCollection(ArrayDeque::new));
 
-        collectionHandler.setCollection(updatedCollection);
+        this.getCollectionHandler().setCollection(updatedCollection);
 
         return new Response(null, "Removed");
     }

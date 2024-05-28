@@ -19,22 +19,22 @@ public class AddIfMin extends CommandWithElement {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public Response execute(String[] args) {
         return null;
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab, DBHandler dbHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(String[] args, LabWork lab) {
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
         boolean shouldAdd = collection.stream()
                 .anyMatch(lw -> lab.getAveragePoint() > lw.getAveragePoint());
 
         if (shouldAdd) {
-            LabWork labWork = dbHandler.createLab(lab, this.getUser().getUsername(), true);
+            LabWork labWork = this.getCollectionHandler().getDbHandler().createLab(lab, this.getUser().getUsername(), true);
 
             if (labWork != null) {
-                collectionHandler.add(labWork);
+                this.getCollectionHandler().add(labWork);
             }
 
             return  new Response(null, "Added");

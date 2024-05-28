@@ -35,7 +35,8 @@ public class Main {
                 logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to db...");
 
                 Save saveCommand = new Save();
-                saveCommand.execute(new String[]{}, collectionHandler, dbHandler);
+                saveCommand.setCollectionHandler(collectionHandler);
+                saveCommand.execute(new String[]{});
                 logger.log(Level.FINE, "Collection was saved");
             }));
 

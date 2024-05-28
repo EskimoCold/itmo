@@ -20,8 +20,8 @@ public class RemoveHead extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(String[] args) {
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
         collection.stream()
                 .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))

@@ -93,3 +93,10 @@ public class Main {
         }
     }
 }
+
+// independent pools
+// hash to server - DONE
+// remove from db
+// dbhandler to command - DONE
+// remove dbhandler from commands, relocate it to collectionHandler - DONE
+// remove duplicate lines in dbhandler

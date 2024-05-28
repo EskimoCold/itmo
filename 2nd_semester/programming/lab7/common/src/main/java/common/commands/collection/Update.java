@@ -21,13 +21,13 @@ public class Update extends CommandWithElement{
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
+    public Response execute(String[] args) {
         return null;
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, LabWork lab, DBHandler dbHandler) {
-        ArrayDeque<LabWork> collection = collectionHandler.getCollection();
+    public Response execute(String[] args, LabWork lab) {
+        ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
         try {
             long targetId = Integer.parseInt(args[0]);
@@ -41,7 +41,7 @@ public class Update extends CommandWithElement{
                 collection.remove(labWork.get());
                 lab.setId(targetId);
                 collection.add(lab);
-                collectionHandler.setCollection(collection);
+                this.getCollectionHandler().setCollection(collection);
                 return new Response(null, "Updated");
             }
 

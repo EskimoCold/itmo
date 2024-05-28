@@ -17,7 +17,7 @@ public class ExecuteScript extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler){
+    public Response execute(String[] args){
         return new Response(null, "Executing commands...");
     }
 }

@@ -16,11 +16,11 @@ public class Save extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
-        dbHandler.removeAllLabs();
+    public Response execute(String[] args) {
+        this.getCollectionHandler().getDbHandler().removeAllLabs();
 
-        collectionHandler.getCollection()
-                .forEach(lab -> dbHandler.createLab(lab, lab.getUsername(), false));
+        this.getCollectionHandler().getCollection()
+                .forEach(lab -> this.getCollectionHandler().getDbHandler().createLab(lab, lab.getUsername(), false));
 
         return new Response(null, "Saved");
     }

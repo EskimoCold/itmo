@@ -19,8 +19,8 @@ public class PrintAveragePointDesc extends CollectionCommand {
     }
 
     @Override
-    public Response execute(String[] args, CollectionHandler collectionHandler, DBHandler dbHandler) {
-        ArrayDeque<LabWork> sortedCollection = (ArrayDeque<LabWork>) collectionHandler.getCollection().stream().sorted();
+    public Response execute(String[] args) {
+        ArrayDeque<LabWork> sortedCollection = (ArrayDeque<LabWork>) this.getCollectionHandler().getCollection().stream().sorted();
 
         StringBuilder output = new StringBuilder();
 
