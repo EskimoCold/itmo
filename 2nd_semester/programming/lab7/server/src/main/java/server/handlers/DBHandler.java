@@ -223,31 +223,4 @@ public class DBHandler implements common.handlers.DBHandler {
 
         return null;
     }
-
-    @Override
-    public void removeAllUserLabs(User user) {
-        String removeAllLabsQuery = "DELETE FROM labworks WHERE username = ?";
-
-        try (Connection connection = getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(removeAllLabsQuery)) {
-                stmt.setString(1, user.getUsername());
-                stmt.execute();
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
-    }
-
-    @Override
-    public void removeAllLabs() {
-        String removeAllLabsQuery = "DELETE FROM labworks";
-
-        try (Connection connection = getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(removeAllLabsQuery)) {
-                stmt.execute();
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
-    }
 }

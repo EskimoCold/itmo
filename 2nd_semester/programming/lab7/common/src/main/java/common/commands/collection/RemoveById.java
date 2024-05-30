@@ -42,7 +42,6 @@ public class RemoveById extends CollectionCommand {
                         .get();
 
                 this.getCollectionHandler().remove(toDelete);
-                this.getCollectionHandler().getDbHandler().removeLab(toDelete);
 
                 return new Response(null, "Removed");
 

@@ -23,12 +23,7 @@ public class Add extends CommandWithElement {
 
     @Override
     public Response execute(String[] args, LabWork lab) {
-        LabWork labWork = this.getCollectionHandler().getDbHandler().createLab(lab, this.getUser().getUsername(), true);
-
-        if (labWork != null) {
-            this.getCollectionHandler().add(labWork);
-        }
-
+        this.getCollectionHandler().add(lab);
         return new Response(null, "Added");
     }
 }

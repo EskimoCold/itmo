@@ -31,15 +31,6 @@ public class Main {
             CollectionHandler collectionHandler = new CollectionHandler(dbHandler);
             UDPServer server = new UDPServer(port);
 
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                logger.log(Level.INFO, "Shutdown hook invoked. Saving collection to db...");
-
-                Save saveCommand = new Save();
-                saveCommand.setCollectionHandler(collectionHandler);
-                saveCommand.execute(new String[]{});
-                logger.log(Level.FINE, "Collection was saved");
-            }));
-
             try {
                 new Thread(() -> {
                     server.run(collectionHandler);
@@ -51,7 +42,7 @@ public class Main {
                     String input = s.nextLine().trim();
                     String commandName = input.split("\\s+")[0].trim();
 
-                    if (commandName.equals("save")) {
+                    if (commandName.equalsIgnoreCase("exit")) {
                         System.exit(0);
                     }
                 }

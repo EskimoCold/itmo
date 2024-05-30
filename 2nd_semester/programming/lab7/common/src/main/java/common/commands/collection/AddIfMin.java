@@ -31,12 +31,7 @@ public class AddIfMin extends CommandWithElement {
                 .anyMatch(lw -> lab.getAveragePoint() > lw.getAveragePoint());
 
         if (shouldAdd) {
-            LabWork labWork = this.getCollectionHandler().getDbHandler().createLab(lab, this.getUser().getUsername(), true);
-
-            if (labWork != null) {
-                this.getCollectionHandler().add(labWork);
-            }
-
+            this.getCollectionHandler().add(lab);
             return  new Response(null, "Added");
         } else {
             return new Response(null, "Not added");

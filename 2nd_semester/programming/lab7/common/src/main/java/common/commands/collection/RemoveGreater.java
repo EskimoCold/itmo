@@ -35,7 +35,6 @@ public class RemoveGreater extends CommandWithElement{
 
         for (LabWork lw: toDelete) {
             this.getCollectionHandler().remove(lw);
-            this.getCollectionHandler().getDbHandler().removeLab(lw);
         }
 
         return new Response(null, "Removed");

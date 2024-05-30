@@ -25,7 +25,7 @@ public class Login extends AuthCommand {
     @Override
     public Response execute(String[] args) {
         String info;
-        User user = this.getCollectionHandler().getDbHandler().checkUserPresence(this.getUser());
+        User user = this.getCollectionHandler().checkUserPresence(this.getUser());
 
         if (user != null) {
             try {
@@ -48,7 +48,7 @@ public class Login extends AuthCommand {
             }
 
             try{
-                if(this.getCollectionHandler().getDbHandler().checkUserPassword(this.getUser())) {
+                if(this.getCollectionHandler().checkUserPassword(this.getUser())) {
                     info = "Found user " + this.getUser().getUsername();
                 } else {
                     info = "Passwords does not match";

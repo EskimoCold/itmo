@@ -31,7 +31,6 @@ public class RemoveHead extends CollectionCommand {
                     .get();
 
             this.getCollectionHandler().remove(toDelete);
-            this.getCollectionHandler().getDbHandler().removeLab(toDelete);
 
             return new Response(null, "Removed");
 

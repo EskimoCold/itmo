@@ -17,11 +17,6 @@ public class Save extends CollectionCommand {
 
     @Override
     public Response execute(String[] args) {
-        this.getCollectionHandler().getDbHandler().removeAllLabs();
-
-        this.getCollectionHandler().getCollection()
-                .forEach(lab -> this.getCollectionHandler().getDbHandler().createLab(lab, lab.getUsername(), false));
-
         return new Response(null, "Saved");
     }
 }

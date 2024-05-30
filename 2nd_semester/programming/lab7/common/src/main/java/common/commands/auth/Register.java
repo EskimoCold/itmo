@@ -25,7 +25,7 @@ public class Register extends AuthCommand{
         String info;
         User user = null;
 
-        if (this.getCollectionHandler().getDbHandler().checkUserPresence(this.getUser()) != null) {
+        if (this.getCollectionHandler().checkUserPresence(this.getUser()) != null) {
             info = "User already exists";
         } else {
             try{
@@ -48,7 +48,7 @@ public class Register extends AuthCommand{
                     IOHandler.println(e.getMessage());
                 }
 
-                user = this.getCollectionHandler().getDbHandler().createUser(this.getUser());
+                user = this.getCollectionHandler().createUser(this.getUser());
 
                 if(user != null){
                     info = "User successfully created";
