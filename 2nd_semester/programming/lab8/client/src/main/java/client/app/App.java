@@ -23,7 +23,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class App extends Application {
-    private Locale currentLocale = Locale.forLanguageTag("en-UK");
+    private Locale currentLocale = Locale.forLanguageTag("en-AU");
     private ResourceBundle bundle = ResourceBundle.getBundle("auth", currentLocale);
     private final UDPClient udpClient;
 
