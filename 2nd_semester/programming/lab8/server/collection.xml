@@ -1,0 +1,70 @@
+<labWorks>
+<LabWork>
+    <id>1</id>
+    <name>lab_name</name>
+    <coordinates>
+        <x>1</x>
+        <y>2</y>
+    </coordinates>
+    <creationDate>2024-04-24T11:54:46.04898</creationDate>
+    <minimalPoint>3.0</minimalPoint>
+    <tunedInWorks>4</tunedInWorks>
+    <averagePoint>5.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>discipline_name</name>
+        <selfStudyHours>6</selfStudyHours>
+    </discipline>
+</LabWork>
+<LabWork>
+    <id>2</id>
+    <name>2222222</name>
+    <coordinates>
+        <x>22222222</x>
+        <y>2222222</y>
+    </coordinates>
+    <creationDate>2024-04-24T11:55:01.064775</creationDate>
+    <minimalPoint>2222222.0</minimalPoint>
+    <tunedInWorks>2222222</tunedInWorks>
+    <averagePoint>2222222.0</averagePoint>
+    <difficulty>IMPOSSIBLE</difficulty>
+    <discipline>
+        <name>2222222</name>
+        <selfStudyHours>222222222</selfStudyHours>
+    </discipline>
+</LabWork>
+<LabWork>
+    <id>3</id>
+    <name>33333</name>
+    <coordinates>
+        <x>33333</x>
+        <y>33333</y>
+    </coordinates>
+    <creationDate>2024-04-26T13:27:33.455988</creationDate>
+    <minimalPoint>333333.0</minimalPoint>
+    <tunedInWorks>3333333</tunedInWorks>
+    <averagePoint>33333.0</averagePoint>
+    <difficulty>TERRIBLE</difficulty>
+    <discipline>
+        <name>33333</name>
+        <selfStudyHours>3333333</selfStudyHours>
+    </discipline>
+</LabWork>
+<LabWork>
+    <id>4</id>
+    <name>lab_name</name>
+    <coordinates>
+        <x>1</x>
+        <y>2</y>
+    </coordinates>
+    <creationDate>2024-04-26T13:37:23.728202</creationDate>
+    <minimalPoint>3.0</minimalPoint>
+    <tunedInWorks>4</tunedInWorks>
+    <averagePoint>5.0</averagePoint>
+    <difficulty>VERY_HARD</difficulty>
+    <discipline>
+        <name>discipline_name</name>
+        <selfStudyHours>6</selfStudyHours>
+    </discipline>
+</LabWork>
+</labWorks>

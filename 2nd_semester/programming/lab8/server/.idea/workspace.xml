@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c9484900-498a-451c-9355-5e041dda35a4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../lab5/my_script" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab5/my_script" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2ebXWesnRpHVFgrVdxrA7ob0Y7D" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.server [:Main.main()].executor": "Run",
+    "Gradle.server.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/eduardsudzhian/Desktop/itmo/itmo/2nd_semester/programming/lab6/server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-53826d6a" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c9484900-498a-451c-9355-5e041dda35a4" name="Changes" comment="" />
+      <created>1712174347876</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712174347876</updated>
+      <workItem from="1712174348872" duration="39000" />
+      <workItem from="1712265948322" duration="852000" />
+      <workItem from="1712310073793" duration="143000" />
+      <workItem from="1712310238548" duration="216000" />
+      <workItem from="1712310467821" duration="76000" />
+      <workItem from="1712310551369" duration="158000" />
+      <workItem from="1712310721975" duration="57000" />
+      <workItem from="1712310884635" duration="44000" />
+      <workItem from="1712310991953" duration="63000" />
+      <workItem from="1712311070459" duration="21000" />
+      <workItem from="1712311171200" duration="69000" />
+      <workItem from="1712312424066" duration="121000" />
+      <workItem from="1712312813449" duration="42000" />
+      <workItem from="1712312932786" duration="34000" />
+      <workItem from="1712313058141" duration="75000" />
+      <workItem from="1712314392698" duration="160000" />
+      <workItem from="1712314574149" duration="140000" />
+      <workItem from="1712314721499" duration="45000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
