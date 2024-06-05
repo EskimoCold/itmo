@@ -1,2 +1,2 @@
-rootProject.name = 'lab6'
+rootProject.name = 'lab8'
 include 'common', 'server', 'client'

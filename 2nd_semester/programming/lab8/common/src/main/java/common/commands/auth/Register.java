@@ -22,11 +22,11 @@ public class Register extends AuthCommand{
 
     @Override
     public Response execute(String[] args) {
-        String info;
+        int code;
         User user = null;
 
         if (this.getCollectionHandler().checkUserPresence(this.getUser()) != null) {
-            info = "User already exists";
+            code = 1; // "User already exists";
         } else {
             try{
                 try {
@@ -51,15 +51,15 @@ public class Register extends AuthCommand{
                 user = this.getCollectionHandler().createUser(this.getUser());
 
                 if(user != null){
-                    info = "User successfully created";
+                    code = 0; // "User successfully created";
                 } else {
-                    info = "SQL error";
+                    code = 3; // "SQL error";
                 }
             } catch (UserException e) {
-                info = e.getMessage();
+                code = 3; // = e.getMessage();
             }
         }
 
-        return new Response(user, info);
+        return new Response(user, code);
     }
 }

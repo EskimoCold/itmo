@@ -23,9 +23,9 @@ public class Main {
             prop.load(resourceAsStream);
             int port = Integer.parseInt(prop.getProperty("SERVER_PORT"));
 
-            final String jdbcUrl = System.getenv("DATABASE_URL");
-            final String username = System.getenv("DATABASE_USERNAME");
-            final String password = System.getenv("DATABASE_PASSWORD");
+            final String jdbcUrl = "jdbc:postgresql://localhost:5432/programming"; // System.getenv("DATABASE_URL");
+            final String username = "postgres"; // System.getenv("DATABASE_USERNAME");
+            final String password = "postgres"; // System.getenv("DATABASE_PASSWORD");
 
             DBHandler dbHandler = new DBHandler(jdbcUrl, username, password);
             CollectionHandler collectionHandler = new CollectionHandler(dbHandler);

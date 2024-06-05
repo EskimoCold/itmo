@@ -30,7 +30,7 @@ public class DBHandler implements common.handlers.DBHandler {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             try (Statement stmt = connection.createStatement()) {
                 String createUsersTable = "CREATE TABLE IF NOT EXISTS users" +
                         "(username VARCHAR(100), password VARCHAR(64));";

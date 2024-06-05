@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/lab8.client.main.iml" filepath="$PROJECT_DIR$/.idea/modules/client/lab8.client.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/lab8.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/lab8.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/lab8.server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/server/lab8.server.main.iml" />
+    </modules>
+  </component>
+</project>

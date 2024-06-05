@@ -1,5 +1,10 @@
 package client.network;
 
+import common.collections.LabWork;
+import common.commands.auth.AuthCommand;
+import common.commands.auth.Login;
+import common.commands.collection.CollectionCommand;
+import common.commands.collection.GetCollection;
 import common.network.Request;
 import common.network.Response;
 import common.network.User;
@@ -8,6 +13,7 @@ import lombok.Setter;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayDeque;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,5 +95,17 @@ public class UDPClient {
 
     public void closeConnection() {
         socket.close();
+    }
+
+    public ArrayDeque<LabWork> loadCollection() {
+        CollectionCommand command = new GetCollection();
+        command.setUser(user);
+        Request request = new Request(user, command, new String[]{});
+
+        this.createConnection();
+        this.sendRequest(request);
+        Response response = this.getResponse(true);
+
+        return (ArrayDeque<LabWork>) response.getObj();
     }
 }

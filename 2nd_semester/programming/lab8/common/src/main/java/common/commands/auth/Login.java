@@ -1,8 +1,6 @@
 package common.commands.auth;
 
 import common.exceptions.UserException;
-import common.handlers.CollectionHandler;
-import common.handlers.DBHandler;
 import common.handlers.IOHandler;
 import common.network.Response;
 import common.network.User;
@@ -24,7 +22,7 @@ public class Login extends AuthCommand {
 
     @Override
     public Response execute(String[] args) {
-        String info;
+        boolean loggedIn;
         User user = this.getCollectionHandler().checkUserPresence(this.getUser());
 
         if (user != null) {
@@ -49,17 +47,17 @@ public class Login extends AuthCommand {
 
             try{
                 if(this.getCollectionHandler().checkUserPassword(this.getUser())) {
-                    info = "Found user " + this.getUser().getUsername();
+                    loggedIn = true;
                 } else {
-                    info = "Passwords does not match";
+                    loggedIn = false;
                 }
             } catch (UserException e) {
-                info = e.getMessage();
+                loggedIn = false;
             }
         } else {
-            info = "User does not exist";
+            loggedIn = false;
         }
 
-        return new Response(user, info);
+        return new Response(user, loggedIn);
     }
 }
