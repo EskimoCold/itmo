@@ -6,7 +6,9 @@ import javafx.beans.property.SimpleLongProperty;
 import lombok.Getter;
 
 public class DisplayCoordinates extends Coordinates {
+    @Getter
     private final Long x;
+    @Getter
     private final Long y;
 
     @Getter

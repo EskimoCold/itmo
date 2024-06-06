@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class RemoveGreater extends CommandWithElement{
+public class RemoveGreater extends CollectionCommand{
     @Override
     public String getName() {
         return "remove_greater";
@@ -23,14 +23,9 @@ public class RemoveGreater extends CommandWithElement{
 
     @Override
     public Response execute(String[] args) {
-        return null;
-    }
-
-    @Override
-    public Response execute(String[] args, LabWork lab) {
         ArrayList<LabWork> toDelete = this.getCollectionHandler().getCollection().stream()
                 .filter(labWork -> Objects.equals(this.getUser().getUsername(), labWork.getUsername()))
-                .filter(labWork -> lab.compareTo(labWork) > 0)
+                .filter(labWork -> Double.parseDouble(args[0]) > labWork.getAveragePoint())
                 .collect(Collectors.toCollection(ArrayList::new));
 
         for (LabWork lw: toDelete) {

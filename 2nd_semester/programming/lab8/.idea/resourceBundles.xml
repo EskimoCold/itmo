@@ -6,8 +6,6 @@
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/client/src/main/resources/auth_en_AU.properties" />
       <file value="file://$PROJECT_DIR$/client/src/main/resources/auth_ru_RU.properties" />
-      <file value="file://$PROJECT_DIR$/client/src/main/resources/table_en_AU.properties" />
-      <file value="file://$PROJECT_DIR$/client/src/main/resources/table_ru_RU.properties" />
       <base-name>auth</base-name>
     </custom-resource-bundle>
   </component>

@@ -17,6 +17,11 @@
                         <Tooltip text="%addTooltip"/>
                     </tooltip>
                 </Button>
+                <Button fx:id="addIfMin" mnemonicParsing="false" text="%addIfMinButtonText" onAction="#handleAddButton">
+                    <tooltip>
+                        <Tooltip text="%addIfMinTooltip"/>
+                    </tooltip>
+                </Button>
                 <Button fx:id="remove_by_id" mnemonicParsing="false" text="%removeButtonText" onAction="#handleRemoveById">
                     <tooltip>
                         <Tooltip text="%removeTooltip"/>
