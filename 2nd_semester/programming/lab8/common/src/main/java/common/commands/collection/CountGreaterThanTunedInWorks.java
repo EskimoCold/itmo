@@ -7,7 +7,7 @@ import common.network.Response;
 
 import java.util.ArrayDeque;
 
-public class CountGreaterThanTunedInWorks extends CommandWithElement {
+public class CountGreaterThanTunedInWorks extends CollectionCommand {
     @Override
     public String getName() {
         return "greater_tuned2work";
@@ -20,16 +20,11 @@ public class CountGreaterThanTunedInWorks extends CommandWithElement {
 
     @Override
     public Response execute(String[] args) {
-        return null;
-    }
-
-    @Override
-    public Response execute(String[] args, LabWork lab) {
         ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
         long count = collection.stream()
-                .filter(lw -> lab.getTunedInWorks() > lw.getTunedInWorks())
+                .filter(lw -> lw.getTunedInWorks() > Integer.parseInt(args[0]))
                 .count();
 
-        return new Response(null, "Count: " + count);
+        return new Response(null, count);
     }
 }

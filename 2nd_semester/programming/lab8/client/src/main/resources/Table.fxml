@@ -17,7 +17,7 @@
                         <Tooltip text="%addTooltip"/>
                     </tooltip>
                 </Button>
-                <Button fx:id="addIfMin" mnemonicParsing="false" text="%addIfMinButtonText" onAction="#handleAddButton">
+                <Button fx:id="addIfMin" mnemonicParsing="false" text="%addIfMinButtonText" onAction="#handleAddIfMinButton">
                     <tooltip>
                         <Tooltip text="%addIfMinTooltip"/>
                     </tooltip>
@@ -32,14 +32,14 @@
                         <Tooltip text="%removeGreaterTooltip"/>
                     </tooltip>
                 </Button>
-                <Button fx:id="reorder" mnemonicParsing="false" text="%reorderButtonText" onAction="#handleReorder">
+                <Button fx:id="clear" mnemonicParsing="false" text="%clearButtonText" onAction="#handleClear">
                     <tooltip>
-                        <Tooltip text="%reorderTooltip"/>
+                        <Tooltip text="%clearTooltip"/>
                     </tooltip>
                 </Button>
-                <Button fx:id="shuffle" mnemonicParsing="false" text="%shuffleButtonText" onAction="#handleShuffle">
+                <Button fx:id="count" mnemonicParsing="false" text="%countButtonText" onAction="#handleCount">
                     <tooltip>
-                        <Tooltip text="%shuffleTooltip"/>
+                        <Tooltip text="%countTooltip"/>
                     </tooltip>
                 </Button>
                 <Button fx:id="update" mnemonicParsing="false" text="%updateButtonText" onAction="#handleUpdate">

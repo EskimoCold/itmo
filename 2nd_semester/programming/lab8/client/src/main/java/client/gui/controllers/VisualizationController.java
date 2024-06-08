@@ -67,21 +67,27 @@ public class VisualizationController {
         mapView.setImage(image);
     }
 
-    public void drawCircles(DisplayLabwork person, ArrayDeque<DisplayLabwork> collection) {
-        double x = (double) person.getCoordinates().getX();
-        double y = (double) person.getCoordinates().getY();
+    public void drawCircles(DisplayLabwork lab, ArrayDeque<DisplayLabwork> collection) {
+        double maxX = collection.stream().max(Comparator.comparing(lw -> lw.getCoordinates().getX())).get().getCoordinates().getX();
+        double maxY = collection.stream().max(Comparator.comparing(lw -> lw.getCoordinates().getY())).get().getCoordinates().getY();
 
-        double viewX = mapView.getLayoutX();
-        double viewY = mapView.getLayoutY();
+        double x = (double) lab.getCoordinates().getX();
+        double y = (double) lab.getCoordinates().getY();
 
-        double circleX = x - viewX;
-        double circleY = y - viewY;
+        double viewX = mapView.getFitWidth();
+        double viewY = mapView.getFitHeight();
+
+        System.out.println(viewX);
+        System.out.println(viewY);
+
+        double circleX = x / maxX * viewX;
+        double circleY = y / maxY * viewY;
 
         Circle circle = new Circle(circleX, circleY, 10, Color.RED);
         Pane parent = (Pane) mapView.getParent();
         circle.setTranslateZ(100);
 
-        long personId = person.getId();
+        long personId = lab.getId();
         circle.setId(Long.toString(personId));
 
         circle.setOnMouseClicked(event -> {
@@ -100,7 +106,7 @@ public class VisualizationController {
             header.setStyle("-fx-font-weight: bold; -fx-padding: 5px;");
             borderPane.setTop(header);
 
-            Label content = new Label("ID: " + clickedLab.getId() + "\n" + bundle.getString("Owner: ") + clickedLab.getUsername());
+            Label content = new Label("ID: " + clickedLab.getId() + "\n" + bundle.getString("creator") + clickedLab.getUsername());
             content.setStyle("-fx-padding: 5px;");
             borderPane.setCenter(content);
 

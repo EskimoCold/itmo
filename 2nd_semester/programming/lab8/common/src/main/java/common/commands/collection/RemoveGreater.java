@@ -25,7 +25,7 @@ public class RemoveGreater extends CollectionCommand{
     public Response execute(String[] args) {
         ArrayList<LabWork> toDelete = this.getCollectionHandler().getCollection().stream()
                 .filter(labWork -> Objects.equals(this.getUser().getUsername(), labWork.getUsername()))
-                .filter(labWork -> Double.parseDouble(args[0]) > labWork.getAveragePoint())
+                .filter(labWork -> labWork.getAveragePoint() > Double.parseDouble(args[0]))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         for (LabWork lw: toDelete) {

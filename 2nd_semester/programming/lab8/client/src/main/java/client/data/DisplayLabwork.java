@@ -18,6 +18,7 @@ public class DisplayLabwork extends LabWork {
     private final Double averagePoint; //Поле может быть null, Значение поля должно быть больше 0
     private final Difficulty difficulty; //Поле не может быть null
     private final DisplayDiscipline discipline; //Поле может быть null
+    @Getter
     private final String username;
 
     @Getter
