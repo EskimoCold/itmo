@@ -71,7 +71,6 @@ public class App extends Application {
                 HBox buttonBox = getButtonBox(stage, scene);
 
                 if (root instanceof Pane) {
-
                     ((Pane) root).getChildren().addAll(buttonBox);
                 }
 
@@ -91,7 +90,13 @@ public class App extends Application {
         Button russianButton = new Button("Русский");
         russianButton.setOnAction(event -> changeLocale(new Locale("ru_RU"), stage, scene));
 
-        HBox buttonBox = new HBox(10, englishButton, russianButton);
+        Button daButton = new Button("Dansk");
+        daButton.setOnAction(event -> changeLocale(new Locale("da_DA"), stage, scene));
+
+        Button nlButton = new Button("Nederlands");
+        nlButton.setOnAction(event -> changeLocale(new Locale("nl_NL"), stage, scene));
+
+        HBox buttonBox = new HBox(10, englishButton, russianButton, daButton, nlButton);
         buttonBox.setPadding(new Insets(10));
         buttonBox.setAlignment(Pos.CENTER_LEFT);
         return buttonBox;

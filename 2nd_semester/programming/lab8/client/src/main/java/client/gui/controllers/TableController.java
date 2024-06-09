@@ -149,12 +149,18 @@ public class TableController {
 
     private HBox getBox(Stage primaryStage, Scene nextScene) {
         Button englishButton = new Button("English");
-        englishButton.setOnAction(pressEvent -> changeLocale(Locale.forLanguageTag("en-UK"), primaryStage, nextScene));
+        englishButton.setOnAction(pressEvent -> changeLocale(Locale.forLanguageTag("en-AU"), primaryStage, nextScene));
 
         Button russianButton = new Button("Русский");
         russianButton.setOnAction(pressEvent -> changeLocale(new Locale("ru_RU"), primaryStage, nextScene));
 
-        HBox buttonBox = new HBox(10, englishButton, russianButton);
+        Button daButton = new Button("Dansk");
+        daButton.setOnAction(pressEvent -> changeLocale(Locale.forLanguageTag("da_DA"), primaryStage, nextScene));
+
+        Button nlButton = new Button("Nederlands");
+        nlButton.setOnAction(pressEvent -> changeLocale(new Locale("nl_NL"), primaryStage, nextScene));
+
+        HBox buttonBox = new HBox(10, englishButton, russianButton, daButton, nlButton);
         buttonBox.setPadding(new Insets(10));
         buttonBox.setAlignment(Pos.CENTER_LEFT);
         return buttonBox;

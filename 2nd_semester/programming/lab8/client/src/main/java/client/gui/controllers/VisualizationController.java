@@ -1,37 +1,29 @@
 package client.gui.controllers;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import client.data.DisplayLabwork;
 import client.network.UDPClient;
-import common.collections.Discipline;
-import common.collections.LabWork;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.Group;
-import javafx.scene.Node;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class VisualizationController {
     @FXML private ImageView mapView;
@@ -48,19 +40,34 @@ public class VisualizationController {
     }
 
     public void initialize() {
-        udpClient.createConnection();
-        ArrayDeque<DisplayLabwork> collection = udpClient.loadCollection().stream()
-                .map(DisplayLabwork::new)
-                .collect(Collectors.toCollection(ArrayDeque::new));
-        udpClient.closeConnection();
-
         Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResource("map.png")).toExternalForm());
-
         setImage(image);
 
-        for (DisplayLabwork labwork : collection) {
-            drawCircles(labwork, collection);
-        }
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    try {
+                        removeAllCircles();
+
+                        udpClient.createConnection();
+                        ArrayDeque<DisplayLabwork> collection = udpClient.loadCollection().stream()
+                                .map(DisplayLabwork::new)
+                                .collect(Collectors.toCollection(ArrayDeque::new));
+                        udpClient.closeConnection();
+
+                        for (DisplayLabwork labwork : collection) {
+                            drawCircles(labwork, collection);
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
+
+            }
+        }, 0, 5000);
     }
 
     public void setImage(Image image) {
@@ -76,9 +83,6 @@ public class VisualizationController {
 
         double viewX = mapView.getFitWidth();
         double viewY = mapView.getFitHeight();
-
-        System.out.println(viewX);
-        System.out.println(viewY);
 
         double circleX = x / maxX * viewX;
         double circleY = y / maxY * viewY;
@@ -133,6 +137,16 @@ public class VisualizationController {
             }
         }
         return null;
+    }
+
+    public void removeAllCircles(){
+        Pane parent = (Pane) mapView.getParent();
+        ArrayList<Object> toRemove = parent.getChildren().stream()
+                .filter(el -> el.getClass().equals(Circle.class))
+                .collect(Collectors.toCollection(ArrayList<Object>::new));
+        for (Object circle: toRemove) {
+            parent.getChildren().remove(circle);
+        }
     }
 
     @FXML

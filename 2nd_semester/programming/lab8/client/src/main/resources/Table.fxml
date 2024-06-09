@@ -90,7 +90,6 @@
                 <TableColumn fx:id="disciplineNameColumn" prefWidth="75.0" text="%disciplineNameColumnHeader"/>
                 <TableColumn fx:id="disciplineSelfStudyHoursColumn" prefWidth="75.0" text="%disciplineSelfStudyHoursColumnHeader"/>
                 <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="%usernameColumnHeader"/>
-
             </columns>
         </TableView>
     </center>
