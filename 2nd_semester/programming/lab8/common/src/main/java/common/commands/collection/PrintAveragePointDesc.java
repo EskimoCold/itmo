@@ -6,6 +6,7 @@ import common.handlers.DBHandler;
 import common.network.Response;
 
 import java.util.ArrayDeque;
+import java.util.stream.Collectors;
 
 public class PrintAveragePointDesc extends CollectionCommand {
     @Override
@@ -20,7 +21,7 @@ public class PrintAveragePointDesc extends CollectionCommand {
 
     @Override
     public Response execute(String[] args) {
-        ArrayDeque<LabWork> sortedCollection = (ArrayDeque<LabWork>) this.getCollectionHandler().getCollection().stream().sorted();
+        ArrayDeque<LabWork> sortedCollection = this.getCollectionHandler().getCollection().stream().sorted().collect(Collectors.toCollection(ArrayDeque::new));
 
         StringBuilder output = new StringBuilder();
 

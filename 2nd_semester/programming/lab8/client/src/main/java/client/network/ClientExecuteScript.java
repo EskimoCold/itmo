@@ -17,18 +17,24 @@ import java.util.Arrays;
 import java.util.Set;
 
 public class ClientExecuteScript {
-    public static void retrieveCommands(String[] args, UDPClient client) {
+    public static ArrayList<Response> retrieveCommands(String[] args, UDPClient client) {
+        ArrayList<Response> r = new ArrayList<>();
+
         try {
             String scriptName = args[0];
 
             String content = FileHandler.read(scriptName);
 
             if (content.contains(scriptName)) {
-                IOHandler.println("Script cannot call itself or have an infinite loop");
-                return;
+                r.add(new Response(null, "Script cannot call itself or have an infinite loop"));
+                return r;
             }
 
             String[] lines = content.split("\n");
+
+            for (int i = 0; i < lines.length; i++) {
+                lines[i] = lines[i].strip();
+            }
 
             for (int i = 0; i < lines.length; i++) {
                 String[] split = lines[i].split("\\s+");
@@ -38,12 +44,12 @@ public class ClientExecuteScript {
                 Command command = PackageParser.getCommand(commandName);
 
                 if (command == null) {
-                    IOHandler.println(commandName + ": this command does not exist");
+                    r.add(new Response(null, commandName + ": this command does not exist"));
                     continue;
                 }
 
                 if (command instanceof AuthCommand) {
-                    IOHandler.println(commandName + " are not available to use in scripts");
+                    r.add(new Response(null, commandName + " are not available to use in scripts"));
                 }
 
                 if (command instanceof CollectionCommand) {
@@ -71,7 +77,7 @@ public class ClientExecuteScript {
 
                     try {
                         LabWork lw = new LabWork(element);
-                        lw.setId(LabWork.generateId());
+                        lw.setId(0);
                         LabWork.validateWithOutId(lw);
                         lw.setUsername(client.getUser().getUsername());
                         Request request = new Request(client.getUser(), command, commandArgs, lw);
@@ -79,9 +85,11 @@ public class ClientExecuteScript {
                         client.sendRequest(request);
                         Response response = client.getResponse(false);
                         IOHandler.println(response);
+                        r.add(response);
 
                     } catch (Exception e) {
-                        IOHandler.println(e.getMessage());
+                        e.printStackTrace();
+                        r.add(new Response(null, e.getMessage()));
                     }
                 } else {
                     if (command instanceof ExecuteScript) {
@@ -91,12 +99,16 @@ public class ClientExecuteScript {
                         client.sendRequest(new Request(client.getUser(), command, commandArgs));
                         Response response = client.getResponse(false);
                         IOHandler.println(response);
+                        r.add(response);
                     }
                 }
             }
 
+            return r;
+
         } catch (Exception e) {
-            IOHandler.println(e.getMessage());
+            r.add(new Response(null, e.getMessage()));
         }
+        return r;
     }
 }

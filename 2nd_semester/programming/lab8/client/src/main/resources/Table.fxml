@@ -47,6 +47,31 @@
                         <Tooltip text="%updateTooltip"/>
                     </tooltip>
                 </Button>
+                <Button fx:id="filterContainsName" mnemonicParsing="false" text="%filterButtonText" onAction="#handleFilter">
+                    <tooltip>
+                        <Tooltip text="%filterTooltip"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="info" mnemonicParsing="false" text="%infoButtonText" onAction="#handleInfo">
+                    <tooltip>
+                        <Tooltip text="%infoTooltip"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="printAverage" mnemonicParsing="false" text="%averageButtonText" onAction="#handleAverage">
+                    <tooltip>
+                        <Tooltip text="%averageTooltip"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="removeHead" mnemonicParsing="false" text="%removeHeadButtonText" onAction="#handleRemoveHead">
+                    <tooltip>
+                        <Tooltip text="%removeHeadTooltip"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="execute" mnemonicParsing="false" text="%executeButtonText" onAction="#handleExecute">
+                    <tooltip>
+                        <Tooltip text="%executeTooltip"/>
+                    </tooltip>
+                </Button>
             </children>
         </VBox>
     </left>

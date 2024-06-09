@@ -1,6 +1,7 @@
 package client.gui.controllers;
 
 import client.data.DisplayLabwork;
+import client.network.ClientExecuteScript;
 import client.network.UDPClient;
 import common.collections.Difficulty;
 import common.collections.LabWork;
@@ -186,6 +187,37 @@ public class TableController {
     private HBox gethBox(Stage stage, Scene scene) {
         HBox buttonBox = getBox(stage, scene);
         return buttonBox;
+    }
+
+    @FXML
+    private void handleFilter(ActionEvent event) {
+        TextInputDialog value = new TextInputDialog();
+        value.setHeaderText(null);
+        value.setContentText(bundle.getString("subPrompt"));
+        Optional<String> res = value.showAndWait();
+
+        if (res.isEmpty() || res.get().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(bundle.getString("subPrompt"));
+            alert.showAndWait();
+            return;
+        }
+
+        CollectionCommand removeById = new FilterContainsName();
+        removeById.setUser(this.udpClient.getUser());
+        udpClient.createConnection();
+        udpClient.sendRequest(new Request(this.udpClient.getUser(), removeById, new String[]{res.get()}));
+        Response response = udpClient.getResponse(true);
+
+        if (response.getObj() != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText(null);
+            alert.setContentText(response.getObj().toString());
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -381,6 +413,57 @@ public class TableController {
     }
 
     @FXML
+    private void handleInfo() {
+        CollectionCommand clear = new Info();
+        clear.setUser(this.udpClient.getUser());
+        udpClient.createConnection();
+        udpClient.sendRequest(new Request(this.udpClient.getUser(), clear, new String[]{}));
+        Response response = udpClient.getResponse(true);
+
+        if (response.getObj() != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText(null);
+            alert.setContentText(response.getObj().toString());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleAverage() {
+        CollectionCommand clear = new PrintAveragePointDesc();
+        clear.setUser(this.udpClient.getUser());
+        udpClient.createConnection();
+        udpClient.sendRequest(new Request(this.udpClient.getUser(), clear, new String[]{}));
+        Response response = udpClient.getResponse(true);
+
+        if (response.getObj() != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText(null);
+            alert.setContentText(response.getObj().toString());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleRemoveHead() {
+        CollectionCommand clear = new RemoveHead();
+        clear.setUser(this.udpClient.getUser());
+        udpClient.createConnection();
+        udpClient.sendRequest(new Request(this.udpClient.getUser(), clear, new String[]{}));
+        Response response = udpClient.getResponse(true);
+
+        if (response.getObj() != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText(null);
+            alert.setContentText(response.getObj().toString());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     private void handleRemoveGreater() {
         TextInputDialog toRemove = new TextInputDialog();
         toRemove.setHeaderText(null);
@@ -434,6 +517,35 @@ public class TableController {
         Response response = udpClient.getResponse(true);
 
         if (response.getObj() != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText(null);
+            alert.setContentText(response.getObj().toString());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleExecute() {
+        TextInputDialog filepath = new TextInputDialog();
+        filepath.setHeaderText(null);
+        filepath.setContentText(bundle.getString("filePrompt"));
+        Optional<String> res = filepath.showAndWait();
+
+        if (res.isEmpty() || res.get().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(bundle.getString("filePrompt"));
+            alert.showAndWait();
+            return;
+        }
+
+        udpClient.createConnection();
+        ArrayList<Response> responses = ClientExecuteScript.retrieveCommands(new String[]{res.get()}, udpClient);
+        udpClient.closeConnection();
+
+        for (Response response: responses) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("INFO");
             alert.setHeaderText(null);

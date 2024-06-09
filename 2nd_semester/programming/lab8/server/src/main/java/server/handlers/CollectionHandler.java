@@ -81,7 +81,7 @@ public class CollectionHandler implements common.handlers.CollectionHandler {
             return "Collection " + this.collection.getClass().getSimpleName() + ".\n" +
                     "Containing " + this.collection.size() + " of object LabWork.\n" +
                     "Collection created on " + dateCreated + ".\n" +
-                    "Collection stored at " + filepath + ".\n";
+                    "Collection stored at " + "DB" + ".\n";
         }
     }
 }
