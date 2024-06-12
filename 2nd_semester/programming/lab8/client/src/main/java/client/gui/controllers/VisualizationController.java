@@ -44,6 +44,8 @@ public class VisualizationController {
         setImage(image);
 
         Timer timer = new Timer();
+
+        ArrayList<Object> drawed = new ArrayList<>();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -58,6 +60,11 @@ public class VisualizationController {
                         udpClient.closeConnection();
 
                         for (DisplayLabwork labwork : collection) {
+                            if (drawed.contains(labwork)) {
+
+                            } else {
+
+                            }
                             drawCircles(labwork, collection);
                         }
 
@@ -87,7 +94,7 @@ public class VisualizationController {
         double circleX = x / maxX * viewX;
         double circleY = y / maxY * viewY;
 
-        Circle circle = new Circle(circleX, circleY, 10, Color.RED);
+        Circle circle = new Circle(circleX, circleY, lab.getAveragePoint(), Color.RED);
         Pane parent = (Pane) mapView.getParent();
         circle.setTranslateZ(100);
 
@@ -95,7 +102,6 @@ public class VisualizationController {
         circle.setId(Long.toString(personId));
 
         circle.setOnMouseClicked(event -> {
-
             String circleId = ((Circle) event.getSource()).getId();
 
             DisplayLabwork clickedLab = getLab(collection, Integer.parseInt(circleId));
