@@ -3,6 +3,7 @@ package client.gui.controllers;
 import client.data.DisplayLabwork;
 import client.network.UDPClient;
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,11 @@ public class VisualizationController {
 
     UDPClient udpClient;
     Locale locale;
+    private final Map<Long, Circle> circlesMap = new HashMap<>();
+    private final Map<String, Color> userColors = new HashMap<>();
+    private final List<Color> availableColors = Arrays.asList(
+            Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.PURPLE, Color.YELLOW, Color.PINK, Color.BROWN
+    );
 
     public VisualizationController(UDPClient udpClient, Locale locale){
         this.locale = locale;
@@ -45,28 +51,18 @@ public class VisualizationController {
 
         Timer timer = new Timer();
 
-        ArrayList<Object> drawed = new ArrayList<>();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
                     try {
-                        removeAllCircles();
-
                         udpClient.createConnection();
                         ArrayDeque<DisplayLabwork> collection = udpClient.loadCollection().stream()
                                 .map(DisplayLabwork::new)
                                 .collect(Collectors.toCollection(ArrayDeque::new));
                         udpClient.closeConnection();
 
-                        for (DisplayLabwork labwork : collection) {
-                            if (drawed.contains(labwork)) {
-
-                            } else {
-
-                            }
-                            drawCircles(labwork, collection);
-                        }
+                        updateCircles(collection);
 
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -81,25 +77,43 @@ public class VisualizationController {
         mapView.setImage(image);
     }
 
-    public void drawCircles(DisplayLabwork lab, ArrayDeque<DisplayLabwork> collection) {
-        double maxX = collection.stream().max(Comparator.comparing(lw -> lw.getCoordinates().getX())).get().getCoordinates().getX();
-        double maxY = collection.stream().max(Comparator.comparing(lw -> lw.getCoordinates().getY())).get().getCoordinates().getY();
+    public void updateCircles(ArrayDeque<DisplayLabwork> collection) {
+        Pane parent = (Pane) mapView.getParent();
 
-        double x = (double) lab.getCoordinates().getX();
-        double y = (double) lab.getCoordinates().getY();
+        Set<Long> existingIds = new HashSet<>(circlesMap.keySet());
+        Set<Long> newIds = collection.stream().map(DisplayLabwork::getId).collect(Collectors.toSet());
 
-        double viewX = mapView.getFitWidth();
-        double viewY = mapView.getFitHeight();
+        existingIds.stream()
+                .filter(id -> !newIds.contains(id))
+                .forEach(id -> {
+                    Circle circle = circlesMap.remove(id);
+                    parent.getChildren().remove(circle);
+                });
 
-        double circleX = x / maxX * viewX;
-        double circleY = y / maxY * viewY;
+        for (DisplayLabwork lab : collection) {
+            if (circlesMap.containsKey(lab.getId())) {
+                moveCircle(lab, collection);
+            } else {
+                drawCircle(lab, collection);
+            }
+        }
+    }
 
-        Circle circle = new Circle(circleX, circleY, lab.getAveragePoint(), Color.RED);
+    public void drawCircle(DisplayLabwork lab, ArrayDeque<DisplayLabwork> collection) {
+        double[] coords = calculateCirclePosition(lab, collection);
+        double circleX = coords[0];
+        double circleY = coords[1];
+
+        double size = lab.getAveragePoint();
+        if (size > 30) size = 30;
+
+        Color color = getUserColor(lab.getUsername());
+        Circle circle = new Circle(circleX, circleY, size, color);
         Pane parent = (Pane) mapView.getParent();
         circle.setTranslateZ(100);
 
-        long personId = lab.getId();
-        circle.setId(Long.toString(personId));
+        long labId = lab.getId();
+        circle.setId(Long.toString(labId));
 
         circle.setOnMouseClicked(event -> {
             String circleId = ((Circle) event.getSource()).getId();
@@ -134,6 +148,41 @@ public class VisualizationController {
         fadeTransition.play();
 
         parent.getChildren().add(circle);
+        circlesMap.put(lab.getId(), circle);
+    }
+
+    public void moveCircle(DisplayLabwork lab, ArrayDeque<DisplayLabwork> collection) {
+        double[] coords = calculateCirclePosition(lab, collection);
+        double circleX = coords[0];
+        double circleY = coords[1];
+
+        Circle circle = circlesMap.get(lab.getId());
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), circle);
+        translateTransition.setToX(circleX - circle.getCenterX());
+        translateTransition.setToY(circleY - circle.getCenterY());
+        translateTransition.play();
+    }
+
+    public double[] calculateCirclePosition(DisplayLabwork lab, ArrayDeque<DisplayLabwork> collection) {
+        double maxX = collection.stream().max(Comparator.comparing(lw -> lw.getCoordinates().getX())).get().getCoordinates().getX();
+        double maxY = collection.stream().max(Comparator.comparing(lw -> lw.getCoordinates().getY())).get().getCoordinates().getY();
+
+        double x = (double) lab.getCoordinates().getX();
+        double y = (double) lab.getCoordinates().getY();
+
+        double viewX = mapView.getFitWidth();
+        double viewY = mapView.getFitHeight();
+
+        double circleX = x / maxX * viewX;
+        double circleY = y / maxY * viewY;
+
+        if (circleX < 0) circleX = 0;
+        if (circleY < 0) circleY = 0;
+        if (circleX > mapView.getFitWidth()) circleX = mapView.getFitWidth();
+        if (circleY > mapView.getFitHeight()) circleY = mapView.getFitHeight();
+
+        return new double[]{circleX, circleY};
     }
 
     public DisplayLabwork getLab(ArrayDeque<DisplayLabwork> collection, int id){
@@ -145,14 +194,12 @@ public class VisualizationController {
         return null;
     }
 
-    public void removeAllCircles(){
-        Pane parent = (Pane) mapView.getParent();
-        ArrayList<Object> toRemove = parent.getChildren().stream()
-                .filter(el -> el.getClass().equals(Circle.class))
-                .collect(Collectors.toCollection(ArrayList<Object>::new));
-        for (Object circle: toRemove) {
-            parent.getChildren().remove(circle);
+    private Color getUserColor(String username) {
+        if (!userColors.containsKey(username)) {
+            Color color = availableColors.get(userColors.size() % availableColors.size());
+            userColors.put(username, color);
         }
+        return userColors.get(username);
     }
 
     @FXML

@@ -16,6 +16,7 @@ public class DisplayLabwork extends LabWork {
     private final LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private final double minimalPoint; //Значение поля должно быть больше 0
     private final int tunedInWorks;
+    @Getter
     private final Double averagePoint; //Поле может быть null, Значение поля должно быть больше 0
     private final Difficulty difficulty; //Поле не может быть null
     private final DisplayDiscipline discipline; //Поле может быть null
