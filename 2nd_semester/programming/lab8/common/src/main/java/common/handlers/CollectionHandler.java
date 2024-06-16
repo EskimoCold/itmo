@@ -3,9 +3,6 @@ package common.handlers;
 import common.collections.LabWork;
 import common.exceptions.UserException;
 import common.network.User;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayDeque;
 

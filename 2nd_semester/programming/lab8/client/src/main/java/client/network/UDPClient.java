@@ -1,8 +1,6 @@
 package client.network;
 
 import common.collections.LabWork;
-import common.commands.auth.AuthCommand;
-import common.commands.auth.Login;
 import common.commands.collection.CollectionCommand;
 import common.commands.collection.GetCollection;
 import common.network.Request;

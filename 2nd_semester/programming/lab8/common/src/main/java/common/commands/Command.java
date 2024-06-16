@@ -1,7 +1,6 @@
 package common.commands;
 
 import common.handlers.CollectionHandler;
-import common.handlers.DBHandler;
 import common.network.Response;
 import lombok.Getter;
 import lombok.Setter;

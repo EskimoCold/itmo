@@ -4,10 +4,7 @@ import common.handlers.IOHandler;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 @Data

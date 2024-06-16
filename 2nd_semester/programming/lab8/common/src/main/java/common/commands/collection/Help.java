@@ -1,8 +1,6 @@
 package common.commands.collection;
 
 import common.commands.Command;
-import common.handlers.CollectionHandler;
-import common.handlers.DBHandler;
 import common.handlers.PackageParser;
 import common.network.Response;
 

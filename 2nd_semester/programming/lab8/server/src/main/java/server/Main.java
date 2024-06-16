@@ -1,6 +1,5 @@
 package server;
 
-import common.commands.collection.Save;
 import server.handlers.CollectionHandler;
 import server.handlers.DBHandler;
 import server.network.UDPServer;

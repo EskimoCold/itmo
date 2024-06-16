@@ -1,10 +1,6 @@
 package common.commands.collection;
 
-import common.handlers.CollectionHandler;
-import common.handlers.DBHandler;
 import common.network.Response;
-
-import java.util.Objects;
 
 public class Exit extends CollectionCommand {
     @Override

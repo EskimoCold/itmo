@@ -4,8 +4,6 @@ import common.collections.LabWork;
 import common.exceptions.UserException;
 import common.handlers.IOHandler;
 import common.network.User;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;

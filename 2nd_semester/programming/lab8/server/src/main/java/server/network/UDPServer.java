@@ -6,7 +6,6 @@ import common.commands.collection.CommandWithElement;
 import common.network.Request;
 import common.network.Response;
 import server.handlers.CollectionHandler;
-import server.handlers.DBHandler;
 import server.handlers.IOManager;
 
 import java.io.IOException;

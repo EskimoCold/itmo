@@ -26,10 +26,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 public class TableController {

@@ -1,6 +1,7 @@
 package client.data;
 
-import common.collections.*;
+import common.collections.Difficulty;
+import common.collections.LabWork;
 import javafx.beans.property.*;
 import lombok.Getter;
 
