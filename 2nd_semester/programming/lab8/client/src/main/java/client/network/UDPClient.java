@@ -54,7 +54,7 @@ public class UDPClient {
     }
 
     public Response getResponse(boolean close) {
-        byte[] bufResponse = new byte[4096];
+        byte[] bufResponse = new byte[65536];
 
         while (true) {
             DatagramPacket packet = new DatagramPacket(bufResponse, bufResponse.length);
@@ -68,7 +68,7 @@ public class UDPClient {
                 try {
                     Response response = (Response) is.readObject();
 
-                    if (this.user == null) {
+                    if (response.getUser() != null) {
                         this.user = response.getUser();
                     }
 

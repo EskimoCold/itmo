@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 public class UDPServer {
     private DatagramSocket socket;
-    private final byte[] buf = new byte[4096];
+    private final byte[] buf = new byte[65536];
     private final Logger logger = Logger.getLogger("logger");
     private final ExecutorService requestPool = Executors.newCachedThreadPool();
     private final ExecutorService processPool = Executors.newCachedThreadPool();
