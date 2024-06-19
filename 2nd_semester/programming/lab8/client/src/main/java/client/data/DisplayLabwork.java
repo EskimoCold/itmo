@@ -10,15 +10,21 @@ import java.time.LocalDateTime;
 public class DisplayLabwork extends LabWork {
     @Getter
     private final Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    @Getter
     private final String name; //Поле не может быть null, Строка не может быть пустой
     @Getter
     private final DisplayCoordinates coordinates; //Поле не может быть null
+    @Getter
     private final LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    @Getter
     private final double minimalPoint; //Значение поля должно быть больше 0
+    @Getter
     private final int tunedInWorks;
     @Getter
     private final Double averagePoint; //Поле может быть null, Значение поля должно быть больше 0
+    @Getter
     private final Difficulty difficulty; //Поле не может быть null
+    @Getter
     private final DisplayDiscipline discipline; //Поле может быть null
     @Getter
     private final String username;

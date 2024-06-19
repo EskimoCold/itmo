@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -115,11 +116,147 @@ public class TableController {
                     usernameColumn.setCellValueFactory(data -> data.getValue().getUsernameProperty());
 
                     tableView.setItems(labs);
+
+                    tableView.setRowFactory(tv -> {
+                        TableRow<DisplayLabwork> row = new TableRow<>();
+                        row.setOnMouseClicked(event -> {
+                            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && (!row.isEmpty())) {
+                                DisplayLabwork rowData = row.getItem();
+                                openUpdateDialog(rowData);
+                            }
+                        });
+                        return row;
+                    });
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
         }, 0, 5000);
+    }
+
+    private void openUpdateDialog(DisplayLabwork labwork) {
+        Dialog<LabWork> dialog = new Dialog<>();
+        dialog.setTitle(bundle.getString("updateButtonText"));
+        dialog.setHeaderText(null);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField idField = new TextField(String.valueOf(labwork.getId()));
+        idField.setPromptText("ID");
+        idField.setDisable(true);  // ID should not be editable
+        TextField nameField = new TextField(labwork.getName());
+        nameField.setPromptText(bundle.getString("name"));
+        TextField xCoordField = new TextField(String.valueOf(labwork.getCoordinates().getX()));
+        xCoordField.setPromptText(bundle.getString("coordinatesX"));
+        TextField yCoordField = new TextField(String.valueOf(labwork.getCoordinates().getY()));
+        yCoordField.setPromptText(bundle.getString("coordinatesY"));
+        TextField minPointField = new TextField(String.valueOf(labwork.getMinimalPoint()));
+        minPointField.setPromptText(bundle.getString("minPoints"));
+        TextField tunedInField = new TextField(String.valueOf(labwork.getTunedInWorks()));
+        tunedInField.setPromptText(bundle.getString("tunedIn"));
+        TextField averagePointsField = new TextField(String.valueOf(labwork.getAveragePoint()));
+        averagePointsField.setPromptText(bundle.getString("averagePoints"));
+        ChoiceBox<Difficulty> difficultyBox = new ChoiceBox<>(FXCollections.observableArrayList(Difficulty.IMPOSSIBLE, Difficulty.INSANE, Difficulty.TERRIBLE, Difficulty.VERY_HARD));
+        difficultyBox.setValue(labwork.getDifficulty());
+        TextField discNameField = new TextField(labwork.getDiscipline().getName());
+        discNameField.setPromptText(bundle.getString("discName"));
+        TextField selfStudyField = new TextField(String.valueOf(labwork.getDiscipline().getSelfStudyHours()));
+        selfStudyField.setPromptText(bundle.getString("selfStudy"));
+
+        grid.add(new Label("ID:"), 0, 0);
+        grid.add(idField, 1, 0);
+        grid.add(new Label(bundle.getString("name") + ":"), 0, 1);
+        grid.add(nameField, 1, 1);
+        grid.add(new Label(bundle.getString("coordinates") + ":"), 0, 2);
+        grid.add(xCoordField, 1, 2);
+        grid.add(yCoordField, 2, 2);
+        grid.add(new Label(bundle.getString("minPoints") + ":"), 0, 3);
+        grid.add(minPointField, 1, 3);
+        grid.add(new Label(bundle.getString("tunedIn") + ":"), 0, 4);
+        grid.add(tunedInField, 1, 4);
+        grid.add(new Label(bundle.getString("averagePoints") + ":"), 0, 5);
+        grid.add(averagePointsField, 1, 5);
+        grid.add(new Label(bundle.getString("difficulty") + ":"), 0, 6);
+        grid.add(difficultyBox, 1, 6);
+        grid.add(new Label(bundle.getString("discipline") + ":"), 0, 7);
+        grid.add(discNameField, 1, 8);
+        grid.add(selfStudyField, 2, 8);
+
+        ButtonType updateButton = new ButtonType(bundle.getString("updateButtonText"), ButtonData.APPLY);
+        ButtonType cancelButton = new ButtonType(bundle.getString("cancel"), ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(updateButton, cancelButton);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == updateButton) {
+                try {
+                    long id = Long.parseLong(idField.getText());
+                    String name = nameField.getText();
+                    long xCoord = Integer.parseInt(xCoordField.getText());
+                    long yCoord = Long.parseLong(yCoordField.getText());
+                    double minPoints = Double.parseDouble(minPointField.getText());
+                    int tunedIn = Integer.parseInt(tunedInField.getText());
+                    double average = Double.parseDouble(averagePointsField.getText());
+                    Difficulty difficulty = difficultyBox.getValue();
+                    String discName = discNameField.getText();
+                    long selfStudy = Long.parseLong(selfStudyField.getText());
+
+                    LabWork labWork = new LabWork(
+                            id,
+                            name,
+                            xCoord, yCoord,
+                            LocalDateTime.now(),
+                            minPoints,
+                            tunedIn,
+                            average,
+                            difficulty.toString(),
+                            discName, selfStudy,
+                            this.udpClient.getUser().getUsername()
+                    );
+                    LabWork.validateWithOutId(labWork);
+
+                    return labWork;
+
+                } catch (NumberFormatException | DateTimeParseException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Invalid input values. Please enter valid input values.");
+                    alert.showAndWait();
+                    return null;
+                } catch (InvalidParameterException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(e.getMessage());
+                    alert.showAndWait();
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        });
+
+        Optional<LabWork> result = dialog.showAndWait();
+        result.ifPresent(labWork -> {
+            CommandWithElement update = new Update();
+            update.setUser(this.udpClient.getUser());
+            this.udpClient.createConnection();
+            this.udpClient.sendRequest(new Request(this.udpClient.getUser(), update, new String[]{idField.getText()}, labWork));
+            Response response = this.udpClient.getResponse(true);
+
+            if (response.getObj() != null) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INFO");
+                alert.setHeaderText(null);
+                alert.setContentText(response.getObj().toString());
+                alert.showAndWait();
+            }
+        });
     }
 
     @FXML

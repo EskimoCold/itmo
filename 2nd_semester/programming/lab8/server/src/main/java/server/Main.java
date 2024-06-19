@@ -31,9 +31,7 @@ public class Main {
             UDPServer server = new UDPServer(port);
 
             try {
-                new Thread(() -> {
-                    server.run(collectionHandler);
-                }).start();
+                new Thread(() -> server.run(collectionHandler)).start();
 
                 while (true) {
                     System.out.println("Server Shell>>");

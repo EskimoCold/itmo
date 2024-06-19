@@ -8,7 +8,9 @@ import javafx.beans.property.StringProperty;
 import lombok.Getter;
 
 public class DisplayDiscipline extends Discipline {
+    @Getter
     private final String name;
+    @Getter
     private final Long selfStudyHours;
 
     @Getter
