@@ -22,12 +22,28 @@ public class FilterContainsName extends CollectionCommand {
         String substring = args[0].toLowerCase();
         ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
-        String output = collection.stream()
-                .filter(lw -> lw.getName().toLowerCase().contains(substring))
-                .map(LabWork::toString)
-                .collect(Collectors.joining("\n"));
+        StringBuilder output = new StringBuilder();
 
-        return new Response(null, output);
+        for (LabWork lw: collection) {
+            boolean id = String.valueOf(lw.getId()).toLowerCase().contains(substring);
+            boolean name = String.valueOf(lw.getName()).toLowerCase().contains(substring);
+            boolean x = String.valueOf(lw.getCoordinates().getX()).toLowerCase().contains(substring);
+            boolean y = String.valueOf(lw.getCoordinates().getY()).toLowerCase().contains(substring);
+            boolean date = String.valueOf(lw.getCreationDate()).toLowerCase().contains(substring);
+            boolean minimal = String.valueOf(lw.getMinimalPoint()).toLowerCase().contains(substring);
+            boolean tuned = String.valueOf(lw.getTunedInWorks()).toLowerCase().contains(substring);
+            boolean average = String.valueOf(lw.getAveragePoint()).toLowerCase().contains(substring);
+            boolean difficulty = String.valueOf(lw.getDifficulty()).toLowerCase().contains(substring);
+            boolean discpline = String.valueOf(lw.getDiscipline().getName()).toLowerCase().contains(substring);
+            boolean selfstudy = String.valueOf(lw.getDiscipline().getSelfStudyHours()).toLowerCase().contains(substring);
+            boolean owner = String.valueOf(lw.getUsername()).toLowerCase().contains(substring);
+
+            if (id || name || x || y || date || minimal || tuned || average ||difficulty || discpline || selfstudy || owner) {
+                output.append(lw).append("\n\n");
+            }
+        }
+
+        return new Response(null, output.toString());
     }
 
 }

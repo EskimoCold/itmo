@@ -23,10 +23,10 @@ public class Clear extends CollectionCommand {
         ArrayDeque<LabWork> collection = this.getCollectionHandler().getCollection();
 
         ArrayDeque<LabWork> newCollection = collection.stream()
-                .filter(lab -> !Objects.equals(this.getUser().getUsername(), lab.getUsername()))
+                .filter(lab -> Objects.equals(this.getUser().getUsername(), lab.getUsername()))
                 .collect(Collectors.toCollection(ArrayDeque::new));
 
-        this.getCollectionHandler().setCollection(newCollection);
+        newCollection.forEach(lw -> this.getCollectionHandler().remove(lw));
 
         return new Response(null, "Cleared");
     }
