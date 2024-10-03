@@ -28,6 +28,9 @@
 3. <a href="2nd_semester/db/lab3">Normal forms</a>
 4. <a href="2nd_semester/db/lab4">Query analysis</a>
 
+## WEB
+1. <a href="3rd_semester/web/lab1">FCGI</a>
+
 # Projects
 ## History
 * <a href="1st_semester/history">"AI and cultural heritage"</a>
