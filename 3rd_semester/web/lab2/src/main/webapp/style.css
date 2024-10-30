@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #483D8B;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-family: fantasy;
+    font-size: 24px;
+}
+
+#student-info h1 {
+    font-size: 20px;
+    color: white;
+}
+
+main table {
+    width: 100%;
+    max-width: 1200px;
+    min-width: 1000px;
+    margin: 0 auto;
+}
+
+#left-panel, #right-panel {
+    padding: 10px;
+    vertical-align: top;
+}
+
+form {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10%;
+    margin-top: 5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+    margin-bottom: 5%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5%;
+    font-weight: bold;
+}
+
+input[type="number"], select {
+    width: 90%;
+    padding: 5%;
+    margin-bottom: 5%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button, #return-button {
+    background-color: #483D8B;
+    color: white;
+    border: none;
+    padding: 5% 10%;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-top: 1%;
+}
+
+#error-message {
+    font-size: 24pt;
+    color: #324759;
+    border: 0.2rem solid #483D8B;
+    display: none;
+}
+
+button:hover, #return-button {
+    background-color: #324759;
+}
+
+canvas {
+    margin-top: 5%;
+    max-width: 100%;
+    height: auto;
+}
+
+#resultTable {
+    width: 1200px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    text-align: left;
+}
+
+#resultTable th, #resultTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 1200px;
+}
+
+button::before {
+    content: "→ ";
+    color: white;
+}
+
+#plotArea {
+    position: relative;
+    margin-top: 15%;
+    margin-left: 5%;
+}
+
+#plotImage {
+    width: 400px;
+    height: 400px;
+}
