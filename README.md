@@ -30,6 +30,7 @@
 
 ## WEB
 1. <a href="3rd_semester/web/lab1">FCGI</a>
+2. <a href="3rd_semester/web/lab2">JSP</a>
 
 # Projects
 ## History
