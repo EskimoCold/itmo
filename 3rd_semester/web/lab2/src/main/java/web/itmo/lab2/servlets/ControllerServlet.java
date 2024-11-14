@@ -1,6 +1,5 @@
 package web.itmo.lab2.servlets;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;

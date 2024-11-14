@@ -10,9 +10,9 @@ function raiseErrorForUser(message){
 }
 
 function sendRequest(x, y, r) {
-    const url = `/lab2-1.0-SNAPSHOT/controller`;
+    drawPoints(x, y)
 
-    console.log('request: ', x, y, r)
+    const url = `/lab2-1.0-SNAPSHOT/controller`;
 
     fetch(url, {
         method: "POST",
@@ -59,41 +59,43 @@ function validate() {
 }
 
 function drawPoints(x, y) {
-    console.log('DRAWING: ', x, y)
-    const svg = document.getElementById("svg-container")
+    console.log('DRAWING at SVG coordinates:', x, y);
+
+    const svg = document.getElementById("svg-container");
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("cx", x);
     circle.setAttribute("cy", y);
-    circle.setAttribute("r", 3);
+    circle.setAttribute("r", "5");
     circle.setAttribute("fill", "red");
     svg.appendChild(circle);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const svg = document.getElementById("svg-container")
+    const svg = document.getElementById("svg-container");
+
     svg.addEventListener("click", function (event) {
         const point = svg.createSVGPoint();
-        const boundary = svg.getBoundingClientRect();
-        point.x = event.clientX - boundary.left;
-        point.y = event.clientY - boundary.bottom;
+        point.x = event.clientX;
+        point.y = event.clientY;
 
-        console.log('x, y: ', point.x, point.y);
+        const svgPoint = point.matrixTransform(svg.getScreenCTM().inverse());
 
-        drawPoints(point.x, point.y)
+        console.log('x, y (SVG coordinates): ', svgPoint.x, svgPoint.y);
 
         const r = parseFloat(document.getElementById("r").value);
 
         if (!isNaN(r)) {
             const scaleValue = 150 / (1.5 * r);
 
-            let scaledX = (point.x - 150) / scaleValue;
-            let scaledY = (-point.y - 150) / scaleValue;
+            let scaledX = (svgPoint.x - 150) / scaleValue;
+            let scaledY = (-svgPoint.y + 150) / scaleValue;
 
+            drawPoints(svgPoint.x, svgPoint.y);
             sendRequest(scaledX, scaledY, r);
         } else {
             raiseErrorForUser("R is not set!");
         }
-    })
+    });
 
     document.getElementById("submit-results").onclick = validate;
-})
+});

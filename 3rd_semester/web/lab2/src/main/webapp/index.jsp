@@ -122,6 +122,22 @@
         </c:forEach>
         </tbody>
     </table>
+    <script>
+        function drawPoints(x, y) {
+            console.log('DRAWING: ', x, y)
+            const svg = document.getElementById("svg-container")
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", x);
+            circle.setAttribute("cy", y);
+            circle.setAttribute("r", "5");
+            circle.setAttribute("fill", "red");
+            svg.appendChild(circle);
+        }
+
+        <c:forEach var="row" items="${resultTable.getHits()}">
+            drawPoints(${row.getX()}, ${row.getY()})
+        </c:forEach>
+    </script>
 </main>
 </body>
 </html>
